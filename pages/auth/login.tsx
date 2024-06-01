@@ -1,10 +1,13 @@
 import { Button, Input } from "@nextui-org/react";
 import { EnvelopeSimple, Key } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   return (
     <Layout title="Login Terlebih Dahulu!">
       <div className="grid gap-8 pt-24">
@@ -59,7 +62,11 @@ export default function LoginPage() {
         </div>
 
         <div className="grid gap-4">
-          <Button color="primary" className="font-semibold">
+          <Button
+            color="primary"
+            onClick={() => router.push("/")}
+            className="font-semibold"
+          >
             Masuk
           </Button>
 

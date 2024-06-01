@@ -9,6 +9,10 @@ html {
   @apply bg-gray-200;
 }
 
+::-webkit-scrollbar {
+  @apply scrollbar-hide;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
