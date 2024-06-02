@@ -1,8 +1,9 @@
 import { Button, Input } from "@nextui-org/react";
-import { CaretLeft, Key } from "@phosphor-icons/react";
+import { Key } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
+import HeaderTitle from "@/components/header/HeaderTitle";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
@@ -10,20 +11,7 @@ export default function ChangePasswordPage() {
   return (
     <Layout title="Ubah Kata Sandi">
       <div className="grid gap-8">
-        <header className="grid h-20 grid-cols-[50px_1fr_50px] items-center">
-          <Button
-            isIconOnly
-            variant="light"
-            color="default"
-            onClick={() => router.push("/profile")}
-          >
-            <CaretLeft weight="bold" size={24} />
-          </Button>
-
-          <h5 className="text-center text-[18px] font-semibold text-foreground">
-            Ubah Kata Sandi
-          </h5>
-        </header>
+        <HeaderTitle path="/profile" label="Ubah Kata Sandi" />
 
         <div className="grid gap-4">
           <Input

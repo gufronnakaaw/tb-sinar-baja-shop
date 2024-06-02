@@ -1,8 +1,8 @@
 import { Button, Checkbox, Input, Textarea } from "@nextui-org/react";
-import { CaretLeft } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
+import HeaderTitle from "@/components/header/HeaderTitle";
 
 export default function CreateShippingAddress() {
   const router = useRouter();
@@ -10,20 +10,11 @@ export default function CreateShippingAddress() {
   return (
     <Layout title="Tambah Alamat" className="relative">
       <div className="grid gap-8">
-        <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
-          <Button
-            isIconOnly
-            variant="light"
-            color="default"
-            onClick={() => router.push("/profile/shipping-address")}
-          >
-            <CaretLeft weight="bold" size={24} />
-          </Button>
-
-          <h5 className="text-center text-[18px] font-semibold text-foreground">
-            Tambah Alamat
-          </h5>
-        </header>
+        <HeaderTitle
+          path="/profile/shipping-address"
+          label="Tambah Alamat"
+          className="sticky left-0 top-0"
+        />
 
         <div className="grid gap-4">
           <h4 className="font-semibold text-foreground">Informasi Penerima</h4>

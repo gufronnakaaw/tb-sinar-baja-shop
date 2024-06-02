@@ -22,13 +22,13 @@ export default function ProfilePage() {
           <Image
             src="/img/avatar.svg"
             alt="avatar"
-            width={64}
-            height={64}
+            width={48}
+            height={48}
             priority
           />
 
           <div>
-            <h6 className="text-[18px] font-semibold text-foreground">
+            <h6 className="font-semibold text-foreground">
               Fajar Fadillah Agustian
             </h6>
             <p className="text-[12px] font-medium text-foreground-600">
@@ -46,12 +46,12 @@ export default function ProfilePage() {
           >
             <Receipt
               weight="duotone"
-              size={28}
+              size={24}
               className="text-foreground-600 group-hover:text-primary"
             />
 
             <div>
-              <h6 className="mb-1 font-semibold text-foreground group-hover:text-primary">
+              <h6 className="font-semibold text-foreground group-hover:text-primary">
                 Daftar Transaksi
               </h6>
               <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
@@ -68,12 +68,12 @@ export default function ProfilePage() {
             <Link href="#" className="group flex items-center gap-4">
               <UserCircle
                 weight="duotone"
-                size={28}
+                size={24}
                 className="text-foreground-600 group-hover:text-primary"
               />
 
               <div>
-                <h6 className="mb-1 font-semibold text-foreground group-hover:text-primary">
+                <h6 className="font-semibold text-foreground group-hover:text-primary">
                   Profil Pengguna
                 </h6>
                 <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
@@ -88,12 +88,12 @@ export default function ProfilePage() {
             >
               <Key
                 weight="duotone"
-                size={28}
+                size={24}
                 className="text-foreground-600 group-hover:text-primary"
               />
 
               <div>
-                <h6 className="mb-1 font-semibold text-foreground group-hover:text-primary">
+                <h6 className="font-semibold text-foreground group-hover:text-primary">
                   Ubah Kata Sandi
                 </h6>
                 <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
@@ -108,12 +108,12 @@ export default function ProfilePage() {
             >
               <MapTrifold
                 weight="duotone"
-                size={28}
+                size={24}
                 className="text-foreground-600 group-hover:text-primary"
               />
 
               <div>
-                <h6 className="mb-1 font-semibold text-foreground group-hover:text-primary">
+                <h6 className="font-semibold text-foreground group-hover:text-primary">
                   Alamat Pengiriman
                 </h6>
                 <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
@@ -127,9 +127,8 @@ export default function ProfilePage() {
         <Button
           variant="flat"
           color="danger"
-          size="lg"
           startContent={
-            <SignOut weight="duotone" size={28} className="text-danger" />
+            <SignOut weight="duotone" size={24} className="text-danger" />
           }
           onClick={() => {
             if (confirm("Apakah kamu yakin?")) {

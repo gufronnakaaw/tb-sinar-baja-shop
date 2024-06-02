@@ -1,5 +1,5 @@
 import { Button, Input } from "@nextui-org/react";
-import { CaretLeft, MagnifyingGlass, MapPin } from "@phosphor-icons/react";
+import { MagnifyingGlass, MapPin } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -8,6 +8,7 @@ import CardAddress from "@/components/card/CardAddress";
 
 // dummy data
 import { my_address } from "@/_dummy/my-address";
+import HeaderTitle from "@/components/header/HeaderTitle";
 
 export default function ShippingAddressPage() {
   const router = useRouter();
@@ -16,20 +17,7 @@ export default function ShippingAddressPage() {
     <Layout title="Alamat Pengiriman" className="relative">
       <div className="grid">
         <div className="sticky left-0 top-0 z-10 grid gap-1 bg-white pb-4">
-          <header className="grid h-20 grid-cols-[50px_1fr_50px] items-center">
-            <Button
-              isIconOnly
-              variant="light"
-              color="default"
-              onClick={() => router.push("/profile")}
-            >
-              <CaretLeft weight="bold" size={24} />
-            </Button>
-
-            <h5 className="text-center text-[18px] font-semibold text-foreground">
-              Alamat Pengiriman
-            </h5>
-          </header>
+          <HeaderTitle path="/profile" label="Alamat Pengiriman" />
 
           <Input
             isRequired
