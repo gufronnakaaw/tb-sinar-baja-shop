@@ -37,8 +37,8 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Pesanan</h4>
+        <div className="grid gap-2">
+          <h4 className="text-sm font-semibold text-foreground">Pesanan</h4>
 
           <Link
             href="/profile/transactions"
@@ -51,20 +51,20 @@ export default function ProfilePage() {
             />
 
             <div>
-              <h6 className="font-semibold text-foreground group-hover:text-primary">
+              <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
                 Daftar Transaksi
               </h6>
-              <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
+              <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
                 Lihat semua riwayat transaksi anda
               </p>
             </div>
           </Link>
         </div>
 
-        <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Akun</h4>
+        <div className="grid gap-2">
+          <h4 className="text-sm font-semibold text-foreground">Akun</h4>
 
-          <div className="grid gap-8">
+          <div className="grid gap-6">
             <Link href="#" className="group flex items-center gap-4">
               <UserCircle
                 weight="duotone"
@@ -73,10 +73,10 @@ export default function ProfilePage() {
               />
 
               <div>
-                <h6 className="font-semibold text-foreground group-hover:text-primary">
+                <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
                   Profil Pengguna
                 </h6>
-                <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
+                <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
                   Ubah informasi diri anda
                 </p>
               </div>
@@ -93,10 +93,10 @@ export default function ProfilePage() {
               />
 
               <div>
-                <h6 className="font-semibold text-foreground group-hover:text-primary">
+                <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
                   Ubah Kata Sandi
                 </h6>
-                <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
+                <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
                   Atur ulang kata sandi
                 </p>
               </div>
@@ -113,10 +113,10 @@ export default function ProfilePage() {
               />
 
               <div>
-                <h6 className="font-semibold text-foreground group-hover:text-primary">
+                <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
                   Alamat Pengiriman
                 </h6>
-                <p className="text-sm font-medium text-foreground-600 group-hover:text-foreground-400">
+                <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
                   Tambah & hapus alamat pengiriman anda
                 </p>
               </div>
