@@ -1,16 +1,13 @@
 import { Button, Input } from "@nextui-org/react";
 import { EnvelopeSimple, Key, Phone, User } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
 
 export default function RegisterPage() {
-  const router = useRouter();
-
   return (
     <Layout title="Daftar Sekarang!">
-      <div className="grid gap-8 pt-24">
+      <div className="grid gap-8 py-24">
         <Link
           href="/"
           className="inline-flex items-center gap-2 justify-self-center"
@@ -46,6 +43,7 @@ export default function RegisterPage() {
 
           <Input
             isRequired
+            type="email"
             variant="bordered"
             color="default"
             label="Email"
@@ -79,6 +77,7 @@ export default function RegisterPage() {
 
           <Input
             isRequired
+            type="password"
             variant="bordered"
             color="default"
             label="Kata Sandi"
@@ -91,6 +90,7 @@ export default function RegisterPage() {
 
           <Input
             isRequired
+            type="password"
             variant="bordered"
             color="default"
             label="Konformasi Kata Sandi"
@@ -105,7 +105,7 @@ export default function RegisterPage() {
         <div className="grid gap-4">
           <Button
             color="primary"
-            onClick={() => router.push("/")}
+            onClick={() => (window.location.href = "/")}
             className="font-semibold"
           >
             Daftar Sekarang

@@ -17,7 +17,7 @@ export default function ProfilePage() {
     <Layout title="Kelola Informasi Profil Dan Pengaturan Akun Anda.">
       <Navbar />
 
-      <div className="grid gap-12 py-12">
+      <div className="grid gap-8 py-8">
         <div className="inline-flex items-center gap-4">
           <Image
             src="/img/avatar.svg"
