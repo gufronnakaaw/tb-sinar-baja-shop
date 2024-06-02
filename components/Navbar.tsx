@@ -12,25 +12,25 @@ export default function Navbar() {
         <ButtonNavbar
           path="/"
           label="Utama"
-          icon={<House weight="duotone" size={32} />}
+          icon={<House weight="duotone" size={28} />}
         />
 
         <ButtonNavbar
           path="/products"
           label="Produk"
-          icon={<SquaresFour weight="duotone" size={32} />}
+          icon={<SquaresFour weight="duotone" size={28} />}
         />
 
         <ButtonNavbar
           path="/profile/transactions"
           label="Transaksi"
-          icon={<Receipt weight="duotone" size={32} />}
+          icon={<Receipt weight="duotone" size={28} />}
         />
 
         <ButtonNavbar
           path="/profile"
           label="Profil"
-          icon={<UserCircle weight="duotone" size={32} />}
+          icon={<UserCircle weight="duotone" size={28} />}
         />
       </div>
     </nav>

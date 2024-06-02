@@ -1,5 +1,3 @@
-import Layout from "@/components/Layout";
-import Navbar from "@/components/Navbar";
 import { Button } from "@nextui-org/react";
 import {
   Key,
@@ -10,6 +8,9 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
+
+import Layout from "@/components/Layout";
+import Navbar from "@/components/Navbar";
 
 export default function ProfilePage() {
   return (
@@ -39,10 +40,13 @@ export default function ProfilePage() {
         <div className="grid gap-4">
           <h4 className="font-semibold text-foreground">Pesanan</h4>
 
-          <Link href="#" className="group flex items-center gap-4">
+          <Link
+            href="/profile/transactions"
+            className="group flex items-center gap-4"
+          >
             <Receipt
               weight="duotone"
-              size={36}
+              size={28}
               className="text-foreground-600 group-hover:text-primary"
             />
 
@@ -64,7 +68,7 @@ export default function ProfilePage() {
             <Link href="#" className="group flex items-center gap-4">
               <UserCircle
                 weight="duotone"
-                size={36}
+                size={28}
                 className="text-foreground-600 group-hover:text-primary"
               />
 
@@ -81,7 +85,7 @@ export default function ProfilePage() {
             <Link href="#" className="group flex items-center gap-4">
               <Key
                 weight="duotone"
-                size={36}
+                size={28}
                 className="text-foreground-600 group-hover:text-primary"
               />
 
@@ -98,7 +102,7 @@ export default function ProfilePage() {
             <Link href="#" className="group flex items-center gap-4">
               <MapTrifold
                 weight="duotone"
-                size={36}
+                size={28}
                 className="text-foreground-600 group-hover:text-primary"
               />
 
@@ -119,7 +123,7 @@ export default function ProfilePage() {
           color="danger"
           size="lg"
           startContent={
-            <SignOut weight="duotone" size={36} className="text-danger" />
+            <SignOut weight="duotone" size={28} className="text-danger" />
           }
           className="font-semibold"
         >
