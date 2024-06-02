@@ -15,9 +15,9 @@ export default function Layout({ children, title, className }: LayoutProps) {
       </Head>
 
       <main
-        className={`relative mx-auto h-dvh max-w-[480px] bg-white pb-24 ${className}`}
+        className={`relative mx-auto h-dvh max-w-[480px] bg-white ${className}`}
       >
-        <div className="container h-full">{children}</div>
+        <div className="container h-full overflow-scroll">{children}</div>
       </main>
     </>
   );
