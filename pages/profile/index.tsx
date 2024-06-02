@@ -82,7 +82,10 @@ export default function ProfilePage() {
               </div>
             </Link>
 
-            <Link href="#" className="group flex items-center gap-4">
+            <Link
+              href="/profile/change-password"
+              className="group flex items-center gap-4"
+            >
               <Key
                 weight="duotone"
                 size={28}
@@ -125,6 +128,11 @@ export default function ProfilePage() {
           startContent={
             <SignOut weight="duotone" size={28} className="text-danger" />
           }
+          onClick={() => {
+            if (confirm("Apakah kamu yakin?")) {
+              window.location.href = "/auth/login";
+            }
+          }}
           className="font-semibold"
         >
           Keluar Akun
