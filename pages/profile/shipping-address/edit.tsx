@@ -10,7 +10,7 @@ export default function EditShippingAddress() {
   return (
     <Layout title="Edit Alamat">
       <div className="grid gap-8">
-        <header className="grid h-20 grid-cols-[50px_1fr_50px] items-center">
+        <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
           <Button
             isIconOnly
             variant="light"
@@ -101,17 +101,19 @@ export default function EditShippingAddress() {
           </Checkbox>
         </div>
 
-        <Button
-          color="primary"
-          onClick={() => {
-            if (confirm("Apakah kamu yakin?")) {
-              window.location.href = "/profile/shipping-address";
-            }
-          }}
-          className="font-semibold"
-        >
-          Simpan Alamat
-        </Button>
+        <div className="sticky bottom-0 left-0 z-50 bg-white py-4">
+          <Button
+            color="primary"
+            onClick={() => {
+              if (confirm("Apakah kamu yakin?")) {
+                window.location.href = "/profile/shipping-address";
+              }
+            }}
+            className="w-full font-semibold"
+          >
+            Simpan Alamat
+          </Button>
+        </div>
       </div>
     </Layout>
   );
