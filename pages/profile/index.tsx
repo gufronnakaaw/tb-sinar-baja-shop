@@ -20,7 +20,7 @@ export default function ProfilePage() {
       <div className="grid gap-12 py-12">
         <div className="inline-flex items-center gap-4">
           <Image
-            src="/avatar.svg"
+            src="/img/avatar.svg"
             alt="avatar"
             width={64}
             height={64}
@@ -102,7 +102,10 @@ export default function ProfilePage() {
               </div>
             </Link>
 
-            <Link href="#" className="group flex items-center gap-4">
+            <Link
+              href="/profile/shipping-address"
+              className="group flex items-center gap-4"
+            >
               <MapTrifold
                 weight="duotone"
                 size={28}
