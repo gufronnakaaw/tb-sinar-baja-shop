@@ -23,14 +23,13 @@ export default function HeaderTitle({
         isIconOnly
         variant="light"
         color="default"
+        size="sm"
         onClick={() => router.push(path)}
       >
-        <CaretLeft weight="bold" size={24} />
+        <CaretLeft weight="bold" size={20} className="text-foreground" />
       </Button>
 
-      <h5 className="text-center text-[18px] font-semibold text-foreground">
-        {label}
-      </h5>
+      <h5 className="text-center font-semibold text-foreground">{label}</h5>
     </header>
   );
 }
