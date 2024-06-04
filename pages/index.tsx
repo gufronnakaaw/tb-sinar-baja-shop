@@ -1,5 +1,5 @@
-import { Badge, Button, Input } from "@nextui-org/react";
-import { MagnifyingGlass, ShoppingCart } from "@phosphor-icons/react";
+import { Input } from "@nextui-org/react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 import Link from "next/link";
 
 import { products } from "@/_dummy/products";
@@ -17,7 +17,7 @@ export default function HomePage() {
       <Navbar />
 
       <div className="grid gap-2">
-        <header className="sticky left-0 top-0 z-50 grid h-20 w-full grid-cols-[1fr_32px] items-center gap-4 bg-white">
+        <header className="sticky left-0 top-0 z-50 flex h-20 items-center gap-4 bg-white">
           <Input
             isRequired
             variant="bordered"
@@ -33,7 +33,7 @@ export default function HomePage() {
             placeholder="Cara produk disini"
           />
 
-          <Badge color="danger" content="5">
+          {/* <Badge color="danger" content="5">
             <Button isIconOnly variant="light" color="primary">
               <ShoppingCart
                 weight="duotone"
@@ -41,7 +41,7 @@ export default function HomePage() {
                 className="text-primary"
               />
             </Button>
-          </Badge>
+          </Badge> */}
         </header>
 
         <div className="mb-2 aspect-video overflow-hidden rounded-xl">

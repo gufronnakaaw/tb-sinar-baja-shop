@@ -1,4 +1,9 @@
-import { House, Receipt, SquaresFour, UserCircle } from "@phosphor-icons/react";
+import {
+  House,
+  ShoppingCart,
+  SquaresFour,
+  UserCircle,
+} from "@phosphor-icons/react";
 
 import ButtonNavbar from "@/components/button/ButtonNavbar";
 
@@ -19,9 +24,9 @@ export default function Navbar() {
         />
 
         <ButtonNavbar
-          path="/profile/transactions"
-          label="Transaksi"
-          icon={<Receipt weight="duotone" size={24} />}
+          path="/cart"
+          label="Keranjang"
+          icon={<ShoppingCart weight="duotone" size={24} />}
         />
 
         <ButtonNavbar
