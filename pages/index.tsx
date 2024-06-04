@@ -6,6 +6,7 @@ import { products } from "@/_dummy/products";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -42,6 +43,17 @@ export default function HomePage() {
             </Button>
           </Badge>
         </header>
+
+        <div className="mb-2 aspect-video overflow-hidden rounded-xl">
+          <Image
+            priority
+            src="/img/dummy-banner.webp"
+            alt="banner"
+            width={1920}
+            height={1080}
+            className="h-auto w-full object-cover object-center"
+          />
+        </div>
 
         <div className="grid gap-2">
           <div className="flex items-center justify-between gap-4">
