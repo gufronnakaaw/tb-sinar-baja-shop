@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
 import { filtering, sorting } from "@/utils/filterDataMap";
-import { Input, Select, SelectItem } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { Funnel, MagnifyingGlass, SortAscending } from "@phosphor-icons/react";
 
 export default function ProductsPage() {
@@ -70,6 +70,14 @@ export default function ProductsPage() {
             {products.map((product) => (
               <CardProduct key={product.product_id} product={product} />
             ))}
+
+            <Button
+              variant="solid"
+              color="primary"
+              className="col-span-2 mt-4 justify-self-center px-8 font-semibold"
+            >
+              Muat Lagi
+            </Button>
           </div>
         </div>
       </div>
