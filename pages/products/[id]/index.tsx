@@ -1,8 +1,9 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
-import { Button } from "@nextui-org/react";
+import PopupPurchaseAmount from "@/components/popup/PopupPurchaseAmount";
+import { Button, Image } from "@nextui-org/react";
 import { Plus, Tag } from "@phosphor-icons/react";
-import Image from "next/image";
+import NextImage from "next/image";
 
 export default function DetailsPage() {
   return (
@@ -16,7 +17,8 @@ export default function DetailsPage() {
 
         <div className="mb-8 grid gap-4">
           <Image
-            priority
+            isBlurred
+            as={NextImage}
             src="/img/dummy-product.jpeg"
             alt="product img"
             width={1000}
@@ -125,13 +127,7 @@ export default function DetailsPage() {
             Keranjang
           </Button>
 
-          <Button
-            variant="solid"
-            color="primary"
-            className="w-full font-semibold"
-          >
-            Beli Sekarang
-          </Button>
+          <PopupPurchaseAmount />
         </div>
       </div>
     </Layout>
