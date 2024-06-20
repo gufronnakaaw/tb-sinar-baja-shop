@@ -24,7 +24,7 @@ export default function PopupPurchaseAmount() {
         Beli Sekarang
       </Button>
 
-      <Modal size="sm" isOpen={isOpen} onClose={onClose}>
+      <Modal isDismissable={false} size="sm" isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -68,6 +68,10 @@ export default function PopupPurchaseAmount() {
                   color="primary"
                   onPress={onClose}
                   className="font-semibold"
+                  onClick={() =>
+                    (window.location.href =
+                      "/checkout?id=17630837&purchase_amount=2")
+                  }
                 >
                   Selanjutnya
                 </Button>
