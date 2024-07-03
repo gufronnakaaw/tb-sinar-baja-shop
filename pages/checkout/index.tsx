@@ -2,8 +2,11 @@ import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { Button, Input, Radio, RadioGroup, Textarea } from "@nextui-org/react";
 import { ArrowRight } from "@phosphor-icons/react";
+import { useRouter } from "next/router";
 
 export default function CheckoutPage() {
+  const router = useRouter();
+
   return (
     <Layout title="Checkout Page">
       <HeaderTitle
@@ -13,7 +16,7 @@ export default function CheckoutPage() {
       />
 
       <div className="grid gap-8">
-        <div className="grid gap-5">
+        <div className="grid gap-4">
           <h3 className="font-semibold text-foreground">
             Informasi Pengiriman
           </h3>
@@ -36,6 +39,7 @@ export default function CheckoutPage() {
             />
 
             <Input
+              type="number"
               variant="bordered"
               color="default"
               label="No. Telp"
@@ -56,7 +60,7 @@ export default function CheckoutPage() {
 
         <div className="h-[1px] w-full border border-dashed border-foreground-200" />
 
-        <div className="grid gap-2">
+        <div className="grid gap-4">
           <h3 className="font-semibold text-foreground">
             Metode Pembayaran{" "}
             <span className="text-[12px] font-medium text-foreground-600">
@@ -80,6 +84,7 @@ export default function CheckoutPage() {
         <Button
           color="primary"
           endContent={<ArrowRight weight="bold" size={16} />}
+          onClick={() => router.push("/checkout/preview")}
           className="w-full font-semibold"
         >
           Selanjutnya

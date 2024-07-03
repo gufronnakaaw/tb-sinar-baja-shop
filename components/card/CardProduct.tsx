@@ -1,6 +1,7 @@
 import { ProductType } from "@/types/product.type";
 import { formatRupiah } from "@/utils/formatRupiah";
-import Image from "next/image";
+import { Image } from "@nextui-org/react";
+import NextImage from "next/image";
 import Link from "next/link";
 
 type ProductCardProps = {
@@ -15,10 +16,12 @@ export default function CardProduct({ product }: ProductCardProps) {
     >
       <Image
         priority
+        isBlurred
+        as={NextImage}
         src={`${product.product_image}`}
         alt="product img"
-        width={100}
-        height={100}
+        width={1000}
+        height={1000}
         className="aspect-square h-auto w-full origin-center rounded-lg object-cover"
       />
 

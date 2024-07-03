@@ -2,9 +2,9 @@ import { products } from "@/_dummy/products";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
-import { Input } from "@nextui-org/react";
+import { Image, Input } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import Image from "next/image";
+import NextImage from "next/image";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -46,6 +46,8 @@ export default function HomePage() {
         <div className="mb-2 aspect-video overflow-hidden rounded-xl">
           <Image
             priority
+            isBlurred
+            as={NextImage}
             src="/img/dummy-banner.webp"
             alt="banner"
             width={1920}
