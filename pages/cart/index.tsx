@@ -1,11 +1,55 @@
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
+import HeaderTitle from "@/components/header/HeaderTitle";
+import { Button, Image } from "@nextui-org/react";
+import NextImage from "next/image";
+import { useRouter } from "next/router";
 
 export default function CartPage() {
+  const router = useRouter();
+
   return (
     <Layout title="Keranjang Saya">
+      <HeaderTitle
+        path="/"
+        label="Keranjang Saya"
+        className="sticky left-0 top-0"
+      />
+
+      <div className="h-[calc(100%-6rem)]">
+        <div className="mt-16 flex flex-col items-center gap-8">
+          <Image
+            priority
+            as={NextImage}
+            src="/img/empty-box.svg"
+            alt="empty box img"
+            width={192}
+            height={192}
+          />
+
+          <div className="grid justify-items-center gap-4">
+            <div className="text-center">
+              <h4 className="mx-auto mb-1 max-w-[230px] font-semibold text-foreground">
+                Oppsss.. keranjang kamu masih kosong
+              </h4>
+              <p className="text-[12px] font-medium text-foreground-600">
+                Cari, pesan, dan terima tanaman yang kamu suka.
+              </p>
+            </div>
+
+            <Button
+              variant="solid"
+              color="primary"
+              onClick={() => router.push("/products")}
+              className="w-max font-semibold"
+            >
+              Mulai Belanja
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <Navbar />
-      <div>cart page</div>
     </Layout>
   );
 }
