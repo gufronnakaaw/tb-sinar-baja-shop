@@ -1,12 +1,15 @@
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { AppContext } from "@/context/AppContext";
 import { Button, Image } from "@nextui-org/react";
 import NextImage from "next/image";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
 export default function CartPage() {
   const router = useRouter();
+  const ctx = useContext(AppContext);
 
   return (
     <Layout title="Keranjang Saya">
@@ -30,18 +33,18 @@ export default function CartPage() {
           <div className="grid justify-items-center gap-4">
             <div className="text-center">
               <h4 className="mx-auto mb-1 max-w-[230px] font-semibold text-foreground">
-                Oppsss.. keranjang kamu masih kosong
+                Oppsss... keranjang kamu masih kosong
               </h4>
               <p className="text-[12px] font-medium text-foreground-600">
-                Cari, pesan, dan terima tanaman yang kamu suka.
+                Cari, pesan, dan terima pesanan yang kamu suka.
               </p>
             </div>
 
             <Button
               variant="solid"
               color="primary"
-              onClick={() => router.push("/products")}
               className="w-max font-semibold"
+              onClick={() => ctx?.onOpenUnauthenticated()}
             >
               Mulai Belanja
             </Button>
