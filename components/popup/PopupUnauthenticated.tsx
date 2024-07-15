@@ -54,8 +54,8 @@ export default function PopupUnauthenticated({
                 as={NextImage}
                 src="/img/password.svg"
                 alt="empty box img"
-                width={130}
-                height={130}
+                width={100}
+                height={100}
               />
             </div>
 
