@@ -3,7 +3,7 @@ import NextImage from "next/image";
 
 export default function CardOrder() {
   return (
-    <div className="grid grid-cols-[100px_1fr] items-center gap-4">
+    <div className="grid grid-cols-[80px_1fr] items-center gap-4">
       <Image
         priority
         isBlurred
@@ -12,7 +12,7 @@ export default function CardOrder() {
         alt="image"
         width={500}
         height={500}
-        className="h-[100px] w-[100px] rounded-xl"
+        className="h-[80px] w-[80px] rounded-lg"
       />
 
       <div className="grid gap-2">
