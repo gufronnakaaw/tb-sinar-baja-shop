@@ -25,7 +25,7 @@ export default function ProductsPage() {
                 className="text-foreground-400"
               />
             }
-            placeholder="Cara produk disini"
+            placeholder="Cari produk disini"
           />
         </header>
 

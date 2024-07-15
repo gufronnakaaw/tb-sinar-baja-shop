@@ -29,7 +29,7 @@ export default function HomePage() {
                 className="text-foreground-400"
               />
             }
-            placeholder="Cara produk disini"
+            placeholder="Cari produk disini"
           />
 
           {/* <Badge color="danger" content="5">

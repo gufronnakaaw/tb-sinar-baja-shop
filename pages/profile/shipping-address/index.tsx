@@ -31,7 +31,7 @@ export default function ShippingAddressPage() {
                 className="text-foreground-400"
               />
             }
-            placeholder="Cara alamat pengiriman"
+            placeholder="Cari alamat pengiriman"
           />
         </div>
 
