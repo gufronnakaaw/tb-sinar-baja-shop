@@ -28,11 +28,9 @@ export default function ProfilePage() {
           />
 
           <div>
-            <h6 className="font-semibold text-foreground">
-              Fajar Fadillah Agustian
-            </h6>
+            <h6 className="font-semibold text-foreground">Johnson Doe</h6>
             <p className="text-[12px] font-medium text-foreground-600">
-              fajarfadillah@gmail.com
+              johnsondoe@mail.com
             </p>
           </div>
         </div>
@@ -50,13 +48,19 @@ export default function ProfilePage() {
               className="text-foreground-600 group-hover:text-primary"
             />
 
-            <div>
-              <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
-                Daftar Transaksi
-              </h6>
-              <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
-                Lihat semua riwayat transaksi anda
-              </p>
+            <div className="flex w-full items-center justify-between">
+              <div>
+                <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
+                  Daftar Transaksi
+                </h6>
+                <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
+                  Lihat semua riwayat transaksi anda
+                </p>
+              </div>
+
+              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-danger">
+                <p className="text-sm text-white">5</p>
+              </div>
             </div>
           </Link>
         </div>
