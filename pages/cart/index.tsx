@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
-import HeaderTitle from "@/components/header/HeaderTitle";
 import { AppContext } from "@/context/AppContext";
 import { Button, Image } from "@nextui-org/react";
 import NextImage from "next/image";
@@ -13,11 +12,11 @@ export default function CartPage() {
 
   return (
     <Layout title="Keranjang Saya">
-      <HeaderTitle
-        path="/"
-        label="Keranjang Saya"
-        className="sticky left-0 top-0"
-      />
+      <header className="sticky left-0 top-0 z-50 grid h-20 items-center bg-white">
+        <h5 className="text-center font-semibold text-foreground">
+          Keranjang Saya
+        </h5>
+      </header>
 
       <div className="h-[calc(100%-6rem)]">
         <div className="mt-16 flex flex-col items-center gap-8">
