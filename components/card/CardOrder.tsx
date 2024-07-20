@@ -1,3 +1,4 @@
+import { formatRupiah } from "@/utils/formatRupiah";
 import { Image } from "@nextui-org/react";
 import NextImage from "next/image";
 
@@ -17,7 +18,7 @@ export default function CardOrder() {
 
       <div className="grid gap-2">
         <div>
-          <h4 className="line-clamp-2 text-sm font-bold text-foreground">
+          <h4 className="line-clamp-2 text-sm font-semibold text-foreground">
             Besi Beton KS (Krakatau Steel) 12mm Polos TP280
           </h4>
           <p className="text-[12px] font-medium text-foreground-600">
@@ -26,8 +27,12 @@ export default function CardOrder() {
         </div>
 
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-bold text-foreground">2 x Rp 130.000</h4>
-          <h4 className="text-sm font-bold text-foreground">Rp 260.000</h4>
+          <h4 className="text-sm font-semibold text-foreground">
+            2 x {formatRupiah(130000)}
+          </h4>
+          <h4 className="text-sm font-semibold text-foreground">
+            {formatRupiah(260000)}
+          </h4>
         </div>
       </div>
     </div>

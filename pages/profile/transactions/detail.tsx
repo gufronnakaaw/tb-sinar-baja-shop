@@ -6,6 +6,7 @@ import { Bag } from "@phosphor-icons/react";
 
 export default function TransactionDetail() {
   const label = "Transaksi " + "#190720240901";
+
   return (
     <Layout title={label}>
       <div className="grid gap-2">
@@ -15,27 +16,26 @@ export default function TransactionDetail() {
           className="sticky left-0 top-0"
         />
 
-        <div className="grid gap-4">
+        <div className="grid gap-6">
           <div className="flex flex-col items-center justify-center gap-2">
             <div className="rounded-full bg-foreground-100 p-6">
-              <Bag size={35} />
+              <Bag weight="bold" size={35} />
             </div>
+
             <div className="flex flex-col items-center gap-1 text-center">
               <p className="text-lg font-semibold">Johnson Doe</p>
-              <p className="text-sm">089078789898</p>
-              <p className="text-sm">
+              <p className="text-sm text-foreground-600">089078789898</p>
+              <p className="text-sm text-foreground-600">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil,
                 dolorem?
               </p>
             </div>
           </div>
 
-          <div className="h-[2px] w-full border-[2px] border-dashed border-foreground-200" />
+          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
 
-          <div className="grid gap-[12px]">
-            <h4 className="text-lg font-semibold text-foreground">
-              Daftar Pesanan
-            </h4>
+          <div className="grid gap-3">
+            <h4 className="font-semibold text-foreground">Daftar Pesanan</h4>
 
             <div className="grid gap-4">
               <CardOrder />
@@ -44,48 +44,39 @@ export default function TransactionDetail() {
             </div>
           </div>
 
-          <div className="h-[2px] w-full border-[2px] border-dashed border-foreground-200" />
+          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
 
-          <h4 className="text-lg font-semibold text-foreground">
-            Rincian Transaksi
-          </h4>
+          <div className="grid gap-3">
+            <h4 className="font-semibold text-foreground">Rincian Transaksi</h4>
 
-          <div className="grid gap-2 text-sm">
-            <div className="grid grid-cols-2">
-              <p>Metode Pembayaran</p>
-              <p className="justify-self-end">Transfer</p>
-            </div>
-            <div className="grid grid-cols-2">
-              <p>Status</p>
-              <p className="justify-self-end text-success">Selesai</p>
-            </div>
-            <div className="grid grid-cols-2">
-              <p>Waktu</p>
-              <p className="justify-self-end">10:00</p>
-            </div>
-            <div className="grid grid-cols-2">
-              <p>Tanggal</p>
-              <p className="justify-self-end">20 Juli 2024</p>
-            </div>
-            <div className="grid grid-cols-2">
-              <p>ID Transaksi</p>
-              <p className="justify-self-end">#190720240901</p>
-            </div>
-            <div className="grid grid-cols-2">
-              <p>Ongkir</p>
-              <p className="justify-self-end">{formatRupiah(50000)}</p>
-            </div>
-            <div className="grid grid-cols-2">
-              <p>Subtotal</p>
-              <p className="justify-self-end">{formatRupiah(150000)}</p>
+            <div className="grid grid-cols-2 items-center gap-2">
+              <div className="grid gap-1 justify-self-start text-sm text-foreground-600">
+                <p>Metode Pembayaran</p>
+                <p>Status</p>
+                <p>Waktu</p>
+                <p>Tanggal</p>
+                <p>ID Transaksi</p>
+                <p>Ongkir</p>
+                <p>Subtotal</p>
+              </div>
+
+              <div className="grid gap-1 justify-self-end text-sm font-medium text-foreground">
+                <p>Transfer</p>
+                <p className="font-semibold text-success">Selesai</p>
+                <p>10:00 WIB</p>
+                <p>20 Juli 2024</p>
+                <p>#190720240901</p>
+                <p>{formatRupiah(50000)}</p>
+                <p>{formatRupiah(150000)}</p>
+              </div>
             </div>
           </div>
 
-          <div className="h-[2px] w-full border-[2px] border-dashed border-foreground-200" />
+          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
 
-          <div className="text-md mb-8 grid grid-cols-2 font-semibold">
+          <div className="mb-10 flex items-center justify-between text-lg font-semibold">
             <p>Total</p>
-            <p className="justify-self-end">{formatRupiah(200000)}</p>
+            <p>{formatRupiah(200000)}</p>
           </div>
         </div>
       </div>
