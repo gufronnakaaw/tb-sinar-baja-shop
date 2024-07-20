@@ -6,11 +6,13 @@ export default function CardTransaction({
   id_transaksi,
   total_item,
   total_transaksi,
+  tanggal_transaksi,
   status,
 }: {
   id_transaksi: string;
   total_item: number;
   total_transaksi: number;
+  tanggal_transaksi: string;
   status: string;
 }) {
   const router = useRouter();
@@ -26,7 +28,7 @@ export default function CardTransaction({
           <h3 className="text-sm font-semibold text-foreground">
             Transaksi {id_transaksi}
           </h3>
-          <p className="font-medium text-foreground-600">20 Juli 2024 09:13</p>
+          <p className="font-medium text-foreground-600">{tanggal_transaksi}</p>
           <p className="font-semibold text-foreground">{total_item} Item</p>
         </div>
 

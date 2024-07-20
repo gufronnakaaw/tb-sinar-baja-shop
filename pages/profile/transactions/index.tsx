@@ -17,6 +17,7 @@ export default function TransactionsPage() {
             id_transaksi: "#150720241001",
             total_item: 2,
             total_transaksi: 100000,
+            tanggal_transaksi: "20 Juli 2024 09:13",
             status: "Selesai",
           }}
         />
@@ -26,6 +27,7 @@ export default function TransactionsPage() {
             id_transaksi: "#090720242301",
             total_item: 10,
             total_transaksi: 3500000,
+            tanggal_transaksi: "20 Juli 2024 09:13",
             status: "Selesai",
           }}
         />
@@ -35,6 +37,7 @@ export default function TransactionsPage() {
             id_transaksi: "#290720241201",
             total_item: 20,
             total_transaksi: 35000000,
+            tanggal_transaksi: "20 Juli 2024 09:13",
             status: "Selesai",
           }}
         />
