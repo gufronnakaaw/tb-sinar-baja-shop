@@ -69,7 +69,10 @@ export default function ProfilePage() {
           <h4 className="text-sm font-semibold text-foreground">Akun</h4>
 
           <div className="grid gap-6">
-            <Link href="#" className="group flex items-center gap-4">
+            <Link
+              href="/profile/user"
+              className="group flex items-center gap-4"
+            >
               <UserCircle
                 weight="duotone"
                 size={24}

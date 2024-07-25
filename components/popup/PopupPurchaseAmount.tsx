@@ -69,8 +69,7 @@ export default function PopupPurchaseAmount() {
                   onPress={onClose}
                   className="font-semibold"
                   onClick={() =>
-                    (window.location.href =
-                      "/checkout?id=17630837&purchase_amount=2")
+                    (window.location.href = "/purchase/checkout?id=17630837")
                   }
                 >
                   Selanjutnya

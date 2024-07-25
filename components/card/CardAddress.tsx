@@ -60,8 +60,9 @@ export default function CardAddress({ address }: AddressProps) {
         <Button
           variant="light"
           color="primary"
+          size="sm"
           startContent={
-            <PencilSimple weight="duotone" size={22} className="text-primary" />
+            <PencilSimple weight="bold" size={18} className="text-primary" />
           }
           onClick={() =>
             router.push(
@@ -77,13 +78,14 @@ export default function CardAddress({ address }: AddressProps) {
           isIconOnly
           variant="light"
           color="danger"
+          size="sm"
           onClick={() => {
             if (confirm("Apakah kamu yakin?")) {
               window.location.href = "/profile/shipping-address";
             }
           }}
         >
-          <Trash weight="duotone" size={22} className="text-danger" />
+          <Trash weight="bold" size={18} className="text-danger" />
         </Button>
       </div>
     </div>

@@ -4,8 +4,11 @@ import PopupPurchaseAmount from "@/components/popup/PopupPurchaseAmount";
 import { Button, Image } from "@nextui-org/react";
 import { Plus, Tag } from "@phosphor-icons/react";
 import NextImage from "next/image";
+import { useRouter } from "next/router";
 
 export default function DetailsPage() {
+  const router = useRouter();
+
   return (
     <Layout title="Detail Page">
       <div className="relative">
@@ -122,6 +125,7 @@ export default function DetailsPage() {
             variant="bordered"
             color="primary"
             startContent={<Plus weight="bold" size={18} />}
+            onClick={() => router.push("/cart")}
             className="w-full font-semibold"
           >
             Keranjang
