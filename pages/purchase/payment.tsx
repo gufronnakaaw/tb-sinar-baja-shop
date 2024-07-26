@@ -180,7 +180,10 @@ export default function OrderPage() {
               <Tab key={item.id} title={item.label}>
                 <div className="grid gap-2">
                   {item.guides.map((guide) => (
-                    <div className="grid grid-cols-[24px_1fr] items-start gap-2">
+                    <div
+                      key={guide.id}
+                      className="grid grid-cols-[24px_1fr] items-start gap-2"
+                    >
                       <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[12px] font-semibold text-white">
                         {guide.id}
                       </div>
