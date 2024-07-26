@@ -16,15 +16,10 @@ export default function HomePage() {
       <Navbar />
 
       <div className="grid gap-2">
-        <div className="flex items-end justify-between gap-4 pb-4 pt-8">
-          <div>
-            <h3 className="mb-1 text-lg font-bold text-foreground">
-              Selamat Pagi, Gufron.
-            </h3>
-            <p className="max-w-[300px] text-sm font-medium text-foreground-600">
-              Cari Besi Berkualitas Tinggi dan Terpercaya Di Sini.
-            </p>
-          </div>
+        <div className="flex items-center justify-between gap-4 pb-4 pt-8">
+          <h3 className="text-lg font-bold text-foreground">
+            Selamat Pagi, Gufron.
+          </h3>
 
           <Chip
             variant="flat"
