@@ -23,7 +23,7 @@ export default function CartPage() {
           <Image
             priority
             as={NextImage}
-            src="/img/empty-box.svg"
+            src="/img/empty-cart-img.svg"
             alt="empty box img"
             width={192}
             height={192}

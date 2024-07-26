@@ -52,20 +52,19 @@ export default function PopupUnauthenticated({
               <Image
                 priority
                 as={NextImage}
-                src="/img/password.svg"
+                src="/img/secure-login-img.svg"
                 alt="empty box img"
-                width={100}
-                height={100}
+                width={150}
+                height={150}
               />
             </div>
 
             <div className="grid justify-items-center gap-4">
               <div className="text-center">
                 <h4 className="mx-auto mb-1 max-w-[230px] font-semibold text-foreground">
-                  Oppsss... <br />
-                  kamu belum login nih
+                  Eittss, kamu belum login nih
                 </h4>
-                <p className="text-[12px] font-medium text-foreground-600">
+                <p className="mx-auto max-w-[280px] text-[12px] font-medium text-foreground-600">
                   Silahkan login atau registrasi terlebih dahulu sebelum
                   berbelanja.
                 </p>
