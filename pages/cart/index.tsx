@@ -1,8 +1,7 @@
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
+import CardCart from "@/components/card/CardCart";
 import { AppContext } from "@/context/AppContext";
-import { Button, Image } from "@nextui-org/react";
-import NextImage from "next/image";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 
@@ -19,7 +18,7 @@ export default function CartPage() {
       </header>
 
       <div className="h-[calc(100%-6rem)]">
-        <div className="mt-16 flex flex-col items-center gap-8">
+        {/* <div className="mt-16 flex flex-col items-center gap-8">
           <Image
             priority
             as={NextImage}
@@ -48,6 +47,12 @@ export default function CartPage() {
               Mulai Belanja
             </Button>
           </div>
+        </div> */}
+
+        <div className="grid gap-4 pb-28">
+          <CardCart />
+          <CardCart />
+          <CardCart />
         </div>
       </div>
 
