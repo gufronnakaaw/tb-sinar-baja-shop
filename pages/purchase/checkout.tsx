@@ -114,7 +114,7 @@ export default function CheckoutPage() {
               }}
             >
               <p className="text-sm font-medium text-foreground">
-                Bank Negara Indonesia
+                Bank Negara Indonesia (BNI)
               </p>
             </Radio>
           </RadioGroup>

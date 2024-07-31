@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout";
-import Navbar from "@/components/Navbar";
 import CardCart from "@/components/card/CardCart";
+import HeaderTitle from "@/components/header/HeaderTitle";
 import { AppContext } from "@/context/AppContext";
+import { Button } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 
@@ -11,13 +12,13 @@ export default function CartPage() {
 
   return (
     <Layout title="Keranjang Saya">
-      <header className="sticky left-0 top-0 z-50 grid h-20 items-center bg-white">
-        <h5 className="text-center font-semibold text-foreground">
-          Keranjang Saya
-        </h5>
-      </header>
+      <HeaderTitle
+        path="/products"
+        label="Keranjang Saya"
+        className="sticky left-0 top-0"
+      />
 
-      <div className="h-[calc(100%-6rem)]">
+      <div className="h-[calc(100%-2rem)]">
         {/* <div className="mt-16 flex flex-col items-center gap-8">
           <Image
             priority
@@ -49,14 +50,33 @@ export default function CartPage() {
           </div>
         </div> */}
 
-        <div className="grid gap-4 pb-28">
+        <div className="grid gap-4 pb-6">
+          <CardCart />
+          <CardCart />
+          <CardCart />
+          <CardCart />
+          <CardCart />
+          <CardCart />
           <CardCart />
           <CardCart />
           <CardCart />
         </div>
-      </div>
 
-      <Navbar />
+        <div className="sticky bottom-0 left-0 z-10 grid gap-2 bg-white py-4">
+          <div className="flex items-center justify-between gap-2">
+            <h4 className="font-semibold text-foreground">Total Pembayaran</h4>
+            <h4 className="font-semibold text-foreground">Rp 830.000</h4>
+          </div>
+
+          <Button
+            color="primary"
+            onClick={() => router.push("/purchase/checkout?id=17630837")}
+            className="w-full font-semibold"
+          >
+            Beli
+          </Button>
+        </div>
+      </div>
     </Layout>
   );
 }
