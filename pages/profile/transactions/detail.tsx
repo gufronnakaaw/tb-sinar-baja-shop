@@ -2,9 +2,12 @@ import Layout from "@/components/Layout";
 import CardOrder from "@/components/card/CardOrder";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { formatRupiah } from "@/utils/formatRupiah";
-import { Bag } from "@phosphor-icons/react";
+import { Button } from "@nextui-org/react";
+import { ArrowRight, Bag } from "@phosphor-icons/react";
+import { useRouter } from "next/router";
 
 export default function TransactionDetail() {
+  const router = useRouter();
   const label = "Transaksi " + "#190720240901";
 
   return (
@@ -74,9 +77,20 @@ export default function TransactionDetail() {
 
           <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
 
-          <div className="mb-10 flex items-center justify-between text-lg font-semibold">
-            <p>Total</p>
-            <p>{formatRupiah(200000)}</p>
+          <div className="mb-10 grid gap-2">
+            <div className="flex items-center justify-between text-lg font-semibold">
+              <p>Total</p>
+              <p>{formatRupiah(200000)}</p>
+            </div>
+
+            <Button
+              color="primary"
+              endContent={<ArrowRight weight="bold" size={16} />}
+              onClick={() => router.push("/products")}
+              className="w-full font-semibold"
+            >
+              Lanjut Belanja
+            </Button>
           </div>
         </div>
       </div>
