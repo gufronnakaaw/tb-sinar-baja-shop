@@ -5,3 +5,16 @@ export type ProductType = {
   product_category: string;
   price: number;
 };
+
+export type ProductTest = {
+  id: number;
+  title: string;
+  image: string;
+  price: number;
+  description: string;
+  brand: string;
+  model: string;
+  color: string;
+  category: string;
+  discount: number;
+};

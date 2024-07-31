@@ -1,12 +1,48 @@
-import { products } from "@/_dummy/products";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
+import { GlobalResponse } from "@/types/global.type";
+import { ProductTest } from "@/types/product.type";
+import { clientFetcher } from "@/utils/fetcher";
 import { filtering, sorting } from "@/utils/filterDataMap";
-import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { Input, Select, SelectItem } from "@nextui-org/react";
 import { Funnel, MagnifyingGlass, SortAscending } from "@phosphor-icons/react";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import useSWRInfinite from "swr/infinite";
 
 export default function ProductsPage() {
+  const getKey = (
+    pageIndex: number,
+    previousPageData: GlobalResponse<ProductTest[]>,
+  ) => {
+    if (previousPageData && !previousPageData.products.length) return null;
+
+    if (pageIndex == 0)
+      return {
+        url: `/products?page=${1}&limit=8`,
+        method: "GET",
+      };
+
+    return {
+      url: `/products?page=${pageIndex + 1}&limit=8`,
+      method: "GET",
+    };
+  };
+
+  const { data, setSize, isValidating } = useSWRInfinite<
+    GlobalResponse<ProductTest[]>
+  >(getKey, clientFetcher);
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      setSize((prev) => prev + 1);
+    }
+  }, [inView, setSize]);
+
+  const produk = data?.map((item) => item.products.flat()).flat();
+
   return (
     <Layout title="Jelajahi Pilihan Baja Berkualitas Tinggi Untuk Semua Kebutuhan Anda.">
       <Navbar />
@@ -67,18 +103,27 @@ export default function ProductsPage() {
           </div>
 
           <div className="grid grid-cols-2 items-start gap-4 pb-32">
-            {products.map((product) => (
-              <CardProduct key={product.product_id} product={product} />
+            {produk?.map((product) => (
+              <CardProduct
+                key={product.id}
+                product={{
+                  price: product.price,
+                  product_category: product.category,
+                  product_id: product.id,
+                  product_image: product.image,
+                  product_name: product.title,
+                }}
+              />
             ))}
 
-            <Button
-              variant="solid"
-              color="primary"
-              className="col-span-2 mt-4 justify-self-center px-8 font-semibold"
-            >
-              Muat Lagi
-            </Button>
+            {isValidating ? (
+              <p className="col-span-2 mt-4 justify-self-center px-8 font-semibold">
+                Loading...
+              </p>
+            ) : null}
           </div>
+
+          <div ref={ref}></div>
         </div>
       </div>
     </Layout>
