@@ -77,11 +77,24 @@ export default function TransactionDetail() {
 
           <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
 
-          <div className="mb-10 grid gap-2">
-            <div className="flex items-center justify-between text-lg font-semibold">
-              <p>Total</p>
-              <p>{formatRupiah(200000)}</p>
+          <div className="mb-4 grid gap-2">
+            <div className="flex items-end justify-between gap-2">
+              <p className="text-[12px] font-medium text-foreground-600">
+                Total
+              </p>
+              <h4 className="font-bold text-foreground">
+                {formatRupiah(200000)}
+              </h4>
             </div>
+
+            <Button
+              variant="bordered"
+              color="primary"
+              onClick={() => router.push("/purchase/payment?id=17630837")}
+              className="w-full font-semibold"
+            >
+              Pembayaran
+            </Button>
 
             <Button
               color="primary"
