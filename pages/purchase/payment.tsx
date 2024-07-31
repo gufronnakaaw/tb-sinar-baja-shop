@@ -1,9 +1,13 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import PopupPaymentConfirm from "@/components/popup/PopupPaymentConfirm";
 import { Button, Snippet, Tab, Tabs } from "@nextui-org/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function OrderPage() {
+  const router = useRouter();
+
   const tabs = [
     {
       id: "m-banking",
@@ -144,7 +148,7 @@ export default function OrderPage() {
 
             <div className="flex items-center justify-between gap-2">
               <h4 className="text-[12px] font-medium text-foreground-600">
-                Ongkos Kirim
+                Biaya Pengiriman
               </h4>
               <h4 className="text-[12px] font-semibold text-foreground">
                 Rp 50.000
@@ -212,17 +216,12 @@ export default function OrderPage() {
             variant="solid"
             color="primary"
             className="w-full font-semibold"
+            onClick={() => router.push("/profile/transactions/detail")}
           >
             Detail Pesanan Saya
           </Button>
 
-          <Button
-            variant="bordered"
-            color="primary"
-            className="w-full font-semibold"
-          >
-            Konfirmasi Pembayaran
-          </Button>
+          <PopupPaymentConfirm />
         </div>
       </div>
     </Layout>

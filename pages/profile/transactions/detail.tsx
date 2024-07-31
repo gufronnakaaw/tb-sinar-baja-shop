@@ -50,17 +50,17 @@ export default function TransactionDetail() {
             <h4 className="font-semibold text-foreground">Rincian Transaksi</h4>
 
             <div className="grid grid-cols-2 items-center gap-2">
-              <div className="grid gap-1 justify-self-start text-sm text-foreground-600">
+              <div className="grid gap-1 justify-self-start text-[12px] font-medium text-foreground-600">
                 <p>Metode Pembayaran</p>
                 <p>Status</p>
                 <p>Waktu</p>
                 <p>Tanggal</p>
                 <p>ID Transaksi</p>
-                <p>Ongkir</p>
+                <p>Biaya Pengiriman</p>
                 <p>Subtotal</p>
               </div>
 
-              <div className="grid gap-1 justify-self-end text-sm font-medium text-foreground">
+              <div className="grid gap-1 justify-self-end text-[12px] font-medium text-foreground">
                 <p>Transfer</p>
                 <p className="font-semibold text-success">Selesai</p>
                 <p>10:00 WIB</p>

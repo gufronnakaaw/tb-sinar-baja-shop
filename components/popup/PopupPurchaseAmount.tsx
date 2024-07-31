@@ -24,7 +24,7 @@ export default function PopupPurchaseAmount() {
         Beli Sekarang
       </Button>
 
-      <Modal isDismissable={false} size="sm" isOpen={isOpen} onClose={onClose}>
+      <Modal isDismissable={false} size="sm" placement="center" isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
