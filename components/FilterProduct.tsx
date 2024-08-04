@@ -1,0 +1,85 @@
+import { Category } from "@/types/category.type";
+import { SuccessResponse } from "@/types/global.type";
+import { clientFetcher } from "@/utils/fetcher";
+import { sorting } from "@/utils/filterDataMap";
+import { Select, SelectItem } from "@nextui-org/react";
+import { Funnel, SortAscending } from "@phosphor-icons/react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
+
+export default function FilterProduct() {
+  const router = useRouter();
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    getCategories();
+
+    async function getCategories() {
+      try {
+        const response: SuccessResponse<Category[]> = await clientFetcher({
+          url: "/categories",
+          method: "GET",
+        });
+
+        setCategories(response.data);
+      } catch (error) {
+        alert("cannot get categories");
+        console.log(error);
+      }
+    }
+  }, []);
+
+  function handleSorting(e: ChangeEvent<HTMLSelectElement>) {
+    const sort = e.target.value;
+
+    if (!sort) {
+      delete router.query.sort;
+
+      return router.push({
+        pathname: "/products",
+        query: { ...router.query },
+      });
+    }
+
+    return router.push({
+      pathname: "/products",
+      query: { sort, ...router.query },
+    });
+  }
+
+  return (
+    <>
+      <Select
+        aria-label="sorting"
+        variant="flat"
+        color="default"
+        labelPlacement="outside"
+        placeholder="Urutkan"
+        startContent={<SortAscending weight="bold" size={18} />}
+        items={sorting}
+        classNames={{
+          value: "font-medium text-foreground",
+        }}
+        onChange={handleSorting}
+        selectedKeys={[router.query.sort as string]}
+      >
+        {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
+      </Select>
+
+      <Select
+        aria-label="filtering"
+        variant="flat"
+        color="default"
+        labelPlacement="outside"
+        placeholder="Semua"
+        startContent={<Funnel weight="bold" size={18} />}
+        items={categories}
+        classNames={{
+          value: "font-medium text-foreground",
+        }}
+      >
+        {(item) => <SelectItem key={item.id}>{item.nama}</SelectItem>}
+      </Select>
+    </>
+  );
+}
