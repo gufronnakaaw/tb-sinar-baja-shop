@@ -1,28 +1,25 @@
+import CardProduct from "@/components/card/CardProduct";
 import FilterProduct from "@/components/FilterProduct";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
-import CardProduct from "@/components/card/CardProduct";
-import { GlobalResponse } from "@/types/global.type";
-import { ProductTest } from "@/types/product.type";
-import { exampleFetcher } from "@/utils/fetcher";
+import { SuccessResponse } from "@/types/global.type";
+import { Product } from "@/types/product.type";
+import { clientFetcher, serverFetcher } from "@/utils/fetcher";
 import { Input, Spinner } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 
-export default function ProductsPage() {
+export default function ProductsPage({
+  products,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const getKey = (
     pageIndex: number,
-    previousPageData: GlobalResponse<ProductTest[]>,
+    previousPageData: SuccessResponse<Product[]>,
   ) => {
-    if (previousPageData && !previousPageData.products.length) return null;
-
-    if (pageIndex == 0)
-      return {
-        url: `/products?page=${1}&limit=8`,
-        method: "GET",
-      };
+    if (previousPageData && !previousPageData.data.length) return null;
 
     return {
       url: `/products?page=${pageIndex + 1}&limit=8`,
@@ -32,9 +29,10 @@ export default function ProductsPage() {
 
   const { data, setSize, isValidating } = useSWRInfinite(
     getKey,
-    exampleFetcher,
+    clientFetcher,
     {
       revalidateFirstPage: false,
+      revalidateOnMount: false,
     },
   );
   const { ref, inView } = useInView();
@@ -45,7 +43,9 @@ export default function ProductsPage() {
     }
   }, [inView, setSize]);
 
-  const produk = data?.map((item) => item.products.flat()).flat();
+  const productsMap = !data?.length
+    ? products.data
+    : data?.map((item) => item.data.flat()).flat();
 
   return (
     <Layout title="Jelajahi Pilihan Baja Berkualitas Tinggi Untuk Semua Kebutuhan Anda.">
@@ -77,24 +77,8 @@ export default function ProductsPage() {
           </div>
 
           <div className="grid grid-cols-2 items-start gap-4 pb-32">
-            {produk?.map((product) => (
-              <CardProduct
-                key={product.id}
-                product={{
-                  kode_item: `${product.id}`,
-                  kategori: product.category,
-                  nama_produk: product.title,
-                  slug: product.title,
-                  image: [{ url: product.image }],
-                  harga_4: product.price,
-                  harga_1: 0,
-                  harga_2: 0,
-                  harga_3: 0,
-                  harga_5: 0,
-                  harga_6: 0,
-                  nama_produk_asli: product.title,
-                }}
-              />
+            {productsMap?.map((product) => (
+              <CardProduct key={product.id} product={product} />
             ))}
 
             <div ref={ref}></div>
@@ -110,3 +94,16 @@ export default function ProductsPage() {
     </Layout>
   );
 }
+
+export const getServerSideProps = (async () => {
+  const response: SuccessResponse<Product[]> = await serverFetcher({
+    url: "/products?page=1",
+    method: "GET",
+  });
+
+  return {
+    props: {
+      products: response,
+    },
+  };
+}) satisfies GetServerSideProps<{ products: SuccessResponse<Product[]> }>;
