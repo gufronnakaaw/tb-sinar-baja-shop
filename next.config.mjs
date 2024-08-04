@@ -7,7 +7,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "storage.googleapis.com",
       },
+      {
+        protocol: "https",
+        hostname: "api.sinarbajakediri.my.id",
+      },
     ],
+  },
+  experimental: {
+    optimizePackageImports: ["@phosphor-icons/react", "@nextui-org/react"],
   },
 };
 
