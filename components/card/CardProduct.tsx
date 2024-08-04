@@ -30,10 +30,10 @@ export default function CardProduct({ product }: ProductCardProps) {
           {product.kategori}
         </span>
         <h4 className="mb-3 line-clamp-2 text-sm font-semibold text-foreground group-hover:text-primary">
-          {product.nama_produk}
+          {product.nama_produk_asli}
         </h4>
         <h4 className="line-clamp-1 text-sm font-semibold text-primary">
-          {formatRupiah(product.harga_4)}
+          {formatRupiah(product.harga_6)}
         </h4>
       </div>
     </Link>
