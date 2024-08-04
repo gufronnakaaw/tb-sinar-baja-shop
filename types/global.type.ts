@@ -3,3 +3,9 @@ export type GlobalResponse<T> = {
   message: string;
   products: T;
 };
+
+export type SuccessResponse<T> = {
+  success: boolean;
+  status_code: number;
+  data: T;
+};

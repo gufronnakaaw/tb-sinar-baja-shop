@@ -18,3 +18,18 @@ export type ProductTest = {
   category: string;
   discount: number;
 };
+
+export type Product = {
+  kode_item: string;
+  slug: string;
+  nama_produk: string;
+  nama_produk_asli: string;
+  kategori: string;
+  harga_1: number;
+  harga_2: number;
+  harga_3: number;
+  harga_4: number;
+  harga_5: number;
+  harga_6: number;
+  image: { url: string }[];
+};
