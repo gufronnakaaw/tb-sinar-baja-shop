@@ -7,7 +7,7 @@ import { Funnel, SortAscending } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 
-export default function FilterProduct() {
+export default function FilterCategoryProduct() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -47,6 +47,10 @@ export default function FilterProduct() {
 
   function handleCategories(e: ChangeEvent<HTMLSelectElement>) {
     const category = e.target.value;
+
+    if (!category) {
+      return router.push("/products");
+    }
 
     const find = categories.find((item) => item.id == parseInt(category));
 

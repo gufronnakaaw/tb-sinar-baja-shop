@@ -1,4 +1,4 @@
-import FilterProduct from "@/components/FilterProduct";
+import FilterCategoryProduct from "@/components/FilterCategoryProduct";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 
-export default function ProductsPage() {
+export default function CategoriesPage() {
   const getKey = (
     pageIndex: number,
     previousPageData: GlobalResponse<ProductTest[]>,
@@ -73,7 +73,7 @@ export default function ProductsPage() {
           <h4 className="font-semibold text-foreground">Semua Produk</h4>
 
           <div className="grid grid-cols-2 items-center gap-4">
-            <FilterProduct />
+            <FilterCategoryProduct />
           </div>
 
           <div className="grid grid-cols-2 items-start gap-4 pb-32">
