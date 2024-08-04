@@ -1,12 +1,12 @@
+import FilterProduct from "@/components/FilterProduct";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
 import { GlobalResponse } from "@/types/global.type";
 import { ProductTest } from "@/types/product.type";
-import { clientFetcher } from "@/utils/fetcher";
-import { filtering, sorting } from "@/utils/filterDataMap";
-import { Input, Select, SelectItem } from "@nextui-org/react";
-import { Funnel, MagnifyingGlass, SortAscending } from "@phosphor-icons/react";
+import { exampleFetcher } from "@/utils/fetcher";
+import { Input } from "@nextui-org/react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
@@ -30,9 +30,13 @@ export default function ProductsPage() {
     };
   };
 
-  const { data, setSize, isValidating } = useSWRInfinite<
-    GlobalResponse<ProductTest[]>
-  >(getKey, clientFetcher);
+  const { data, setSize, isValidating } = useSWRInfinite(
+    getKey,
+    exampleFetcher,
+    {
+      revalidateFirstPage: false,
+    },
+  );
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -69,37 +73,7 @@ export default function ProductsPage() {
           <h4 className="font-semibold text-foreground">Semua Produk</h4>
 
           <div className="grid grid-cols-2 items-center gap-4">
-            <Select
-              aria-label="sorting"
-              variant="flat"
-              color="default"
-              labelPlacement="outside"
-              placeholder="Urutkan"
-              startContent={<SortAscending weight="bold" size={18} />}
-              items={sorting}
-              classNames={{
-                value: "font-medium text-foreground",
-              }}
-            >
-              {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
-            </Select>
-
-            <Select
-              aria-label="filtering"
-              variant="flat"
-              color="default"
-              labelPlacement="outside"
-              placeholder="Semua"
-              startContent={<Funnel weight="bold" size={18} />}
-              items={filtering}
-              classNames={{
-                value: "font-medium text-foreground",
-              }}
-            >
-              {(item) => (
-                <SelectItem key={item.id_category}>{item.name}</SelectItem>
-              )}
-            </Select>
+            <FilterProduct />
           </div>
 
           <div className="grid grid-cols-2 items-start gap-4 pb-32">
@@ -107,14 +81,23 @@ export default function ProductsPage() {
               <CardProduct
                 key={product.id}
                 product={{
-                  price: product.price,
-                  product_category: product.category,
-                  product_id: product.id,
-                  product_image: product.image,
-                  product_name: product.title,
+                  kode_item: `${product.id}`,
+                  kategori: product.category,
+                  nama_produk: product.title,
+                  slug: product.title,
+                  image: [{ url: product.image }],
+                  harga_4: product.price,
+                  harga_1: 0,
+                  harga_2: 0,
+                  harga_3: 0,
+                  harga_5: 0,
+                  harga_6: 0,
+                  nama_produk_asli: product.title,
                 }}
               />
             ))}
+
+            <div ref={ref}></div>
 
             {isValidating ? (
               <p className="col-span-2 mt-4 justify-self-center px-8 font-semibold">
@@ -122,8 +105,6 @@ export default function ProductsPage() {
               </p>
             ) : null}
           </div>
-
-          <div ref={ref}></div>
         </div>
       </div>
     </Layout>
