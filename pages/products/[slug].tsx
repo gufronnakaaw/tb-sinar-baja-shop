@@ -4,6 +4,7 @@ import PopupPurchaseAmount from "@/components/popup/PopupPurchaseAmount";
 import { SuccessResponse } from "@/types/global.type";
 import { ProductDetail } from "@/types/product.type";
 import { serverFetcher } from "@/utils/fetcher";
+import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Image } from "@nextui-org/react";
 import { Plus, Tag } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -46,7 +47,9 @@ export default function DetailsPage({
           />
 
           <div className="flex items-center justify-between">
-            <h3 className="text-[20px] font-bold text-primary">Rp 18.216</h3>
+            <h3 className="text-[20px] font-bold text-primary">
+              {formatRupiah(product.harga_6)}
+            </h3>
             <p className="inline-flex items-center text-sm font-medium text-foreground-600">
               <Tag weight="fill" size={16} className="mr-2 text-amber-500" />
               {product.terjual} terjual
