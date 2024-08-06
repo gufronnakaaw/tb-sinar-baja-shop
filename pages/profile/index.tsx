@@ -28,9 +28,9 @@ export default function ProfilePage() {
           />
 
           <div>
-            <h6 className="font-semibold text-foreground">Johnson Doe</h6>
+            <h6 className="font-semibold text-foreground">Winda</h6>
             <p className="text-[12px] font-medium text-foreground-600">
-              johnsondoe@mail.com
+              winda@mail.com
             </p>
           </div>
         </div>

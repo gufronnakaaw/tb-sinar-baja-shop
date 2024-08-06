@@ -25,7 +25,7 @@ export default function HomePage({
       <div className="grid gap-2">
         <div className="flex items-center justify-between gap-4 pb-4 pt-8">
           <h3 className="text-lg font-bold text-foreground">
-            Selamat Pagi, Gufron.
+            Selamat Malam, Winda.
           </h3>
 
           <Chip

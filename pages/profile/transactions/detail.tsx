@@ -26,7 +26,7 @@ export default function TransactionDetail() {
             </div>
 
             <div className="flex flex-col items-center gap-1 text-center">
-              <p className="text-lg font-semibold">Johnson Doe</p>
+              <p className="text-lg font-semibold">Winda</p>
               <p className="text-sm text-foreground-600">089078789898</p>
               <p className="text-sm text-foreground-600">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil,
