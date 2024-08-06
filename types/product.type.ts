@@ -33,3 +33,23 @@ export type Product = {
   harga_6: number;
   image: { url: string }[];
 };
+
+export type ProductDetail = {
+  kode_item: string;
+  slug: string;
+  nama_produk: string;
+  nama_produk_asli: string;
+  kategori: string;
+  harga_6: number;
+  total_stok: number;
+  image: { url: string }[];
+  berat: number;
+  volume: number;
+  merk: string;
+  tipe: string;
+  satuan_kecil: string;
+  satuan_besar: string;
+  isi_satuan_besar: string;
+  deskripsi: string;
+  terjual: number;
+};
