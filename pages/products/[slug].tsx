@@ -37,7 +37,6 @@ export default function DetailsPage({
 
         <div className="mb-8 grid gap-4">
           <Image
-            isBlurred
             as={NextImage}
             src={`${!product.image.length ? "/img/product-image-test.jpg" : product.image[0].url}`}
             alt="product img"
