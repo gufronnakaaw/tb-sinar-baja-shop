@@ -9,7 +9,6 @@ import { Chip, Image } from "@nextui-org/react";
 import { Circle } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import NextImage from "next/image";
-import Link from "next/link";
 
 export default function HomePage({
   banners,
@@ -66,15 +65,7 @@ export default function HomePage({
         </div>
 
         <div className="grid gap-2">
-          <div className="flex items-center justify-between gap-4">
-            <h4 className="font-semibold text-foreground">Produk Terbaru</h4>
-            <Link
-              href="/products?sort=newest"
-              className="text-[12px] font-semibold text-primary"
-            >
-              Lihat Semua Produk
-            </Link>
-          </div>
+          <h4 className="font-semibold text-foreground">Produk Terbaru</h4>
 
           <div className="grid grid-cols-2 items-start gap-4 overflow-scroll pb-32">
             {products.map((product) => (
