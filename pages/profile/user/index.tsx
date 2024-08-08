@@ -46,9 +46,6 @@ export default function UserProfilePage() {
                   Nama
                 </h6>
                 <h6 className="text-sm font-medium text-foreground-600">
-                  Username
-                </h6>
-                <h6 className="text-sm font-medium text-foreground-600">
                   Tanggal Lahir
                 </h6>
                 <h6 className="text-sm font-medium text-foreground-600">
@@ -59,9 +56,6 @@ export default function UserProfilePage() {
               <div className="grid gap-2">
                 <p className="text-sm font-medium text-foreground">
                   Fajar Fadillah Agustian
-                </p>
-                <p className="text-sm font-medium text-foreground">
-                  fajarfadillah9021
                 </p>
                 <p className="text-sm font-medium text-foreground">
                   12 September 2001

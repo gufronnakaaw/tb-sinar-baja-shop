@@ -57,8 +57,10 @@ export default function CartPage() {
         </div>
 
         <div className="sticky bottom-0 left-0 z-10 grid gap-2 bg-white py-6">
-          <div className="flex items-center justify-between gap-2">
-            <h4 className="font-semibold text-foreground">Total Pembayaran</h4>
+          <div className="flex items-end justify-between gap-2">
+            <h4 className="text-[12px] font-medium text-foreground-600">
+              Total Pembayaran
+            </h4>
             <h4 className="font-semibold text-foreground">Rp 830.000</h4>
           </div>
 
