@@ -65,9 +65,7 @@ export default function CardAddress({ address }: AddressProps) {
             <PencilSimple weight="bold" size={18} className="text-primary" />
           }
           onClick={() =>
-            router.push(
-              `/profile/shipping-address/edit?id=${address.address_id}`,
-            )
+            router.push(`/profile/address/edit?id=${address.address_id}`)
           }
           className="px-2 font-semibold"
         >
@@ -81,7 +79,7 @@ export default function CardAddress({ address }: AddressProps) {
           size="sm"
           onClick={() => {
             if (confirm("Apakah kamu yakin?")) {
-              window.location.href = "/profile/shipping-address";
+              window.location.href = "/profile/address";
             }
           }}
         >

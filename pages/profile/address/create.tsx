@@ -1,17 +1,14 @@
 import { Button, Checkbox, Input, Textarea } from "@nextui-org/react";
-import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 
 export default function CreateShippingAddress() {
-  const router = useRouter();
-
   return (
     <Layout title="Tambah Alamat" className="relative">
       <div className="grid gap-8">
         <HeaderTitle
-          path="/profile/shipping-address"
+          path="/profile/address"
           label="Tambah Alamat"
           className="sticky left-0 top-0"
         />
@@ -97,7 +94,7 @@ export default function CreateShippingAddress() {
             color="primary"
             onClick={() => {
               if (confirm("Apakah kamu yakin?")) {
-                window.location.href = "/profile/shipping-address";
+                window.location.href = "/profile/address";
               }
             }}
             className="w-full font-semibold"

@@ -11,7 +11,7 @@ export default function EditShippingAddress() {
     <Layout title="Edit Alamat">
       <div className="grid gap-8">
         <HeaderTitle
-          path="/profile/shipping-address"
+          path="/profile/address"
           label="Edit Alamat"
           className="sticky left-0 top-0"
         />
@@ -97,7 +97,7 @@ export default function EditShippingAddress() {
             color="primary"
             onClick={() => {
               if (confirm("Apakah kamu yakin?")) {
-                window.location.href = "/profile/shipping-address";
+                window.location.href = "/profile/address";
               }
             }}
             className="w-full font-semibold"

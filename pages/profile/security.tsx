@@ -1,13 +1,10 @@
 import { Button, Input } from "@nextui-org/react";
 import { Key } from "@phosphor-icons/react";
-import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 
 export default function ChangePasswordPage() {
-  const router = useRouter();
-
   return (
     <Layout title="Ubah Kata Sandi">
       <div className="grid gap-8">

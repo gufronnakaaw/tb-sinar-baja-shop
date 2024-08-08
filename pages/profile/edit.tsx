@@ -7,7 +7,7 @@ export default function EditUserProfilePage() {
     <Layout title="Edit Profile Page" className="relative">
       <div className="grid">
         <div className="sticky left-0 top-0 z-10 grid gap-1 bg-white pb-4">
-          <HeaderTitle path="/profile/user" label="Edit Profil" />
+          <HeaderTitle path="/profile/detail" label="Edit Profil" />
         </div>
 
         <div className="grid gap-8">

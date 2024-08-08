@@ -70,7 +70,7 @@ export default function ProfilePage() {
 
           <div className="grid gap-6">
             <Link
-              href="/profile/user"
+              href="/profile/detail"
               className="group flex items-center gap-4"
             >
               <UserCircle
@@ -90,7 +90,7 @@ export default function ProfilePage() {
             </Link>
 
             <Link
-              href="/profile/change-password"
+              href="/profile/security"
               className="group flex items-center gap-4"
             >
               <Key
@@ -110,7 +110,7 @@ export default function ProfilePage() {
             </Link>
 
             <Link
-              href="/profile/shipping-address"
+              href="/profile/address"
               className="group flex items-center gap-4"
             >
               <MapTrifold

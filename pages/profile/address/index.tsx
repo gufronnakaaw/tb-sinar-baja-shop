@@ -67,7 +67,7 @@ export default function ShippingAddressPage() {
           <Button
             color="primary"
             startContent={<MapPin weight="bold" size={20} />}
-            onClick={() => router.push("/profile/shipping-address/create")}
+            onClick={() => router.push("/profile/address/create")}
             className="w-full font-semibold"
           >
             Tambah Alamat

@@ -93,7 +93,7 @@ export default function UserProfilePage() {
             variant="bordered"
             color="primary"
             startContent={<PencilLine weight="duotone" size={18} />}
-            onClick={() => router.push("/profile/user/edit")}
+            onClick={() => router.push("/profile/edit")}
             className="font-semibold"
           >
             Edit Profil
