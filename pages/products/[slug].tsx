@@ -55,14 +55,14 @@ export default function DetailsPage({
             </p>
           </div>
 
-          <div className="mb-2">
+          <div className="mb-6">
             <h4 className="text-[20px] font-semibold text-foreground">
               {product.nama_produk_asli}
             </h4>
           </div>
 
           <div className="mb-4 grid gap-2">
-            <h3 className="border-l-4 border-primary pl-4 text-[18px] font-semibold text-foreground">
+            <h3 className="border-l-4 border-primary pl-4 font-semibold text-foreground">
               Detail Produk
             </h3>
 
@@ -122,7 +122,7 @@ export default function DetailsPage({
           </div>
 
           <div className="grid gap-2">
-            <h3 className="border-l-4 border-primary pl-4 text-[18px] font-semibold text-foreground">
+            <h3 className="border-l-4 border-primary pl-4 font-semibold text-foreground">
               Deskripsi Produk
             </h3>
 
