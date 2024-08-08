@@ -27,15 +27,6 @@ export default function EditUserProfilePage() {
               isRequired
               variant="bordered"
               color="default"
-              label="Username"
-              labelPlacement="outside"
-              placeholder="eg, mamankusniadi"
-            />
-
-            <Input
-              isRequired
-              variant="bordered"
-              color="default"
               label="Tanggal Lahir"
               labelPlacement="outside"
               placeholder="eg, 12 Januari 1999"
