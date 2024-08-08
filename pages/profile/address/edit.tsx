@@ -1,11 +1,98 @@
-import { Button, Checkbox, Input, Textarea } from "@nextui-org/react";
-import { useRouter } from "next/router";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+  Checkbox,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@nextui-org/react";
 
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { SuccessResponse } from "@/types/global.type";
+import { Regional } from "@/types/regional.type";
+import { fetcher } from "@/utils/fetcher";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
+import { Key, useEffect, useState } from "react";
+import Toast from "react-hot-toast";
 
-export default function EditShippingAddress() {
+export default function EditShippingAddress({
+  provinces,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+
+  const [provinceCode, setProvinceCode] = useState<Key>("");
+  const [regencies, setRegencies] = useState<Regional[]>([]);
+  const [regencyCode, setRegencyCode] = useState<Key>("");
+  const [districts, setDistricts] = useState<Regional[]>([]);
+  const [districtCode, setDistrictCode] = useState<Key>("");
+
+  useEffect(() => {
+    if (provinceCode) {
+      setRegencies([]);
+      setDistricts([]);
+      getRegencies();
+    }
+
+    async function getRegencies() {
+      try {
+        const response: SuccessResponse<Regional[]> = await fetcher({
+          url: `/regencies/${provinceCode}`,
+          method: "GET",
+        });
+
+        setRegencies(response.data);
+      } catch (error) {
+        Toast.error("Terjadi kesalahan saat mendapatkan data kabupaten/kota");
+        console.log(error);
+      }
+    }
+  }, [provinceCode]);
+
+  useEffect(() => {
+    if (provinceCode) {
+      setDistricts([]);
+      getRegencies();
+    }
+
+    async function getRegencies() {
+      try {
+        const response: SuccessResponse<Regional[]> = await fetcher({
+          url: `/regencies/${provinceCode}`,
+          method: "GET",
+        });
+
+        setRegencies(response.data);
+      } catch (error) {
+        Toast.error("Terjadi kesalahan saat mendapatkan data kabupaten/kota");
+        console.log(error);
+      }
+    }
+  }, [provinceCode]);
+
+  useEffect(() => {
+    if (regencyCode) {
+      setDistricts([]);
+      getDistricts();
+    }
+
+    async function getDistricts() {
+      try {
+        const response: SuccessResponse<Regional[]> = await fetcher({
+          url: `/districts/${regencyCode}`,
+          method: "GET",
+        });
+
+        setDistricts(response.data);
+      } catch (error) {
+        Toast.error("Terjadi kesalahan saat mendapatkan data kabupaten/kota");
+        console.log(error);
+      }
+    }
+  }, [regencyCode]);
 
   return (
     <Layout title="Edit Alamat">
@@ -35,24 +122,60 @@ export default function EditShippingAddress() {
             color="default"
             label="No. Telpon Penerima"
             labelPlacement="outside"
-            startContent={
-              <span className="text-sm text-foreground-600">+62</span>
-            }
-            placeholder="eg, 8172684294"
+            placeholder="Cth. 082233445566"
           />
         </div>
 
         <div className="grid gap-4">
           <h4 className="font-semibold text-foreground">Detail Alamat</h4>
 
-          <Input
+          <Autocomplete
             isRequired
-            variant="bordered"
             color="default"
-            label="Label Alamat"
+            variant="bordered"
+            label="Provinsi"
             labelPlacement="outside"
-            placeholder="Cth. Alamat Rumah, Alamat Kantor"
-          />
+            onSelectionChange={setProvinceCode}
+            placeholder="Cth. DKI Jakarta"
+          >
+            {provinces.map((province) => (
+              <AutocompleteItem key={province.code} value={province.name}>
+                {province.name}
+              </AutocompleteItem>
+            ))}
+          </Autocomplete>
+
+          <Autocomplete
+            isRequired
+            color="default"
+            variant="bordered"
+            label="Kabupaten/Kota"
+            labelPlacement="outside"
+            onSelectionChange={setRegencyCode}
+            placeholder="Cth. Jakarta Selatan"
+          >
+            {regencies.map((regency) => (
+              <AutocompleteItem key={regency.code} value={regency.name}>
+                {regency.name}
+              </AutocompleteItem>
+            ))}
+          </Autocomplete>
+
+          <Autocomplete
+            isRequired
+            color="default"
+            variant="bordered"
+            label="Kecamatan"
+            labelPlacement="outside"
+            onSelectionChange={setDistrictCode}
+            placeholder="Cth. Setiabudi"
+          >
+            {districts.map((district) => (
+              <AutocompleteItem key={district.code} value={district.name}>
+                {district.name}
+              </AutocompleteItem>
+            ))}
+          </Autocomplete>
 
           <Textarea
             isRequired
@@ -64,14 +187,21 @@ export default function EditShippingAddress() {
             placeholder="Masukan nama jalan, no. rumah, dan lain sebagainya"
           />
 
-          <Input
+          <Select
             isRequired
-            variant="bordered"
             color="default"
-            label="Kecamatan, Kota, Provinsi"
+            variant="bordered"
+            label="Label Alamat"
             labelPlacement="outside"
-            placeholder="Cth. Limo, Depok, Jawa Barat"
-          />
+            placeholder="Cth. Rumah"
+          >
+            <SelectItem key="rumah" value="rumah">
+              Rumah
+            </SelectItem>
+            <SelectItem key="kantor" value="kantor">
+              Kantor
+            </SelectItem>
+          </Select>
 
           <Input
             isRequired
@@ -109,3 +239,16 @@ export default function EditShippingAddress() {
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ query }) => {
+  const response: SuccessResponse<Regional[]> = await fetcher({
+    url: "/provinces",
+    method: "GET",
+  });
+
+  return {
+    props: {
+      provinces: response.data,
+    },
+  };
+}) satisfies GetServerSideProps<{ provinces: Regional[] }>;
