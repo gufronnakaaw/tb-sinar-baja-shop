@@ -18,7 +18,7 @@ export default function CartPage() {
         className="sticky left-0 top-0"
       />
 
-      <div className="h-[calc(100%-2rem)]">
+      <div className="h-[calc(100vh-184px)]">
         {/* <div className="mt-16 flex flex-col items-center gap-8">
           <Image
             priority
@@ -50,16 +50,10 @@ export default function CartPage() {
           </div>
         </div> */}
 
-        <div className="grid gap-4 pb-6">
-          <CardCart />
-          <CardCart />
-          <CardCart />
-          <CardCart />
-          <CardCart />
-          <CardCart />
-          <CardCart />
-          <CardCart />
-          <CardCart />
+        <div className="h-full">
+          <div className="grid gap-4 pb-6">
+            <CardCart />
+          </div>
         </div>
 
         <div className="sticky bottom-0 left-0 z-10 grid gap-2 bg-white py-4">
