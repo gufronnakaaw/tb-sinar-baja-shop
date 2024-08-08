@@ -1,5 +1,5 @@
 import { SuccessResponse } from "@/types/global.type";
-import { serverFetcher } from "@/utils/fetcher";
+import { fetcher } from "@/utils/fetcher";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -7,7 +7,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET_KEY,
   session: {
     strategy: "jwt",
-    maxAge: 1 * 60 * 60 * 10, // 10 hours
+    maxAge: 1 * 60 * 60 * 11, // 11 hours
   },
   providers: [
     CredentialsProvider({
@@ -17,16 +17,18 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          const result: SuccessResponse<{ id: string; role: string }> =
-            await serverFetcher({
-              url: "/users/login",
-              method: "POST",
-              data: credentials,
-            });
+          const result: SuccessResponse<{
+            user_id: string;
+            access_token: string;
+          }> = await fetcher({
+            url: "/auth/login/users",
+            method: "POST",
+            data: credentials,
+          });
 
           return {
-            id: result.data.id,
-            role: result.data.role,
+            user_id: result.data.user_id,
+            access_token: result.data.access_token,
           };
         } catch (error) {
           throw new Error(JSON.stringify(error));
@@ -37,15 +39,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = user.role;
+        token.user_id = user.user_id;
+        token.access_token = user.access_token;
       }
       return token;
     },
 
     session({ session, token }) {
-      session.user.id = token.id;
-      session.user.role = token.role;
+      session.user.user_id = token.user_id;
+      session.user.access_token = token.access_token;
       return session;
     },
   },

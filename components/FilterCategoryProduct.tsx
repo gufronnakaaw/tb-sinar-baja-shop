@@ -1,6 +1,6 @@
 import { Category } from "@/types/category.type";
 import { SuccessResponse } from "@/types/global.type";
-import { clientFetcher } from "@/utils/fetcher";
+import { fetcher } from "@/utils/fetcher";
 import { sorting } from "@/utils/filterDataMap";
 import { Select, SelectItem } from "@nextui-org/react";
 import { Funnel, SortAscending } from "@phosphor-icons/react";
@@ -16,7 +16,7 @@ export default function FilterCategoryProduct() {
 
     async function getCategories() {
       try {
-        const response: SuccessResponse<Category[]> = await clientFetcher({
+        const response: SuccessResponse<Category[]> = await fetcher({
           url: "/categories",
           method: "GET",
         });

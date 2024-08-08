@@ -3,7 +3,7 @@ import HeaderTitle from "@/components/header/HeaderTitle";
 import PopupPurchaseAmount from "@/components/popup/PopupPurchaseAmount";
 import { SuccessResponse } from "@/types/global.type";
 import { ProductDetail } from "@/types/product.type";
-import { serverFetcher } from "@/utils/fetcher";
+import { fetcher } from "@/utils/fetcher";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Image } from "@nextui-org/react";
 import { Plus, Tag } from "@phosphor-icons/react";
@@ -154,7 +154,7 @@ export default function DetailsPage({
 }
 
 export const getServerSideProps = (async ({ params }) => {
-  const response: SuccessResponse<ProductDetail> = await serverFetcher({
+  const response: SuccessResponse<ProductDetail> = await fetcher({
     url: `/products/${params?.slug}`,
     method: "GET",
   });

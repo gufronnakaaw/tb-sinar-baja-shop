@@ -4,7 +4,7 @@ import CardProduct from "@/components/card/CardProduct";
 import { Banner } from "@/types/banner.type";
 import { SuccessResponse } from "@/types/global.type";
 import { Product } from "@/types/product.type";
-import { serverFetcher } from "@/utils/fetcher";
+import { fetcher } from "@/utils/fetcher";
 import { Chip, Image } from "@nextui-org/react";
 import { Circle } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -80,7 +80,7 @@ export default function HomePage({
 
 export const getServerSideProps = (async () => {
   const response: SuccessResponse<{ banners: Banner[]; newest: Product[] }> =
-    await serverFetcher({
+    await fetcher({
       url: "/homepage",
       method: "GET",
     });

@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import { SuccessResponse } from "@/types/global.type";
 import { Product } from "@/types/product.type";
-import { clientFetcher, serverFetcher } from "@/utils/fetcher";
+import { fetcher } from "@/utils/fetcher";
 import { Input, Spinner } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -27,14 +27,11 @@ export default function ProductsPage({
     };
   };
 
-  const { data, setSize, isValidating } = useSWRInfinite(
-    getKey,
-    clientFetcher,
-    {
-      revalidateFirstPage: false,
-      revalidateOnMount: false,
-    },
-  );
+  const { data, setSize, isValidating } = useSWRInfinite(getKey, fetcher, {
+    revalidateFirstPage: false,
+    revalidateOnMount: false,
+    revalidateOnFocus: false,
+  });
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -43,7 +40,7 @@ export default function ProductsPage({
     }
   }, [inView, setSize]);
 
-  const productsMap = !data?.length
+  const productsMap: Product[] = !data
     ? products.data
     : data?.map((item) => item.data.flat()).flat();
 
@@ -78,7 +75,7 @@ export default function ProductsPage({
 
           <div className="grid grid-cols-2 items-start gap-4 pb-32">
             {productsMap?.map((product) => (
-              <CardProduct key={product.id} product={product} />
+              <CardProduct key={product.kode_item} product={product} />
             ))}
 
             <div ref={ref}></div>
@@ -96,7 +93,7 @@ export default function ProductsPage({
 }
 
 export const getServerSideProps = (async () => {
-  const response: SuccessResponse<Product[]> = await serverFetcher({
+  const response: SuccessResponse<Product[]> = await fetcher({
     url: "/products?page=1",
     method: "GET",
   });
