@@ -11,8 +11,15 @@ import Link from "next/link";
 
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
+import { SuccessResponse } from "@/types/global.type";
+import { Profile } from "@/types/profile.type";
+import { fetcher } from "@/utils/fetcher";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { signOut } from "next-auth/react";
 
-export default function ProfilePage() {
+export default function ProfilePage({
+  profile,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout title="Kelola Informasi Profil Dan Pengaturan Akun Anda.">
       <Navbar />
@@ -28,9 +35,9 @@ export default function ProfilePage() {
           />
 
           <div>
-            <h6 className="font-semibold text-foreground">Winda</h6>
+            <h6 className="font-semibold text-foreground">{profile.nama}</h6>
             <p className="text-[12px] font-medium text-foreground-600">
-              winda@mail.com
+              {profile.email}
             </p>
           </div>
         </div>
@@ -59,7 +66,9 @@ export default function ProfilePage() {
               </div>
 
               <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-danger">
-                <p className="text-sm text-white">5</p>
+                <p className="text-sm text-white">
+                  {profile.total_transaction}
+                </p>
               </div>
             </div>
           </Link>
@@ -137,9 +146,11 @@ export default function ProfilePage() {
           startContent={
             <SignOut weight="duotone" size={24} className="text-danger" />
           }
-          onClick={() => {
+          onClick={async () => {
             if (confirm("Apakah kamu yakin?")) {
-              window.location.href = "/auth/login";
+              await signOut({
+                callbackUrl: "/",
+              });
             }
           }}
           className="font-semibold"
@@ -150,3 +161,19 @@ export default function ProfilePage() {
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ req }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<Profile> = await fetcher({
+    url: "/profile",
+    method: "GET",
+    token,
+  });
+
+  return {
+    props: {
+      profile: response.data,
+    },
+  };
+}) satisfies GetServerSideProps<{ profile: Profile }>;

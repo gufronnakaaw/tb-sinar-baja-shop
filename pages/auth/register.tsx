@@ -1,10 +1,45 @@
+import Layout from "@/components/Layout";
+import { fetcher } from "@/utils/fetcher";
 import { Button, Input } from "@nextui-org/react";
 import { EnvelopeSimple, Key, Phone, User } from "@phosphor-icons/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-
-import Layout from "@/components/Layout";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Toast from "react-hot-toast";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [input, setInput] = useState<{
+    nama?: string;
+    email?: string;
+    no_telpon?: string;
+    password?: string;
+    password_confirm?: string;
+  }>({});
+  const [disabled, setDisabled] = useState(true);
+
+  async function handleRegister() {
+    try {
+      const data = await fetcher({
+        url: "/auth/register/users",
+        method: "POST",
+        data: input,
+      });
+
+      await signIn("credentials", {
+        email: input.email,
+        password: input.password,
+        redirect: false,
+      });
+
+      return router.push("/profile/address/create?from=register");
+    } catch (error) {
+      Toast.error("Terjadi kesalahan saat registrasi");
+      console.log(error);
+    }
+  }
+
   return (
     <Layout title="Daftar Sekarang!">
       <div className="grid gap-8 py-24">
@@ -38,7 +73,15 @@ export default function RegisterPage() {
             endContent={
               <User weight="bold" size={18} className="text-foreground-400" />
             }
-            placeholder="eg, Maman Kusniadi"
+            placeholder="Cth. Johnson Doe"
+            name="nama"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
+            autoComplete="off"
           />
 
           <Input
@@ -55,7 +98,15 @@ export default function RegisterPage() {
                 className="text-foreground-400"
               />
             }
-            placeholder="eg, maman.kusniadi@mail.com"
+            placeholder="Cth. johnson.doe@mail.com"
+            name="email"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
+            autoComplete="off"
           />
 
           <Input
@@ -65,14 +116,19 @@ export default function RegisterPage() {
             color="default"
             label="No. Telpon Pengguna"
             labelPlacement="outside"
-            startContent={
-              <span className="text-sm text-foreground-600">+62</span>
-            }
             endContent={
               <Phone weight="bold" size={18} className="text-foreground-400" />
             }
-            placeholder="eg, 8172684294"
+            placeholder="Cth. 081122334455"
             className="gap-10"
+            name="no_telpon"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
+            autoComplete="off"
           />
 
           <Input
@@ -86,6 +142,20 @@ export default function RegisterPage() {
               <Key weight="bold" size={18} className="text-foreground-400" />
             }
             placeholder="Masukan kata sandi"
+            name="password"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+
+              if (e.target.value != input.password_confirm) {
+                setDisabled(true);
+              } else {
+                setDisabled(false);
+              }
+            }}
+            autoComplete="off"
           />
 
           <Input
@@ -93,20 +163,35 @@ export default function RegisterPage() {
             type="password"
             variant="bordered"
             color="default"
-            label="Konformasi Kata Sandi"
+            label="Konfirmasi Kata Sandi"
             labelPlacement="outside"
             endContent={
               <Key weight="bold" size={18} className="text-foreground-400" />
             }
             placeholder="Masukan konfirmasi kata sandi"
+            name="password_confirm"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+
+              if (e.target.value != input.password) {
+                setDisabled(true);
+              } else {
+                setDisabled(false);
+              }
+            }}
+            autoComplete="off"
           />
         </div>
 
         <div className="grid gap-4">
           <Button
             color="primary"
-            onClick={() => (window.location.href = "/")}
+            onClick={handleRegister}
             className="font-semibold"
+            isDisabled={disabled}
           >
             Daftar Sekarang
           </Button>

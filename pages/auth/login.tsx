@@ -1,10 +1,48 @@
+import Layout from "@/components/Layout";
 import { Button, Input } from "@nextui-org/react";
 import { EnvelopeSimple, Key } from "@phosphor-icons/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-
-import Layout from "@/components/Layout";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Toast from "react-hot-toast";
 
 export default function LoginPage() {
+  const [disabled, setDisabled] = useState(true);
+
+  const router = useRouter();
+  const [input, setInput] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
+  useEffect(() => {
+    if (!input.email || !input.password) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [input]);
+
+  async function handleLogin() {
+    if (Object.keys(input).length < 2) return;
+
+    const result = await signIn("credentials", {
+      ...input,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      const { error } = JSON.parse(result?.error);
+
+      Toast.error(error.message);
+    }
+
+    if (result?.ok) {
+      return router.push("/");
+    }
+  }
+
   return (
     <Layout title="Login Terlebih Dahulu!">
       <div className="grid gap-8 py-24">
@@ -44,6 +82,14 @@ export default function LoginPage() {
               />
             }
             placeholder="Masukan email"
+            name="email"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
+            autoComplete="off"
           />
 
           <Input
@@ -57,14 +103,23 @@ export default function LoginPage() {
               <Key weight="bold" size={18} className="text-foreground-400" />
             }
             placeholder="Masukan kata sandi"
+            name="password"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
+            autoComplete="off"
           />
         </div>
 
         <div className="grid gap-4">
           <Button
             color="primary"
-            onClick={() => (window.location.href = "/")}
+            onClick={handleLogin}
             className="font-semibold"
+            isDisabled={disabled}
           >
             Masuk
           </Button>
