@@ -29,17 +29,13 @@ export default function LoginPage() {
 
     const result = await signIn("credentials", {
       ...input,
-      redirect: false,
+      callbackUrl: "/",
     });
 
     if (result?.error) {
       const { error } = JSON.parse(result?.error);
 
       Toast.error(error.message);
-    }
-
-    if (result?.ok) {
-      return router.push("/");
     }
   }
 

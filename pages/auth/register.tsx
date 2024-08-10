@@ -4,12 +4,10 @@ import { Button, Input } from "@nextui-org/react";
 import { EnvelopeSimple, Key, Phone, User } from "@phosphor-icons/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import Toast from "react-hot-toast";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [input, setInput] = useState<{
     nama?: string;
     email?: string;
@@ -27,13 +25,17 @@ export default function RegisterPage() {
         data: input,
       });
 
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         email: input.email,
         password: input.password,
-        redirect: false,
+        callbackUrl: "/profile/address/create?from=register",
       });
 
-      return router.push("/profile/address/create?from=register");
+      if (result?.error) {
+        const { error } = JSON.parse(result?.error);
+
+        Toast.error(error.message);
+      }
     } catch (error) {
       Toast.error("Terjadi kesalahan saat registrasi");
       console.log(error);
