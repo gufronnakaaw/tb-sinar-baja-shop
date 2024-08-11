@@ -9,14 +9,16 @@ import { Input, Spinner } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 
-export default function ProductsPage({
+export default function ProductsSearchPage({
   products,
+  q,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const cardParent = useRef<HTMLDivElement>(null);
 
   const getKey = (
     pageIndex: number,
@@ -25,7 +27,7 @@ export default function ProductsPage({
     if (previousPageData && !previousPageData.data.length) return null;
 
     return {
-      url: `/products?page=${pageIndex + 1}`,
+      url: `/products/search?q=${encodeURIComponent(q)}&page=${pageIndex + 1}`,
       method: "GET",
     };
   };
@@ -51,9 +53,10 @@ export default function ProductsPage({
     <Layout title="Jelajahi Pilihan Baja Berkualitas Tinggi Untuk Semua Kebutuhan Anda.">
       <Navbar />
 
-      <div className="grid gap-4">
+      <div className="grid gap-4" ref={cardParent}>
         <header className="sticky left-0 top-0 z-50 flex h-20 items-center gap-4 bg-white">
           <Input
+            defaultValue={q}
             isRequired
             variant="bordered"
             color="default"
@@ -67,19 +70,28 @@ export default function ProductsPage({
             }
             placeholder="Cari produk disini"
             onChange={(e) => {
-              if (!e.target.value) return;
-              setTimeout(() => {
-                router.push(
-                  `/products/search?q=${encodeURIComponent(e.target.value)}`,
-                );
-              }, 1000);
+              if (!e.target.value) {
+                router.push("/products");
+              } else {
+                setTimeout(() => {
+                  router
+                    .push(
+                      `/products/search?q=${encodeURIComponent(e.target.value)}`,
+                    )
+                    .then(() => {
+                      cardParent.current?.scrollIntoView({
+                        behavior: "instant",
+                      });
+                    });
+                }, 1000);
+              }
             }}
             autoComplete="off"
           />
         </header>
 
         <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Semua Produk</h4>
+          <h4 className="font-semibold text-foreground">Semua Produk “{q}”</h4>
 
           <div className="grid grid-cols-2 items-center gap-4">
             <FilterProduct />
@@ -104,15 +116,21 @@ export default function ProductsPage({
   );
 }
 
-export const getServerSideProps = (async () => {
+export const getServerSideProps = (async ({ query }) => {
+  const q = query?.q as string;
+
   const response: SuccessResponse<Product[]> = await fetcher({
-    url: "/products?page=1",
+    url: `/products/search?q=${encodeURIComponent(q)}&page=1`,
     method: "GET",
   });
 
   return {
     props: {
       products: response,
+      q,
     },
   };
-}) satisfies GetServerSideProps<{ products: SuccessResponse<Product[]> }>;
+}) satisfies GetServerSideProps<{
+  products: SuccessResponse<Product[]>;
+  q: string;
+}>;

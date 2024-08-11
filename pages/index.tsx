@@ -5,7 +5,7 @@ import { Banner } from "@/types/banner.type";
 import { SuccessResponse } from "@/types/global.type";
 import { Product } from "@/types/product.type";
 import { fetcher } from "@/utils/fetcher";
-import { Chip, Image } from "@nextui-org/react";
+import { Chip, Image, Skeleton } from "@nextui-org/react";
 import { Circle } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import NextImage from "next/image";
@@ -14,6 +14,21 @@ export default function HomePage({
   banners,
   products,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  function getGreeting() {
+    const hour = new Date().getHours();
+
+    if (hour >= 0 && hour < 11) {
+      return "Selamat Pagi";
+    } else if (hour >= 11 && hour < 15) {
+      return "Selamat Siang";
+    } else if (hour >= 15 && hour < 18) {
+      return "Selamat Sore";
+    } else if (hour >= 18 && hour < 24) {
+      return "Selamat Malam";
+    }
+  }
+
+  getGreeting();
   return (
     <Layout
       title="TB Sinar Baja : Temukan Berbagai Produk Baja Berkualitas Untuk Kebutuhan Proyek Anda Disini."
@@ -23,8 +38,15 @@ export default function HomePage({
 
       <div className="grid gap-2">
         <div className="flex items-center justify-between gap-4 pb-4 pt-8">
-          <h3 className="text-lg font-bold text-foreground">
-            Selamat Malam, Winda.
+          <h3 className="inline-flex gap-1 text-lg font-bold text-foreground">
+            {getGreeting()}
+            {false ? (
+              <Skeleton className="w-[70px] rounded-lg">
+                <div className="w-[70px] rounded-lg bg-default-200"></div>
+              </Skeleton>
+            ) : (
+              ", Winda"
+            )}
           </h3>
 
           <Chip
