@@ -1,5 +1,5 @@
-import { Button, Input } from "@nextui-org/react";
-import { MagnifyingGlass, MapPin } from "@phosphor-icons/react";
+import { Button } from "@nextui-org/react";
+import { MapPin } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -16,24 +16,7 @@ export default function ShippingAddressPage() {
   return (
     <Layout title="Alamat Pengiriman" className="relative">
       <div className="grid">
-        <div className="sticky left-0 top-0 z-10 grid gap-1 bg-white pb-4">
-          <HeaderTitle path="/profile" label="Alamat Pengiriman" />
-
-          <Input
-            isRequired
-            variant="bordered"
-            color="default"
-            labelPlacement="outside"
-            startContent={
-              <MagnifyingGlass
-                weight="duotone"
-                size={18}
-                className="text-foreground-400"
-              />
-            }
-            placeholder="Cari alamat pengiriman"
-          />
-        </div>
+        <HeaderTitle path="/profile" label="Alamat Pengiriman" />
 
         <div className="grid gap-4 overflow-scroll">
           {my_address.length < 1 ? (

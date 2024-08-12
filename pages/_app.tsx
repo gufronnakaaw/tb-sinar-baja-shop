@@ -17,11 +17,7 @@ export default function App({
 
   useEffect(() => {
     window.onfocus = async () => {
-      if (
-        router.pathname.startsWith("/purchase") ||
-        router.pathname.startsWith("/cart") ||
-        router.pathname.startsWith("/profile")
-      ) {
+      if (!router.pathname.startsWith("/auth")) {
         const session = await getSession();
 
         if (!session) {
@@ -40,7 +36,7 @@ export default function App({
       <SessionProvider session={session} refetchOnWindowFocus={false}>
         <SWRConfig value={{ fetcher: fetcher }}>
           <AppProvider>
-            <Toaster position="top-right" />
+            <Toaster position="top-center" />
             <Component {...pageProps} />
           </AppProvider>
         </SWRConfig>

@@ -9,14 +9,18 @@ import { Input, Spinner } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
+import { useDebounce } from "use-debounce";
 
 export default function ProductsPage({
   products,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [searchValue] = useDebounce(search, 1000);
+  const inputElement = useRef<HTMLInputElement>(null);
 
   const getKey = (
     pageIndex: number,
@@ -43,6 +47,16 @@ export default function ProductsPage({
     }
   }, [inView, setSize]);
 
+  useEffect(() => {
+    if (searchValue) {
+      router.push(`/products/search?q=${encodeURIComponent(searchValue)}`);
+    }
+  }, [searchValue, router]);
+
+  useEffect(() => {
+    inputElement.current?.focus();
+  }, []);
+
   const productsMap: Product[] = !data
     ? products.data
     : data?.map((item) => item.data.flat()).flat();
@@ -67,14 +81,12 @@ export default function ProductsPage({
             }
             placeholder="Cari produk disini"
             onChange={(e) => {
-              if (!e.target.value) return;
-              setTimeout(() => {
-                router.push(
-                  `/products/search?q=${encodeURIComponent(e.target.value)}`,
-                );
-              }, 1000);
+              if (e.target.value) {
+                setSearch(e.target.value);
+              }
             }}
             autoComplete="off"
+            ref={inputElement}
           />
         </header>
 

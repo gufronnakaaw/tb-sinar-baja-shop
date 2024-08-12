@@ -41,7 +41,7 @@ export default function ButtonNavbar({
     }
 
     return (
-      <Badge color="danger" content={"5"}>
+      <Badge color="danger" content={ctx?.totalCarts}>
         <Link
           href={path}
           className={`grid place-items-center ${router.pathname == path ? "text-primary" : "text-foreground-600"}`}

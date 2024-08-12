@@ -11,7 +11,7 @@ type ProductCardProps = {
 export default function CardProduct({ product }: ProductCardProps) {
   return (
     <Link
-      href={`/products/${product.slug}`}
+      href={`/products/${encodeURIComponent(product.kode_item)}`}
       className="group grid gap-4 rounded-[16px] border border-foreground-200 bg-white p-3 hover:border-primary"
     >
       <div className="aspect-square overflow-hidden rounded-lg">

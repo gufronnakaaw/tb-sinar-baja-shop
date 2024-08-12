@@ -1,39 +1,63 @@
 import Layout from "@/components/Layout";
-import HeaderTitle from "@/components/header/HeaderTitle";
 import PopupPurchaseAmount from "@/components/popup/PopupPurchaseAmount";
+import { AppContext } from "@/context/AppContext";
 import { SuccessResponse } from "@/types/global.type";
 import { ProductDetail } from "@/types/product.type";
 import { fetcher } from "@/utils/fetcher";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Image } from "@nextui-org/react";
-import { Plus, Tag } from "@phosphor-icons/react";
+import { CaretLeft, Plus, Tag } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useSession } from "next-auth/react";
 import NextImage from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import Toast from "react-hot-toast";
 
 export default function DetailsPage({
   product,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const session = useSession();
+  const ctx = useContext(AppContext);
   const router = useRouter();
-  const [client, setClient] = useState(false);
 
-  useEffect(() => {
-    setClient(true);
-  }, []);
+  async function handleCreateCart() {
+    try {
+      await fetcher({
+        url: "/carts",
+        method: "POST",
+        token: session.data?.user.access_token,
+        data: {
+          kode_item: product.kode_item,
+          qty: 1,
+        },
+      });
 
-  if (!client) {
-    return;
+      Toast.success("Berhasil menambahkan produk");
+    } catch (error) {
+      console.log(error);
+      Toast.error("Terjadi kesalahan saat menambahkan keranjang");
+    }
   }
 
   return (
-    <Layout title="Detail Page">
+    <Layout title={product.nama_produk_asli}>
       <div className="relative">
-        <HeaderTitle
-          path="/"
-          label="Detail Produk"
-          className="sticky left-0 top-0"
-        />
+        <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
+          <Button
+            isIconOnly
+            variant="light"
+            color="default"
+            size="sm"
+            onClick={() => router.back()}
+          >
+            <CaretLeft weight="bold" size={20} className="text-foreground" />
+          </Button>
+
+          <h5 className="text-center font-semibold text-foreground">
+            Detail Produk
+          </h5>
+        </header>
 
         <div className="mb-8 grid gap-4">
           <Image
@@ -140,13 +164,19 @@ export default function DetailsPage({
             variant="bordered"
             color="primary"
             startContent={<Plus weight="bold" size={18} />}
-            onClick={() => router.push("/cart")}
+            onClick={() => {
+              if (session.status == "unauthenticated") {
+                ctx?.onOpenUnauthenticated();
+              } else {
+                handleCreateCart();
+              }
+            }}
             className="w-full font-semibold"
           >
             Keranjang
           </Button>
 
-          <PopupPurchaseAmount />
+          <PopupPurchaseAmount status={session.status} />
         </div>
       </div>
     </Layout>
@@ -155,7 +185,7 @@ export default function DetailsPage({
 
 export const getServerSideProps = (async ({ params }) => {
   const response: SuccessResponse<ProductDetail> = await fetcher({
-    url: `/products/${params?.slug}`,
+    url: `/products/detail/${encodeURIComponent(params?.code as string)}`,
     method: "GET",
   });
 

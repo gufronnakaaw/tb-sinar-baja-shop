@@ -1,3 +1,4 @@
+import { AppContext } from "@/context/AppContext";
 import {
   Button,
   Input,
@@ -9,22 +10,40 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { Minus, Plus } from "@phosphor-icons/react";
+import { useContext } from "react";
 
-export default function PopupPurchaseAmount() {
+export default function PopupPurchaseAmount({
+  status,
+}: {
+  status: "authenticated" | "unauthenticated" | "loading";
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const ctx = useContext(AppContext);
 
   return (
     <>
       <Button
         variant="solid"
         color="primary"
-        onPress={onOpen}
+        onClick={() => {
+          if (status == "unauthenticated") {
+            ctx?.onOpenUnauthenticated();
+          } else {
+            onOpen();
+          }
+        }}
         className="w-full font-semibold"
       >
         Beli Sekarang
       </Button>
 
-      <Modal isDismissable={false} size="sm" placement="center" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isDismissable={false}
+        size="sm"
+        placement="center"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalContent>
           {(onClose) => (
             <>

@@ -1,11 +1,17 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { SuccessResponse } from "@/types/global.type";
+import { ProfileDetail } from "@/types/profile.type";
+import { fetcher } from "@/utils/fetcher";
 import { Button } from "@nextui-org/react";
-import { PencilLine, WarningCircle } from "@phosphor-icons/react";
+import { PencilLine } from "@phosphor-icons/react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function UserProfilePage() {
+export default function UserProfilePage({
+  profile,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
 
   return (
@@ -25,7 +31,7 @@ export default function UserProfilePage() {
             className="justify-self-center"
           />
 
-          <div className="grid grid-cols-[24px_1fr] items-start gap-2 rounded-xl border-[2px] border-primary bg-primary/20 p-4">
+          {/* <div className="grid grid-cols-[24px_1fr] items-start gap-2 rounded-xl border-[2px] border-primary bg-primary/20 p-4">
             <WarningCircle
               weight="duotone"
               size={24}
@@ -35,7 +41,7 @@ export default function UserProfilePage() {
             <p className="text-sm font-medium italic text-primary">
               Harap lengkapi data diri anda, sebelum anda mulai berbelanja!
             </p>
-          </div>
+          </div> */}
 
           <div className="grid gap-2">
             <h4 className="font-semibold text-foreground">Biodata Diri</h4>
@@ -55,12 +61,14 @@ export default function UserProfilePage() {
 
               <div className="grid gap-2">
                 <p className="text-sm font-medium text-foreground">
-                  Fajar Fadillah Agustian
+                  {profile.nama}
                 </p>
                 <p className="text-sm font-medium text-foreground">
-                  12 September 2001
+                  {profile.tanggal_lahir ? profile.tanggal_lahir : "-"}
                 </p>
-                <p className="text-sm font-medium text-foreground">Pria</p>
+                <p className="text-sm font-medium text-foreground">
+                  {profile.jenis_kelamin ? profile.jenis_kelamin : "-"}
+                </p>
               </div>
             </div>
           </div>
@@ -80,10 +88,10 @@ export default function UserProfilePage() {
 
               <div className="grid gap-2">
                 <p className="text-sm font-medium text-foreground">
-                  fajarfadillah9012@gmail.com
+                  {profile.email}
                 </p>
                 <p className="text-sm font-medium text-foreground">
-                  0891234567891
+                  {profile.no_telpon}
                 </p>
               </div>
             </div>
@@ -103,3 +111,19 @@ export default function UserProfilePage() {
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ req }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<ProfileDetail> = await fetcher({
+    url: "/profile/detail",
+    method: "GET",
+    token,
+  });
+
+  return {
+    props: {
+      profile: response.data,
+    },
+  };
+}) satisfies GetServerSideProps<{ profile: ProfileDetail }>;

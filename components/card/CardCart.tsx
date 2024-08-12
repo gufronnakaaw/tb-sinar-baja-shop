@@ -1,9 +1,10 @@
+import { Cart } from "@/types/cart.type";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Checkbox, Image, Input } from "@nextui-org/react";
 import { Minus, Plus, Trash } from "@phosphor-icons/react";
 import NextImage from "next/image";
 
-export default function CardCart() {
+export default function CardCart(cart: Cart) {
   return (
     <Checkbox
       size="lg"
@@ -11,12 +12,13 @@ export default function CardCart() {
       classNames={{
         base: "gap-2",
       }}
+      isSelected={cart.active}
     >
       <div className="grid grid-cols-[120px_1fr] items-center gap-4">
         <Image
           priority
           as={NextImage}
-          src="/img/product-img-1.webp"
+          src={cart.image[0].url}
           alt="image"
           width={1000}
           height={1000}
@@ -26,13 +28,13 @@ export default function CardCart() {
         <div className="flex h-full flex-col justify-between">
           <div>
             <h4 className="line-clamp-1 text-sm font-semibold text-foreground">
-              Besi Beton KS (Krakatau Steel) 12mm Polos TP280
+              {cart.nama_produk_asli}
             </h4>
             <p className="text-[12px] font-medium text-foreground-600">
-              Besi Baja
+              {cart.kategori}
             </p>
             <h4 className="mt-2 text-sm font-semibold text-foreground">
-              {formatRupiah(130000)}
+              {formatRupiah(cart.harga_6)}
             </h4>
           </div>
 
@@ -50,7 +52,7 @@ export default function CardCart() {
                 size="sm"
                 labelPlacement="outside"
                 placeholder="Jumlah"
-                defaultValue="1"
+                value={`${cart.qty}`}
               />
 
               <Button isIconOnly variant="bordered" color="default" size="sm">

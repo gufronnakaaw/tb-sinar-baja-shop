@@ -1,8 +1,14 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { SuccessResponse } from "@/types/global.type";
+import { ProfileDetail } from "@/types/profile.type";
+import { fetcher } from "@/utils/fetcher";
 import { Button, Input, Radio, RadioGroup } from "@nextui-org/react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-export default function EditUserProfilePage() {
+export default function EditUserProfilePage({
+  profile,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout title="Edit Profile Page" className="relative">
       <div className="grid">
@@ -15,32 +21,31 @@ export default function EditUserProfilePage() {
             <h4 className="font-semibold text-foreground">Biodata Diri</h4>
 
             <Input
+              value={profile.nama}
               isRequired
               variant="bordered"
               color="default"
               label="Nama Lengkap"
               labelPlacement="outside"
-              placeholder="eg, Maman Kusniadi"
+              placeholder="Cth. Johnson Doe"
             />
 
             <Input
-              isRequired
               variant="bordered"
               color="default"
               label="Tanggal Lahir"
               labelPlacement="outside"
-              placeholder="eg, 12 Januari 1999"
+              placeholder="Cth. 12 Januari 1999"
             />
 
             <RadioGroup
-              isRequired
               label="Jenis Kelamin"
               classNames={{
                 label: "text-sm text-foreground",
               }}
             >
-              <Radio value="man">Pria</Radio>
-              <Radio value="woman">Wanita</Radio>
+              <Radio value="P">Pria</Radio>
+              <Radio value="W">Wanita</Radio>
             </RadioGroup>
           </div>
 
@@ -48,7 +53,8 @@ export default function EditUserProfilePage() {
             <h4 className="font-semibold text-foreground">Kontak</h4>
 
             <Input
-              isRequired
+              value={profile.email}
+              isDisabled
               type="email"
               variant="bordered"
               color="default"
@@ -58,7 +64,7 @@ export default function EditUserProfilePage() {
             />
 
             <Input
-              isRequired
+              value={profile.no_telpon}
               type="number"
               variant="bordered"
               color="default"
@@ -80,3 +86,19 @@ export default function EditUserProfilePage() {
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ req }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<ProfileDetail> = await fetcher({
+    url: "/profile/detail",
+    method: "GET",
+    token,
+  });
+
+  return {
+    props: {
+      profile: response.data,
+    },
+  };
+}) satisfies GetServerSideProps<{ profile: ProfileDetail }>;

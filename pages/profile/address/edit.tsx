@@ -1,6 +1,4 @@
 import {
-  Autocomplete,
-  AutocompleteItem,
   Button,
   Checkbox,
   Input,
@@ -129,53 +127,53 @@ export default function EditShippingAddress({
         <div className="grid gap-4">
           <h4 className="font-semibold text-foreground">Detail Alamat</h4>
 
-          <Autocomplete
+          <Select
             isRequired
             color="default"
             variant="bordered"
             label="Provinsi"
             labelPlacement="outside"
-            onSelectionChange={setProvinceCode}
+            onChange={(e) => setProvinceCode(e.target.value)}
             placeholder="Cth. DKI Jakarta"
           >
             {provinces.map((province) => (
-              <AutocompleteItem key={province.code} value={province.name}>
+              <SelectItem key={province.code} value={province.name}>
                 {province.name}
-              </AutocompleteItem>
+              </SelectItem>
             ))}
-          </Autocomplete>
+          </Select>
 
-          <Autocomplete
+          <Select
             isRequired
             color="default"
             variant="bordered"
             label="Kabupaten/Kota"
             labelPlacement="outside"
-            onSelectionChange={setRegencyCode}
+            onChange={(e) => setRegencyCode(e.target.value)}
             placeholder="Cth. Jakarta Selatan"
           >
             {regencies.map((regency) => (
-              <AutocompleteItem key={regency.code} value={regency.name}>
+              <SelectItem key={regency.code} value={regency.name}>
                 {regency.name}
-              </AutocompleteItem>
+              </SelectItem>
             ))}
-          </Autocomplete>
+          </Select>
 
-          <Autocomplete
+          <Select
             isRequired
             color="default"
             variant="bordered"
             label="Kecamatan"
             labelPlacement="outside"
-            onSelectionChange={setDistrictCode}
+            onChange={(e) => setDistrictCode(e.target.value)}
             placeholder="Cth. Setiabudi"
           >
             {districts.map((district) => (
-              <AutocompleteItem key={district.code} value={district.name}>
+              <SelectItem key={district.code} value={district.name}>
                 {district.name}
-              </AutocompleteItem>
+              </SelectItem>
             ))}
-          </Autocomplete>
+          </Select>
 
           <Textarea
             isRequired
