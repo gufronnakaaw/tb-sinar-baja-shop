@@ -17,5 +17,6 @@ jobs:
             cd /app/tb-sinar-baja-shop
             git pull
             git status
+            npm install
             npm run build
             pm2 restart shop
