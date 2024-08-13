@@ -82,7 +82,7 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
             </h4>
           </div>
 
-          <div className="flex items-center justify-between gap-2">
+          <div className="grid grid-cols-2 items-center justify-between gap-2">
             <div className="grid grid-cols-[32px_64px_32px] items-center gap-2">
               <Button isIconOnly variant="bordered" color="default" size="sm">
                 <Minus weight="bold" size={20} />
@@ -110,6 +110,7 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
               color="danger"
               size="sm"
               onClick={() => handleDeleteCart(cart.cart_id)}
+              className="justify-self-end"
             >
               <Trash weight="duotone" size={20} />
             </Button>

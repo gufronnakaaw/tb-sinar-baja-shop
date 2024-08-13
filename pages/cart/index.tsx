@@ -14,11 +14,16 @@ import useSWR from "swr";
 export default function CartPage({
   token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { data, isLoading, mutate } = useSWR<SuccessResponse<Cart[]>>({
-    url: "/carts",
-    method: "GET",
-    token,
-  });
+  const { data, isLoading, mutate } = useSWR<SuccessResponse<Cart[]>>(
+    {
+      url: "/carts",
+      method: "GET",
+      token,
+    },
+    {
+      revalidateOnFocus: false,
+    },
+  );
   const router = useRouter();
 
   if (isLoading) {
