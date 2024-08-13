@@ -20,7 +20,6 @@ export default function AppProvider({
   const router = useRouter();
   const session = useSession();
   const [totalCarts, setTotalCarts] = useState(0);
-  const [mutateTotalCarts, setMutateTotalCarts] = useState(false);
 
   useEffect(() => {
     onCloseUnauthenticated();

@@ -1,10 +1,53 @@
 import { Cart } from "@/types/cart.type";
+import { fetcher } from "@/utils/fetcher";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Checkbox, Image, Input } from "@nextui-org/react";
 import { Minus, Plus, Trash } from "@phosphor-icons/react";
 import NextImage from "next/image";
+import Toast from "react-hot-toast";
+import { KeyedMutator } from "swr";
 
-export default function CardCart(cart: Cart) {
+type CardCartProps = {
+  cart: Cart;
+  mutate: KeyedMutator<any>;
+  token: string;
+};
+
+export default function CardCart({ cart, mutate, token }: CardCartProps) {
+  async function handleCartActive() {
+    try {
+      await fetcher({
+        url: "/carts",
+        method: "PATCH",
+        token,
+        data: {
+          cart_id: cart.cart_id,
+          value: !cart.active,
+        },
+      });
+      mutate();
+    } catch (error) {
+      console.log(error);
+      Toast.error("Terjadi kesalahan saat update keranjang");
+    }
+  }
+
+  async function handleDeleteCart(cart_id: string) {
+    if (!confirm("apakah anda yakin?")) return;
+
+    try {
+      await fetcher({
+        url: `/carts/${cart_id}`,
+        method: "DELETE",
+        token,
+      });
+      mutate();
+    } catch (error) {
+      console.log(error);
+      Toast.error("Terjadi kesalahan saat hapus keranjang");
+    }
+  }
+
   return (
     <Checkbox
       size="lg"
@@ -13,6 +56,7 @@ export default function CardCart(cart: Cart) {
         base: "gap-2",
       }}
       isSelected={cart.active}
+      onValueChange={handleCartActive}
     >
       <div className="grid grid-cols-[120px_1fr] items-center gap-4">
         <Image
@@ -60,7 +104,13 @@ export default function CardCart(cart: Cart) {
               </Button>
             </div>
 
-            <Button isIconOnly variant="flat" color="danger" size="sm">
+            <Button
+              isIconOnly
+              variant="flat"
+              color="danger"
+              size="sm"
+              onClick={() => handleDeleteCart(cart.cart_id)}
+            >
               <Trash weight="duotone" size={20} />
             </Button>
           </div>

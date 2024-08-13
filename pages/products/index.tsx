@@ -9,7 +9,7 @@ import { Input, Spinner } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 import { useDebounce } from "use-debounce";
@@ -20,7 +20,6 @@ export default function ProductsPage({
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [searchValue] = useDebounce(search, 1000);
-  const inputElement = useRef<HTMLInputElement>(null);
 
   const getKey = (
     pageIndex: number,
@@ -53,10 +52,6 @@ export default function ProductsPage({
     }
   }, [searchValue, router]);
 
-  useEffect(() => {
-    inputElement.current?.focus();
-  }, []);
-
   const productsMap: Product[] = !data
     ? products.data
     : data?.map((item) => item.data.flat()).flat();
@@ -86,7 +81,6 @@ export default function ProductsPage({
               }
             }}
             autoComplete="off"
-            ref={inputElement}
           />
         </header>
 

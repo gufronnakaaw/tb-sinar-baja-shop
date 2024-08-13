@@ -7,7 +7,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET_KEY,
   session: {
     strategy: "jwt",
-    maxAge: 1 * 60 * 60 * 11, // 11 hours
+    maxAge: 1 * 60 * 60 * 6, // 6 hours
   },
   providers: [
     CredentialsProvider({
@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
           const result: SuccessResponse<{
             user_id: string;
             access_token: string;
+            nama: string;
           }> = await fetcher({
             url: "/auth/login/users",
             method: "POST",
@@ -28,6 +29,7 @@ export const authOptions: NextAuthOptions = {
 
           return {
             user_id: result.data.user_id,
+            nama: result.data.nama,
             access_token: result.data.access_token,
           };
         } catch (error) {
@@ -40,6 +42,7 @@ export const authOptions: NextAuthOptions = {
     jwt({ token, user }) {
       if (user) {
         token.user_id = user.user_id;
+        token.nama = user.nama;
         token.access_token = user.access_token;
       }
       return token;
@@ -47,6 +50,7 @@ export const authOptions: NextAuthOptions = {
 
     session({ session, token }) {
       session.user.user_id = token.user_id;
+      session.user.nama = token.nama;
       session.user.access_token = token.access_token;
       return session;
     },

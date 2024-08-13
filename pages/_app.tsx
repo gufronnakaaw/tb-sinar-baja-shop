@@ -24,8 +24,6 @@ export default function App({
           await signOut({
             redirect: false,
           });
-
-          router.push("/");
         }
       }
     };

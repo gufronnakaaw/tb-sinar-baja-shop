@@ -3,17 +3,27 @@ import EmptyCart from "@/components/EmptyCart";
 import Layout from "@/components/Layout";
 import { Cart } from "@/types/cart.type";
 import { SuccessResponse } from "@/types/global.type";
-import { fetcher } from "@/utils/fetcher";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button } from "@nextui-org/react";
 import { CaretLeft } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
+import * as qs from "qs";
+import useSWR from "swr";
 
 export default function CartPage({
-  carts,
+  token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { data, isLoading, mutate } = useSWR<SuccessResponse<Cart[]>>({
+    url: "/carts",
+    method: "GET",
+    token,
+  });
   const router = useRouter();
+
+  if (isLoading) {
+    return;
+  }
 
   return (
     <Layout title="Keranjang Saya">
@@ -34,36 +44,52 @@ export default function CartPage({
       </header>
 
       <div className="h-screen">
-        {carts.length ? (
+        {data?.data.length ? (
           <div className="grid gap-4 pb-8">
-            {carts.map((cart) => (
-              <CardCart {...cart} key={cart.cart_id} />
+            {data.data.map((cart) => (
+              <CardCart {...{ cart, token, mutate }} key={cart.cart_id} />
             ))}
           </div>
         ) : (
           <EmptyCart />
         )}
 
-        {carts.length ? (
-          <div className="absolute bottom-0 left-0 z-10 grid w-full gap-2 bg-white px-6 py-6">
+        {data?.data.length ? (
+          <div className="sticky bottom-0 left-0 z-10 grid w-full gap-2 bg-white px-3 py-3">
             <div className="flex items-end justify-between gap-2">
               <h4 className="text-[12px] font-medium text-foreground-600">
                 Total Pembayaran
               </h4>
               <h4 className="font-semibold text-foreground">
-                {formatRupiah(
-                  carts
-                    .filter((cart) => cart.active)
-                    .map((cart) => cart.qty * cart.harga_6)
-                    .reduce((a, b) => a + b),
-                )}
+                {data.data.filter((cart) => cart.active).length == 0
+                  ? formatRupiah(0)
+                  : formatRupiah(
+                      data?.data
+                        .filter((cart) => cart.active)
+                        .map((cart) => cart.qty * cart.harga_6)
+                        .reduce((a, b) => a + b),
+                    )}
               </h4>
             </div>
 
             <Button
               color="primary"
-              onClick={() => router.push("/purchase/checkout?id=17630837")}
+              onClick={() =>
+                router.push(
+                  `/purchase/checkout?${qs.stringify(
+                    {
+                      carts: data.data
+                        .filter((cart) => cart.active)
+                        .map((cart) => cart.cart_id),
+                    },
+                    {
+                      arrayFormat: "repeat",
+                    },
+                  )}`,
+                )
+              }
               className="w-full font-semibold"
+              isDisabled={data.data.filter((cart) => cart.active).length == 0}
             >
               Beli
             </Button>
@@ -76,16 +102,9 @@ export default function CartPage({
 
 export const getServerSideProps = (async ({ req }) => {
   const token = req.headers["access_token"] as string;
-
-  const response: SuccessResponse<Cart[]> = await fetcher({
-    url: "/carts",
-    method: "GET",
-    token,
-  });
-
   return {
     props: {
-      carts: response.data,
+      token,
     },
   };
-}) satisfies GetServerSideProps<{ carts: Cart[] }>;
+}) satisfies GetServerSideProps<{ token: string }>;

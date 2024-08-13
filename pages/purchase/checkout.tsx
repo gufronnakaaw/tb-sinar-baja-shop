@@ -2,17 +2,14 @@ import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import { ArrowRight, MapTrifold, Truck } from "@phosphor-icons/react";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function CheckoutPage() {
   const router = useRouter();
 
-  const [selectedDiv, setSelectedDiv] = useState<number | null>(null);
-
-  const toggleSelect = (id: number) => {
-    setSelectedDiv(selectedDiv === id ? null : id);
-  };
+  const [selectedDiv, setSelectedDiv] = useState("");
 
   return (
     <Layout title="Checkout Page">
@@ -29,42 +26,58 @@ export default function CheckoutPage() {
           </h3>
 
           <div className="grid grid-cols-2 gap-4">
-            <CardShipping>
+            <div
+              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "pickup" ? "bg-primary" : null}`}
+              onClick={() => setSelectedDiv("pickup")}
+            >
               <MapTrifold
                 weight="duotone"
                 size={36}
-                className="text-primary transition group-hover:text-white"
+                className={`text-primary transition group-hover:text-white ${selectedDiv == "pickup" ? "text-white" : null}`}
               />
 
-              <h6 className="text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white">
+              <h6
+                className={`text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white ${selectedDiv == "pickup" ? "text-white" : null}`}
+              >
                 Pesanan <br />
                 Diambil Sendiri
               </h6>
-            </CardShipping>
+            </div>
 
-            <CardShipping>
+            <div
+              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "delivery" ? "bg-primary" : null}`}
+              onClick={() => setSelectedDiv("delivery")}
+            >
               <Truck
                 weight="duotone"
                 size={36}
-                className="text-primary transition group-hover:text-white"
+                className={`text-primary transition group-hover:text-white ${selectedDiv == "delivery" ? "text-white" : null}`}
               />
 
-              <h6 className="text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white">
+              <h6
+                className={`text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white ${selectedDiv == "delivery" ? "text-white" : null}`}
+              >
                 Pesanan <br />
                 Diantar
               </h6>
-            </CardShipping>
+            </div>
           </div>
 
           {/* selected delivery */}
           <div className="grid border-l-[4px] border-primary pl-4">
-            <h5 className="mb-1 text-sm font-semibold italic text-foreground">
-              Pesanan Diambil Sendiri
-            </h5>
-            <p className="text-[12px] font-medium text-foreground-600">
-              Jl. Letjend Sutoyo No.67, Burengan, Kec. Pesantren, Kabupaten
-              Kediri, Jawa Timur 64131
-            </p>
+            {selectedDiv == "pickup" ? (
+              <>
+                <h5 className="mb-1 text-sm font-semibold italic text-foreground">
+                  Pesanan Diambil Sendiri
+                </h5>
+                <p className="text-[12px] font-medium text-foreground-600">
+                  Jl. Letjend Sutoyo No.67, Burengan, Kec. Pesantren, Kabupaten
+                  Kediri, Jawa Timur 64131
+                </p>
+              </>
+            ) : (
+              <h1>your address here</h1>
+            )}
           </div>
         </div>
 
@@ -91,52 +104,29 @@ export default function CheckoutPage() {
                 Bank Central Asia (BCA)
               </p>
             </Radio>
-
-            <Radio
-              value="mandiri"
-              description="717260402 a/n TB Sinar Baja Kediri"
-              classNames={{
-                description:
-                  "text-[12px] italic text-foreground-600 font-medium",
-              }}
-            >
-              <p className="text-sm font-medium text-foreground">
-                Bank Mandiri
-              </p>
-            </Radio>
-
-            <Radio
-              value="bni"
-              description="881629374 a/n TB Sinar Baja Kediri"
-              classNames={{
-                description:
-                  "text-[12px] italic text-foreground-600 font-medium",
-              }}
-            >
-              <p className="text-sm font-medium text-foreground">
-                Bank Negara Indonesia (BNI)
-              </p>
-            </Radio>
           </RadioGroup>
-        </div>
 
-        <Button
-          color="primary"
-          endContent={<ArrowRight weight="bold" size={16} />}
-          onClick={() => router.push("/purchase/preview?id=17630837")}
-          className="mb-4 w-full font-semibold"
-        >
-          Selanjutnya
-        </Button>
+          <Button
+            color="primary"
+            endContent={<ArrowRight weight="bold" size={16} />}
+            onClick={() => router.push("/purchase/preview?id=17630837")}
+            className="mb-4 w-full font-semibold"
+            isDisabled={!selectedDiv}
+          >
+            Selanjutnya
+          </Button>
+        </div>
       </div>
     </Layout>
   );
 }
 
-function CardShipping({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary">
-      {children}
-    </div>
-  );
-}
+export const getServerSideProps = (async ({ query }) => {
+  console.log(query);
+
+  return {
+    props: {
+      carts: ["ak"],
+    },
+  };
+}) satisfies GetServerSideProps<{ carts: string[] }>;
