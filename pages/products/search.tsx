@@ -17,6 +17,7 @@ import { useDebounce } from "use-debounce";
 export default function ProductsSearchPage({
   products,
   q,
+  sort,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [search, setSearch] = useState(q);
   const [searchValue] = useDebounce(search, 1000);
@@ -32,7 +33,9 @@ export default function ProductsSearchPage({
     if (previousPageData && !previousPageData.data.length) return null;
 
     return {
-      url: `/products/search?q=${encodeURIComponent(q)}&page=${pageIndex + 1}`,
+      url: sort
+        ? `/products/search?q=${encodeURIComponent(q)}&page=${pageIndex + 1}&sort=${sort}`
+        : `/products/search?q=${encodeURIComponent(q)}&page=${pageIndex + 1}`,
       method: "GET",
     };
   };
@@ -122,9 +125,12 @@ export default function ProductsSearchPage({
 
 export const getServerSideProps = (async ({ query }) => {
   const q = query?.q as string;
+  const sort = query?.sort as string;
 
   const response: SuccessResponse<Product[]> = await fetcher({
-    url: `/products/search?q=${encodeURIComponent(q)}&page=1`,
+    url: sort
+      ? `/products/search?q=${encodeURIComponent(q)}&page=1&sort=${sort}`
+      : `/products/search?q=${encodeURIComponent(q)}&page=1`,
     method: "GET",
   });
 
@@ -132,9 +138,11 @@ export const getServerSideProps = (async ({ query }) => {
     props: {
       products: response,
       q,
+      sort: sort ? sort : "",
     },
   };
 }) satisfies GetServerSideProps<{
   products: SuccessResponse<Product[]>;
   q: string;
+  sort: string;
 }>;

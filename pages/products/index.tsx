@@ -16,6 +16,7 @@ import { useDebounce } from "use-debounce";
 
 export default function ProductsPage({
   products,
+  sort,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const [search, setSearch] = useState("");
@@ -28,7 +29,9 @@ export default function ProductsPage({
     if (previousPageData && !previousPageData.data.length) return null;
 
     return {
-      url: `/products?page=${pageIndex + 1}`,
+      url: sort
+        ? `/products?page=${pageIndex + 1}&sort=${sort}`
+        : `/products?page=${pageIndex + 1}`,
       method: "GET",
     };
   };
@@ -110,15 +113,20 @@ export default function ProductsPage({
   );
 }
 
-export const getServerSideProps = (async () => {
+export const getServerSideProps = (async ({ query }) => {
+  const sort = query?.sort as string;
   const response: SuccessResponse<Product[]> = await fetcher({
-    url: "/products?page=1",
+    url: sort ? `/products?page=1&sort=${sort}` : "/products?page=1",
     method: "GET",
   });
 
   return {
     props: {
       products: response,
+      sort: sort ? sort : "",
     },
   };
-}) satisfies GetServerSideProps<{ products: SuccessResponse<Product[]> }>;
+}) satisfies GetServerSideProps<{
+  products: SuccessResponse<Product[]>;
+  sort: string;
+}>;
