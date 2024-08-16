@@ -1,15 +1,36 @@
 import { Button, Chip } from "@nextui-org/react";
-import { PencilSimple, Star, Trash } from "@phosphor-icons/react";
+import { PencilSimple, Trash } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 
-import { AddressType } from "@/types/address.type";
+import { Address } from "@/types/address.type";
+import { fetcher } from "@/utils/fetcher";
+import Toast from "react-hot-toast";
+import { KeyedMutator } from "swr";
 
 type AddressProps = {
-  address: AddressType;
+  address: Address;
+  mutate: KeyedMutator<any>;
+  token: string;
 };
 
-export default function CardAddress({ address }: AddressProps) {
+export default function CardAddress({ address, mutate, token }: AddressProps) {
   const router = useRouter();
+
+  async function handleDeleteAddress(address_id: string) {
+    if (!confirm("apakah anda yakin?")) return;
+
+    try {
+      await fetcher({
+        url: `/profile/address/${address_id}`,
+        method: "DELETE",
+        token,
+      });
+      mutate();
+    } catch (error) {
+      console.log(error);
+      Toast.error("Terjadi kesalahan saat hapus alamat");
+    }
+  }
 
   return (
     <div className="grid gap-4 rounded-xl border border-foreground-200 p-4">
@@ -19,40 +40,21 @@ export default function CardAddress({ address }: AddressProps) {
           color="primary"
           size="sm"
           classNames={{
-            content: "font-semibold",
+            content: "font-semibold capitalize",
           }}
         >
-          {address.address_label}
+          Alamat {address.label}
         </Chip>
-
-        {address.main_address ? (
-          <Chip
-            variant="flat"
-            color="success"
-            size="sm"
-            startContent={
-              <Star weight="fill" size={14} className="text-success" />
-            }
-            classNames={{
-              base: "gap-1 px-2",
-              content: "font-semibold",
-            }}
-          >
-            {address.main_address && "Utama"}
-          </Chip>
-        ) : null}
       </div>
 
       <div className="grid gap-1">
         <h4 className="font-semibold text-foreground">
-          {address.recipient_name}
+          {address.nama_penerima}
         </h4>
-        <p className="font-medium text-foreground">
-          +62{address.recipient_no_telp}
-        </p>
+        <p className="font-medium text-foreground">{address.no_telpon}</p>
         <p className="mt-1 text-sm font-medium leading-[180%] text-foreground-600">
-          {address.complete_address} | {address.subdistrict_city_province} |{" "}
-          {address.postal_code}
+          {address.alamat_lengkap} | {address.kecamatan} | {address.kota} |{" "}
+          {address.provinsi} | {address.kode_pos}
         </p>
       </div>
 
@@ -65,7 +67,9 @@ export default function CardAddress({ address }: AddressProps) {
             <PencilSimple weight="bold" size={18} className="text-primary" />
           }
           onClick={() =>
-            router.push(`/profile/address/edit?id=${address.address_id}`)
+            router.push(
+              `/profile/address/edit?address_id=${address.address_id}`,
+            )
           }
           className="px-2 font-semibold"
         >
@@ -77,11 +81,7 @@ export default function CardAddress({ address }: AddressProps) {
           variant="light"
           color="danger"
           size="sm"
-          onClick={() => {
-            if (confirm("Apakah kamu yakin?")) {
-              window.location.href = "/profile/address";
-            }
-          }}
+          onClick={() => handleDeleteAddress(address.address_id)}
         >
           <Trash weight="bold" size={18} className="text-danger" />
         </Button>

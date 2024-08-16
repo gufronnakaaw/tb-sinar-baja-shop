@@ -27,7 +27,7 @@ export default function CheckoutPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div
-              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "pickup" ? "bg-primary" : null}`}
+              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "pickup" ? "border-primary bg-primary" : null}`}
               onClick={() => setSelectedDiv("pickup")}
             >
               <MapTrifold
@@ -45,7 +45,7 @@ export default function CheckoutPage() {
             </div>
 
             <div
-              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "delivery" ? "bg-primary" : null}`}
+              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "delivery" ? "border-primary bg-primary" : null}`}
               onClick={() => setSelectedDiv("delivery")}
             >
               <Truck
@@ -68,7 +68,7 @@ export default function CheckoutPage() {
             {selectedDiv == "pickup" ? (
               <>
                 <h5 className="mb-1 text-sm font-semibold italic text-foreground">
-                  Pesanan Diambil Sendiri
+                  Alamat Toko TB Sinar Baja
                 </h5>
                 <p className="text-[12px] font-medium text-foreground-600">
                   Jl. Letjend Sutoyo No.67, Burengan, Kec. Pesantren, Kabupaten
@@ -76,7 +76,15 @@ export default function CheckoutPage() {
                 </p>
               </>
             ) : (
-              <h1>your address here</h1>
+              <>
+                <h5 className="mb-1 text-sm font-semibold italic text-foreground">
+                  Alamat Saya
+                </h5>
+                <p className="text-[12px] font-medium text-foreground-600">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Harum quasi quibusdam iusto facilis odit cupiditate.
+                </p>
+              </>
             )}
           </div>
         </div>

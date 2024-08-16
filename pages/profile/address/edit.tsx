@@ -1,11 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Input,
-  Select,
-  SelectItem,
-  Textarea,
-} from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
@@ -210,14 +203,14 @@ export default function EditShippingAddress({
             placeholder="Cth. 16512"
           />
 
-          <Checkbox
+          {/* <Checkbox
             color="primary"
             classNames={{
               label: "text-sm text-foreground",
             }}
           >
             Jadikan Alamat Utama
-          </Checkbox>
+          </Checkbox> */}
         </div>
 
         <div className="sticky bottom-0 left-0 z-50 bg-white py-4">

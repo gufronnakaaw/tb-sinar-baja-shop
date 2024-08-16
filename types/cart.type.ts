@@ -1,5 +1,6 @@
 export type Cart = {
   cart_id: string;
+  kode_item: string;
   qty: number;
   active: boolean;
   image: {

@@ -1,10 +1,13 @@
-export type AddressType = {
-  address_id: number;
-  recipient_name: string;
-  recipient_no_telp: number;
-  address_label: string;
-  complete_address: string;
-  subdistrict_city_province: string;
-  postal_code: number;
+export type Address = {
+  address_id: string;
+  user_id: string;
+  nama_penerima: string;
+  no_telpon: string;
+  provinsi: string;
+  kota: string;
+  kecamatan: string;
+  alamat_lengkap: string;
+  label: string;
+  kode_pos: string;
   main_address: boolean;
 };

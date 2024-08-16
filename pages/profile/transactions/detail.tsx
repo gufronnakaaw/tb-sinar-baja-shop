@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import CardOrder from "@/components/card/CardOrder";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { formatRupiah } from "@/utils/formatRupiah";
-import { Button } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import { ArrowRight, Bag } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 
@@ -31,6 +31,33 @@ export default function TransactionDetail() {
               <p className="text-sm text-foreground-600">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil,
                 dolorem?
+              </p>
+            </div>
+          </div>
+
+          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
+
+          <div className="grid gap-3">
+            <h4 className="font-semibold text-foreground">Alamat Pengiriman</h4>
+
+            <div className="border-l-4 border-primary py-2 pl-3">
+              <h6 className="mb-1 text-[12px] font-semibold text-foreground">
+                Toko TB Sinar Baja
+                <Chip
+                  color="primary"
+                  size="sm"
+                  classNames={{
+                    base: "px-[2px]",
+                    content: "font-medium text-[10px]",
+                  }}
+                  className="ml-2 inline-flex"
+                >
+                  Ambil Sendiri
+                </Chip>
+              </h6>
+              <p className="text-[12px] font-medium text-foreground-600">
+                Jl. Letjend Sutoyo No.67, Burengan, Kec. Pesantren, Kabupaten
+                Kediri, Jawa Timur 64131
               </p>
             </div>
           </div>

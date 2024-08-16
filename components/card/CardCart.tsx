@@ -4,8 +4,10 @@ import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Checkbox, Image, Input } from "@nextui-org/react";
 import { Minus, Plus, Trash } from "@phosphor-icons/react";
 import NextImage from "next/image";
+import { useEffect, useState } from "react";
 import Toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
+import { useDebounce } from "use-debounce";
 
 type CardCartProps = {
   cart: Cart;
@@ -14,6 +16,9 @@ type CardCartProps = {
 };
 
 export default function CardCart({ cart, mutate, token }: CardCartProps) {
+  const [input, setInput] = useState(`${cart.qty}`);
+  const [inputValue] = useDebounce(input, 1000);
+
   async function handleCartActive() {
     try {
       await fetcher({
@@ -48,16 +53,100 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
     }
   }
 
+  async function handleDecrementCart() {
+    try {
+      await fetcher({
+        url: `/carts/quantity`,
+        method: "PATCH",
+        token,
+        data: {
+          cart_id: cart.cart_id,
+          kode_item: cart.kode_item,
+          type: "decrement",
+        },
+      });
+      mutate();
+      setInput((prev) => `${parseInt(prev) - 1}`);
+    } catch (error) {
+      console.log(error);
+      Toast.error("Terjadi kesalahan saat update keranjang");
+    }
+  }
+
+  async function handleIncrementCart() {
+    try {
+      await fetcher({
+        url: `/carts/quantity`,
+        method: "PATCH",
+        token,
+        data: {
+          cart_id: cart.cart_id,
+          kode_item: cart.kode_item,
+          type: "increment",
+        },
+      });
+      mutate();
+      setInput((prev) => `${parseInt(prev) + 1}`);
+    } catch (error) {
+      console.log(error);
+      const err = error as { status_code: number };
+
+      if (err.status_code == 422) {
+        return Toast.error("Terlalu banyak input");
+      }
+      Toast.error("Terjadi kesalahan saat update keranjang");
+    }
+  }
+
+  useEffect(() => {
+    if (inputValue) {
+      if (parseInt(inputValue)) {
+        if (parseInt(inputValue) != cart.qty) {
+          handleInputCart();
+        }
+      }
+    }
+
+    async function handleInputCart() {
+      try {
+        await fetcher({
+          url: `/carts/quantity`,
+          method: "PATCH",
+          token,
+          data: {
+            cart_id: cart.cart_id,
+            kode_item: cart.kode_item,
+            type: "input",
+            qty: parseFloat(inputValue),
+          },
+        });
+
+        mutate();
+      } catch (error) {
+        console.log(error);
+        const err = error as { status_code: number };
+
+        if (err.status_code == 422) {
+          setInput(`${cart.qty}`);
+          return Toast.error("Input terlalu banyak");
+        }
+        Toast.error("Terjadi kesalahan saat update keranjang");
+      }
+    }
+  }, [inputValue]);
+
   return (
-    <Checkbox
-      size="lg"
-      color="primary"
-      classNames={{
-        base: "gap-2",
-      }}
-      isSelected={cart.active}
-      onValueChange={handleCartActive}
-    >
+    <div className="flex">
+      <Checkbox
+        size="lg"
+        color="primary"
+        classNames={{
+          base: "gap-2",
+        }}
+        isSelected={cart.active}
+        onValueChange={handleCartActive}
+      ></Checkbox>
+
       <div className="grid grid-cols-[120px_1fr] items-center gap-4">
         <Image
           priority
@@ -83,23 +172,43 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
           </div>
 
           <div className="grid grid-cols-2 items-center justify-between gap-2">
-            <div className="grid grid-cols-[32px_64px_32px] items-center gap-2">
-              <Button isIconOnly variant="bordered" color="default" size="sm">
+            <div className="grid grid-cols-[32px_100px_32px] items-center gap-2">
+              <Button
+                isIconOnly
+                variant="bordered"
+                color="default"
+                size="sm"
+                isDisabled={cart.qty <= 1}
+                onClick={() => {
+                  setTimeout(() => {
+                    handleDecrementCart();
+                  }, 1000);
+                }}
+              >
                 <Minus weight="bold" size={20} />
               </Button>
 
               <Input
                 type="number"
-                inputMode="numeric"
                 variant="flat"
                 color="default"
                 size="sm"
                 labelPlacement="outside"
-                placeholder="Jumlah"
-                value={`${cart.qty}`}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
               />
 
-              <Button isIconOnly variant="bordered" color="default" size="sm">
+              <Button
+                isIconOnly
+                variant="bordered"
+                color="default"
+                size="sm"
+                onClick={() => {
+                  setTimeout(() => {
+                    handleIncrementCart();
+                  }, 1000);
+                }}
+              >
                 <Plus weight="bold" size={20} />
               </Button>
             </div>
@@ -117,6 +226,6 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
           </div>
         </div>
       </div>
-    </Checkbox>
+    </div>
   );
 }

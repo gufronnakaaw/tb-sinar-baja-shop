@@ -1,11 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Input,
-  Select,
-  SelectItem,
-  Textarea,
-} from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
@@ -14,18 +7,34 @@ import { Regional } from "@/types/regional.type";
 import { fetcher } from "@/utils/fetcher";
 import { WarningCircle } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
 import { Key, useEffect, useState } from "react";
 import Toast from "react-hot-toast";
 
 export default function CreateShippingAddress({
   provinces,
   from,
+  token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const [provinceCode, setProvinceCode] = useState<Key>("");
   const [regencies, setRegencies] = useState<Regional[]>([]);
   const [regencyCode, setRegencyCode] = useState<Key>("");
   const [districts, setDistricts] = useState<Regional[]>([]);
   const [districtCode, setDistrictCode] = useState<Key>("");
+  const [input, setInput] = useState<{
+    nama_penerima: string;
+    no_telpon: string;
+    alamat_lengkap: string;
+    label: string;
+    kode_pos: string;
+  }>({
+    nama_penerima: "",
+    no_telpon: "",
+    alamat_lengkap: "",
+    label: "",
+    kode_pos: "",
+  });
 
   useEffect(() => {
     if (provinceCode) {
@@ -91,6 +100,26 @@ export default function CreateShippingAddress({
     }
   }, [regencyCode]);
 
+  async function handleCreateAddress() {
+    const provinsi = provinces.find((item) => item.code == provinceCode)?.name;
+    const kota = regencies.find((item) => item.code == regencyCode)?.name;
+    const kecamatan = districts.find((item) => item.code == districtCode)?.name;
+
+    try {
+      await fetcher({
+        url: "/profile/address",
+        method: "POST",
+        data: { ...input, provinsi, kota, kecamatan },
+        token,
+      });
+
+      return router.push("/profile/address");
+    } catch (error) {
+      Toast.error("Terjadi kesalahan saat membuat alamat");
+      console.log(error);
+    }
+  }
+
   return (
     <Layout title="Tambah Alamat" className="relative">
       <div className="grid gap-8">
@@ -125,6 +154,13 @@ export default function CreateShippingAddress({
             label="Nama Penerima"
             labelPlacement="outside"
             placeholder="Masukan nama penerima"
+            name="nama_penerima"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
           />
 
           <Input
@@ -135,6 +171,13 @@ export default function CreateShippingAddress({
             label="No. Telpon Penerima"
             labelPlacement="outside"
             placeholder="Cth. 082233445566"
+            name="no_telpon"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
           />
         </div>
 
@@ -197,6 +240,13 @@ export default function CreateShippingAddress({
             label="Alamat Lengkap"
             labelPlacement="outside"
             placeholder="Masukan nama jalan, no. rumah, dan lain sebagainya"
+            name="alamat_lengkap"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
+            }}
           />
 
           <Select
@@ -206,6 +256,12 @@ export default function CreateShippingAddress({
             label="Label Alamat"
             labelPlacement="outside"
             placeholder="Cth. Rumah"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                label: e.target.value,
+              });
+            }}
           >
             <SelectItem key="rumah" value="rumah">
               Rumah
@@ -217,32 +273,33 @@ export default function CreateShippingAddress({
 
           <Input
             isRequired
+            type="number"
             variant="bordered"
             color="default"
             label="Kode Pos"
             labelPlacement="outside"
             placeholder="Cth. 16512"
-          />
-
-          <Checkbox
-            color="primary"
-            classNames={{
-              label: "text-sm text-foreground",
+            name="kode_pos"
+            onChange={(e) => {
+              setInput({
+                ...input,
+                [e.target.name]: e.target.value,
+              });
             }}
-          >
-            Jadikan Alamat Utama
-          </Checkbox>
+          />
         </div>
 
         <div className="sticky bottom-0 left-0 z-50 bg-white py-4">
           <Button
             color="primary"
-            onClick={() => {
-              if (confirm("Apakah kamu yakin?")) {
-                window.location.href = "/profile/address";
-              }
-            }}
+            onClick={handleCreateAddress}
             className="w-full font-semibold"
+            isDisabled={
+              !Object.values(input).every((value) => value.trim() !== "") ||
+              !provinceCode ||
+              !regencyCode ||
+              !districtCode
+            }
           >
             Simpan Alamat
           </Button>
@@ -252,7 +309,9 @@ export default function CreateShippingAddress({
   );
 }
 
-export const getServerSideProps = (async ({ query }) => {
+export const getServerSideProps = (async ({ req, query }) => {
+  const token = req.headers["access_token"] as string;
+
   const response: SuccessResponse<Regional[]> = await fetcher({
     url: "/provinces",
     method: "GET",
@@ -262,6 +321,11 @@ export const getServerSideProps = (async ({ query }) => {
     props: {
       provinces: response.data,
       from: query?.from ? (query?.from as string) : "any",
+      token,
     },
   };
-}) satisfies GetServerSideProps<{ provinces: Regional[]; from: string }>;
+}) satisfies GetServerSideProps<{
+  provinces: Regional[];
+  from: string;
+  token: string;
+}>;

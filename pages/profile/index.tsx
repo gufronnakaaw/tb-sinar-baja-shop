@@ -1,6 +1,5 @@
 import { Button } from "@nextui-org/react";
 import {
-  Key,
   MapTrifold,
   Receipt,
   SignOut,
@@ -98,7 +97,7 @@ export default function ProfilePage({
               </div>
             </Link>
 
-            <Link
+            {/* <Link
               href="/profile/security"
               className="group flex items-center gap-4"
             >
@@ -116,7 +115,7 @@ export default function ProfilePage({
                   Atur ulang kata sandi
                 </p>
               </div>
-            </Link>
+            </Link> */}
 
             <Link
               href="/profile/address"
