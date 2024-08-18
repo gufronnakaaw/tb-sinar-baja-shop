@@ -151,7 +151,7 @@ export default function DetailsPage({
             </h3>
 
             <p
-              className="text-sm font-medium leading-[180%] text-foreground-600"
+              className="list-inside text-sm font-medium leading-[180%] text-foreground-600"
               dangerouslySetInnerHTML={{ __html: product.deskripsi }}
             ></p>
           </div>
