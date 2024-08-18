@@ -29,7 +29,9 @@ export default function LoginPage() {
 
     const result = await signIn("credentials", {
       ...input,
-      callbackUrl: "/",
+      callbackUrl: router.query.callback
+        ? (router.query.callback as string)
+        : "/",
     });
 
     if (result?.error) {

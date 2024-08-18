@@ -4,6 +4,8 @@ import { Button, Input } from "@nextui-org/react";
 import { EnvelopeSimple, Key, Phone, User } from "@phosphor-icons/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import qs from "qs";
 import { useState } from "react";
 import Toast from "react-hot-toast";
 
@@ -16,19 +18,22 @@ export default function RegisterPage() {
     password_confirm?: string;
   }>({});
   const [disabled, setDisabled] = useState(true);
+  const router = useRouter();
 
   async function handleRegister() {
     try {
-      const data = await fetcher({
+      await fetcher({
         url: "/auth/register/users",
         method: "POST",
         data: input,
       });
 
+      localStorage.setItem("register", "true");
+
       const result = await signIn("credentials", {
         email: input.email,
         password: input.password,
-        callbackUrl: "/profile/address/create?from=register",
+        callbackUrl: `/profile/address/create?from=register&${qs.stringify(router.query)}`,
       });
 
       if (result?.error) {

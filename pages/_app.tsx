@@ -27,6 +27,13 @@ export default function App({
         }
       }
     };
+
+    const register = localStorage.getItem("register");
+    if (register) {
+      if (router.pathname != "/profile/address/create") {
+        router.push("/profile/address/create?from=register");
+      }
+    }
   }, [router]);
 
   return (

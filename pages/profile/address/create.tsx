@@ -113,7 +113,12 @@ export default function CreateShippingAddress({
         token,
       });
 
-      return router.push("/profile/address");
+      localStorage.removeItem("register");
+      return router.push(
+        router.query.callback
+          ? (router.query.callback as string)
+          : "/profile/address",
+      );
     } catch (error) {
       Toast.error("Terjadi kesalahan saat membuat alamat");
       console.log(error);
