@@ -75,7 +75,9 @@ export default function PopupUnauthenticated({
                   variant="flat"
                   color="primary"
                   className="font-semibold"
-                  onClick={() => router.push("/auth/register")}
+                  onClick={() =>
+                    router.push(`/auth/register?callback=${router.asPath}`)
+                  }
                 >
                   Register
                 </Button>
@@ -84,7 +86,9 @@ export default function PopupUnauthenticated({
                   variant="solid"
                   color="primary"
                   className="font-semibold"
-                  onClick={() => router.push("/auth/login")}
+                  onClick={() =>
+                    router.push(`/auth/login?callback=${router.asPath}`)
+                  }
                 >
                   Login
                 </Button>

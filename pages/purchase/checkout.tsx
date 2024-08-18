@@ -1,12 +1,25 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
+import { shopAddress } from "@/data/app.data";
+import { Address } from "@/types/address.type";
+import { Bank } from "@/types/bank.type";
+import { SuccessResponse } from "@/types/global.type";
+import { fetcher } from "@/utils/fetcher";
+import {
+  Button,
+  Radio,
+  RadioGroup,
+  Select,
+  SelectItem,
+} from "@nextui-org/react";
 import { ArrowRight, MapTrifold, Truck } from "@phosphor-icons/react";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function CheckoutPage() {
+export default function CheckoutPage({
+  checkout,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
 
   const [selectedDiv, setSelectedDiv] = useState("");
@@ -14,7 +27,7 @@ export default function CheckoutPage() {
   return (
     <Layout title="Checkout Page">
       <HeaderTitle
-        path="/products/17630837"
+        path="/products"
         label="Buat Pesanan"
         className="sticky left-0 top-0"
       />
@@ -67,25 +80,46 @@ export default function CheckoutPage() {
           <div className="grid border-l-[4px] border-primary pl-4">
             {selectedDiv == "pickup" ? (
               <>
-                <h5 className="mb-1 text-sm font-semibold italic text-foreground">
-                  Alamat Toko TB Sinar Baja
+                <h5 className="mb-1 text-sm font-semibold text-foreground">
+                  Alamat Toko
                 </h5>
                 <p className="text-[12px] font-medium text-foreground-600">
-                  Jl. Letjend Sutoyo No.67, Burengan, Kec. Pesantren, Kabupaten
-                  Kediri, Jawa Timur 64131
+                  {shopAddress.address} - {shopAddress.phone}
                 </p>
               </>
-            ) : (
+            ) : null}
+
+            {selectedDiv == "delivery" ? (
               <>
-                <h5 className="mb-1 text-sm font-semibold italic text-foreground">
+                <h5 className="mb-1 text-sm font-semibold text-foreground">
                   Alamat Saya
                 </h5>
-                <p className="text-[12px] font-medium text-foreground-600">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Harum quasi quibusdam iusto facilis odit cupiditate.
-                </p>
+                <Select
+                  items={checkout.address}
+                  placeholder="Pilih Alamat"
+                  labelPlacement="outside"
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                  }}
+                >
+                  {(address) => (
+                    <SelectItem
+                      key={address.address_id}
+                      textValue={address.nama_penerima}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="flex flex-col">
+                          <span className="text-small capitalize">{`Alamat ${address.label} - ${address.nama_penerima} - ${address.no_telpon}`}</span>
+                          <span className="text-tiny text-default-400">
+                            {address.alamat_lengkap}
+                          </span>
+                        </div>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
               </>
-            )}
+            ) : null}
           </div>
         </div>
 
@@ -100,18 +134,22 @@ export default function CheckoutPage() {
           </h3>
 
           <RadioGroup>
-            <Radio
-              value="bca"
-              description="0192847621 a/n TB Sinar Baja Kediri"
-              classNames={{
-                description:
-                  "text-[12px] italic text-foreground-600 font-medium",
-              }}
-            >
-              <p className="text-sm font-medium text-foreground">
-                Bank Central Asia (BCA)
-              </p>
-            </Radio>
+            {checkout.banks.map((item) => {
+              return (
+                <Radio
+                  key={item.bank_id}
+                  value={item.bank_id}
+                  description={`${item.no_rekening} a/n ${item.atas_nama}`}
+                  classNames={{
+                    description: "text-[12px] text-foreground-600 font-medium",
+                  }}
+                >
+                  <p className="text-sm font-medium text-foreground">
+                    {item.bank}
+                  </p>
+                </Radio>
+              );
+            })}
           </RadioGroup>
 
           <Button
@@ -129,12 +167,21 @@ export default function CheckoutPage() {
   );
 }
 
-export const getServerSideProps = (async ({ query }) => {
-  console.log(query);
+export const getServerSideProps = (async ({ query, req }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<{ banks: Bank[]; address: Address[] }> =
+    await fetcher({
+      url: "/checkout",
+      method: "GET",
+      token,
+    });
 
   return {
     props: {
-      carts: ["ak"],
+      checkout: response.data,
     },
   };
-}) satisfies GetServerSideProps<{ carts: string[] }>;
+}) satisfies GetServerSideProps<{
+  checkout: { banks: Bank[]; address: Address[] };
+}>;
