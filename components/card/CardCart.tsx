@@ -172,7 +172,7 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
           </div>
 
           <div className="grid grid-cols-2 items-center justify-between gap-2">
-            <div className="grid grid-cols-[32px_100px_32px] items-center gap-2">
+            <div className="grid grid-cols-[32px_50px_32px] items-center gap-2">
               <Button
                 isIconOnly
                 variant="bordered"

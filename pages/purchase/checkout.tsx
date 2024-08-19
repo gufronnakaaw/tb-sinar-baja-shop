@@ -15,14 +15,41 @@ import {
 import { ArrowRight, MapTrifold, Truck } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CheckoutPage({
   checkout,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const [address, setAddress] = useState("");
+  const [bank, setBank] = useState("");
+  const [disabled, setDisabled] = useState<boolean>(true);
 
   const [selectedDiv, setSelectedDiv] = useState("");
+
+  useEffect(() => {
+    if (selectedDiv == "pickup") {
+      setDisabled(!selectedDiv || !bank);
+    }
+
+    if (selectedDiv == "delivery") {
+      setDisabled(!selectedDiv || !bank || !address);
+    }
+  }, [selectedDiv, bank, address]);
+
+  function handleCheckout() {
+    if (!disabled) {
+      return router.push({
+        pathname: "/purchase/preview",
+        query: {
+          type: selectedDiv,
+          bank,
+          address,
+          ...router.query,
+        },
+      });
+    }
+  }
 
   return (
     <Layout title="Checkout Page">
@@ -41,7 +68,10 @@ export default function CheckoutPage({
           <div className="grid grid-cols-2 gap-4">
             <div
               className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "pickup" ? "border-primary bg-primary" : null}`}
-              onClick={() => setSelectedDiv("pickup")}
+              onClick={() => {
+                setSelectedDiv("pickup");
+                setAddress("");
+              }}
             >
               <MapTrifold
                 weight="duotone"
@@ -98,9 +128,7 @@ export default function CheckoutPage({
                   items={checkout.address}
                   placeholder="Pilih Alamat"
                   labelPlacement="outside"
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                  }}
+                  onChange={(e) => setAddress(e.target.value)}
                 >
                   {(address) => (
                     <SelectItem
@@ -133,7 +161,7 @@ export default function CheckoutPage({
             </span>
           </h3>
 
-          <RadioGroup>
+          <RadioGroup onChange={(e) => setBank(e.target.value)}>
             {checkout.banks.map((item) => {
               return (
                 <Radio
@@ -155,9 +183,9 @@ export default function CheckoutPage({
           <Button
             color="primary"
             endContent={<ArrowRight weight="bold" size={16} />}
-            onClick={() => router.push("/purchase/preview?id=17630837")}
+            onClick={handleCheckout}
             className="mb-4 w-full font-semibold"
-            isDisabled={!selectedDiv}
+            isDisabled={disabled}
           >
             Selanjutnya
           </Button>
