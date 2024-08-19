@@ -8,13 +8,22 @@ import { fetcher } from "@/utils/fetcher";
 import { Input, Spinner } from "@nextui-org/react";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
+import { useDebounce } from "use-debounce";
 
 export default function CategoriesPage({
   products,
+  name,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const params = useParams();
+  const [search, setSearch] = useState("");
+  const [searchValue] = useDebounce(search, 1000);
+  const router = useRouter();
+
   const getKey = (
     pageIndex: number,
     previousPageData: SuccessResponse<Product[]>,
@@ -22,7 +31,7 @@ export default function CategoriesPage({
     if (previousPageData && !previousPageData.data.length) return null;
 
     return {
-      url: `/products?page=${pageIndex + 1}&limit=8`,
+      url: `/products/category/${encodeURIComponent(name)}?page=${pageIndex + 1}`,
       method: "GET",
     };
   };
@@ -39,6 +48,12 @@ export default function CategoriesPage({
       setSize((prev) => prev + 1);
     }
   }, [inView, setSize]);
+
+  useEffect(() => {
+    if (searchValue) {
+      router.push(`/products/search?q=${encodeURIComponent(searchValue)}`);
+    }
+  }, [searchValue]);
 
   const productsMap = !data
     ? products.data
@@ -63,11 +78,14 @@ export default function CategoriesPage({
               />
             }
             placeholder="Cari produk disini"
+            onChange={(e) => setSearch(e.target.value)}
           />
         </header>
 
         <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Semua Produk</h4>
+          <h4 className="font-semibold text-foreground">
+            Semua Produk {params.name ? `“${params.name}”` : null}
+          </h4>
 
           <div className="grid grid-cols-2 items-center gap-4">
             <FilterProduct />
@@ -75,7 +93,7 @@ export default function CategoriesPage({
 
           <div className="grid grid-cols-2 items-start gap-4 pb-32">
             {productsMap?.map((product) => (
-              <CardProduct key={product.id} product={product} />
+              <CardProduct key={product.kode_item} product={product} />
             ))}
 
             <div ref={ref}></div>
@@ -92,15 +110,19 @@ export default function CategoriesPage({
   );
 }
 
-export const getServerSideProps = (async () => {
+export const getServerSideProps = (async ({ params }) => {
   const response: SuccessResponse<Product[]> = await fetcher({
-    url: "/products?page=1",
+    url: `/products/category/${encodeURIComponent(params?.name as string)}?page=1`,
     method: "GET",
   });
 
   return {
     props: {
       products: response,
+      name: params?.name as string,
     },
   };
-}) satisfies GetServerSideProps<{ products: SuccessResponse<Product[]> }>;
+}) satisfies GetServerSideProps<{
+  products: SuccessResponse<Product[]>;
+  name: string;
+}>;

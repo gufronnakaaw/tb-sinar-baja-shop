@@ -21,6 +21,23 @@ export default function ButtonNavbar({
 }: ButtonNavbarProps) {
   const ctx = useContext(AppContext);
 
+  function checkPath(path: string) {
+    if (router.pathname == path) {
+      return "text-primary";
+    }
+
+    if (path == "/products") {
+      if (
+        router.pathname == "/products/search" ||
+        router.pathname == "/category/[name]"
+      ) {
+        return "text-primary";
+      }
+    }
+
+    return "text-foreground-600";
+  }
+
   if (path == "/cart") {
     if (status == "unauthenticated") {
       return (
@@ -72,10 +89,7 @@ export default function ButtonNavbar({
   }
 
   return (
-    <Link
-      href={path}
-      className={`grid place-items-center ${router.pathname == path ? "text-primary" : "text-foreground-600"}`}
-    >
+    <Link href={path} className={`grid place-items-center ${checkPath(path)}`}>
       <>{icon}</>
       <span className="text-[12px] font-semibold">{label}</span>
     </Link>

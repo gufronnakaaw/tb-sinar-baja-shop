@@ -48,11 +48,15 @@ export default function FilterProduct() {
   function handleCategories(e: ChangeEvent<HTMLSelectElement>) {
     const category = e.target.value;
 
-    const find = categories.find((item) => item.id == parseInt(category));
+    if (category) {
+      const find = categories.find((item) => item.id == parseInt(category));
 
-    return router.push(
-      `/category/${find?.nama.toLowerCase().split(" ").join("-")}`,
-    );
+      return router.push(
+        `/category/${encodeURIComponent(find?.nama as string)}`,
+      );
+    }
+
+    return router.push("/products");
   }
 
   return (

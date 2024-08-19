@@ -53,7 +53,7 @@ export default function ProductsPage({
     if (searchValue) {
       router.push(`/products/search?q=${encodeURIComponent(searchValue)}`);
     }
-  }, [searchValue, router]);
+  }, [searchValue]);
 
   const productsMap: Product[] = !data
     ? products.data

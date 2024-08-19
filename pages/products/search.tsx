@@ -54,7 +54,7 @@ export default function ProductsSearchPage({
   }, [inView, setSize]);
 
   useEffect(() => {
-    if (searchValue != q) {
+    if (searchValue) {
       containerParent.current?.scrollIntoView({
         behavior: "instant",
         block: "start",
@@ -62,8 +62,10 @@ export default function ProductsSearchPage({
       inputElement.current?.focus();
 
       router.push(`/products/search?q=${encodeURIComponent(searchValue)}`);
+    } else {
+      router.push("/products");
     }
-  }, [searchValue, router, q]);
+  }, [searchValue]);
 
   const productsMap: Product[] = !data
     ? products.data
