@@ -1,15 +1,13 @@
-import { Button } from "@nextui-org/react";
-import { MapPin } from "@phosphor-icons/react";
-import Image from "next/image";
-import { useRouter } from "next/router";
-
 import Layout from "@/components/Layout";
 import CardAddress from "@/components/card/CardAddress";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { Address } from "@/types/address.type";
 import { SuccessResponse } from "@/types/global.type";
+import { Button } from "@nextui-org/react";
+import { MapPin } from "@phosphor-icons/react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import useSWR from "swr";
 
 export default function ShippingAddressPage({
@@ -35,7 +33,7 @@ export default function ShippingAddressPage({
     <Layout title="Alamat Pengiriman" className="relative">
       <HeaderTitle path="/profile" label="Alamat Pengiriman" />
 
-      <div className="h-screen">
+      <div className="mb-16 min-h-screen">
         <div className="grid gap-4 overflow-scroll">
           {!data?.data.length ? (
             <div className="mt-12 grid place-items-center gap-4">
@@ -65,7 +63,7 @@ export default function ShippingAddressPage({
         </div>
       </div>
 
-      <div className="sticky bottom-0 left-0 z-50 h-16 w-full">
+      <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
         <Button
           color="primary"
           startContent={<MapPin weight="bold" size={20} />}
