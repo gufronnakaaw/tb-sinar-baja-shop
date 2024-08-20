@@ -59,71 +59,72 @@ export default function CheckoutPage({
         className="sticky left-0 top-0"
       />
 
-      <div className="grid gap-8">
-        <div className="grid gap-4">
-          <h3 className="text-sm font-semibold text-foreground">
-            Informasi Pengiriman
-          </h3>
+      <div className="mb-16 min-h-screen">
+        <div className="grid divide-y-1 divide-dashed divide-foreground-200">
+          <div className="grid gap-4 pb-6">
+            <h3 className="text-sm font-semibold text-foreground">
+              Informasi Pengiriman
+            </h3>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div
-              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "pickup" ? "border-primary bg-primary" : null}`}
-              onClick={() => {
-                setSelectedDiv("pickup");
-                setAddress("");
-              }}
-            >
-              <MapTrifold
-                weight="duotone"
-                size={36}
-                className={`text-primary transition group-hover:text-white ${selectedDiv == "pickup" ? "text-white" : null}`}
-              />
-
-              <h6
-                className={`text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white ${selectedDiv == "pickup" ? "text-white" : null}`}
+            <div className="grid grid-cols-2 gap-4">
+              <div
+                className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "pickup" ? "border-primary bg-primary" : null}`}
+                onClick={() => {
+                  setSelectedDiv("pickup");
+                  setAddress("");
+                }}
               >
-                Pesanan <br />
-                Diambil Sendiri
-              </h6>
+                <MapTrifold
+                  weight="duotone"
+                  size={36}
+                  className={`text-primary transition group-hover:text-white ${selectedDiv == "pickup" ? "text-white" : null}`}
+                />
+
+                <h6
+                  className={`text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white ${selectedDiv == "pickup" ? "text-white" : null}`}
+                >
+                  Pesanan <br />
+                  Diambil Sendiri
+                </h6>
+              </div>
+
+              <div
+                className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "delivery" ? "border-primary bg-primary" : null}`}
+                onClick={() => setSelectedDiv("delivery")}
+              >
+                <Truck
+                  weight="duotone"
+                  size={36}
+                  className={`text-primary transition group-hover:text-white ${selectedDiv == "delivery" ? "text-white" : null}`}
+                />
+
+                <h6
+                  className={`text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white ${selectedDiv == "delivery" ? "text-white" : null}`}
+                >
+                  Pesanan <br />
+                  Diantar
+                </h6>
+              </div>
             </div>
 
-            <div
-              className={`group flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[2px] border-foreground-200 p-2 transition hover:border-primary hover:bg-primary ${selectedDiv == "delivery" ? "border-primary bg-primary" : null}`}
-              onClick={() => setSelectedDiv("delivery")}
-            >
-              <Truck
-                weight="duotone"
-                size={36}
-                className={`text-primary transition group-hover:text-white ${selectedDiv == "delivery" ? "text-white" : null}`}
-              />
-
-              <h6
-                className={`text-center text-[12px] font-semibold text-foreground-600 transition group-hover:text-white ${selectedDiv == "delivery" ? "text-white" : null}`}
-              >
-                Pesanan <br />
-                Diantar
-              </h6>
-            </div>
-          </div>
-
-          {/* selected delivery */}
-          <div className="grid border-l-[4px] border-primary pl-4">
+            {/* selected delivery */}
             {selectedDiv == "pickup" ? (
-              <>
+              <div className="grid border-l-[4px] border-primary pl-4">
                 <h5 className="mb-1 text-sm font-semibold text-foreground">
                   Alamat Toko
                 </h5>
                 <p className="text-[12px] font-medium text-foreground-600">
                   {shopAddress.address} - {shopAddress.phone}
                 </p>
-              </>
+              </div>
             ) : null}
 
             {selectedDiv == "delivery" ? (
-              <>
+              <div className="grid border-l-[4px] border-primary pl-4">
                 <h5 className="mb-1 text-sm font-semibold text-foreground">
                   Alamat Saya
                 </h5>
+
                 <Select
                   items={checkout.address}
                   placeholder="Pilih Alamat"
@@ -146,50 +147,51 @@ export default function CheckoutPage({
                     </SelectItem>
                   )}
                 </Select>
-              </>
+              </div>
             ) : null}
           </div>
+
+          <div className="grid gap-4 pt-6">
+            <h3 className="text-sm font-semibold text-foreground">
+              Metode Pembayaran{" "}
+              <span className="text-[12px] font-medium text-foreground-600">
+                (Transfer Bank)
+              </span>
+            </h3>
+
+            <RadioGroup onChange={(e) => setBank(e.target.value)}>
+              {checkout.banks.map((item) => {
+                return (
+                  <Radio
+                    key={item.bank_id}
+                    value={item.bank_id}
+                    description={`${item.no_rekening} a/n ${item.atas_nama}`}
+                    classNames={{
+                      description:
+                        "text-[12px] text-foreground-600 font-medium",
+                    }}
+                  >
+                    <p className="text-sm font-medium text-foreground">
+                      {item.bank}
+                    </p>
+                  </Radio>
+                );
+              })}
+            </RadioGroup>
+          </div>
         </div>
+      </div>
 
-        <div className="h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="grid gap-4">
-          <h3 className="text-sm font-semibold text-foreground">
-            Metode Pembayaran{" "}
-            <span className="text-[12px] font-medium text-foreground-600">
-              (Transfer Bank)
-            </span>
-          </h3>
-
-          <RadioGroup onChange={(e) => setBank(e.target.value)}>
-            {checkout.banks.map((item) => {
-              return (
-                <Radio
-                  key={item.bank_id}
-                  value={item.bank_id}
-                  description={`${item.no_rekening} a/n ${item.atas_nama}`}
-                  classNames={{
-                    description: "text-[12px] text-foreground-600 font-medium",
-                  }}
-                >
-                  <p className="text-sm font-medium text-foreground">
-                    {item.bank}
-                  </p>
-                </Radio>
-              );
-            })}
-          </RadioGroup>
-
-          <Button
-            color="primary"
-            endContent={<ArrowRight weight="bold" size={16} />}
-            onClick={handleCheckout}
-            className="mb-4 w-full font-semibold"
-            isDisabled={disabled}
-          >
-            Selanjutnya
-          </Button>
-        </div>
+      <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
+        <Button
+          color="primary"
+          endContent={<ArrowRight weight="bold" size={16} />}
+          onClick={handleCheckout}
+          className="mb-4 w-full font-semibold"
+          isDisabled={disabled}
+        >
+          Selanjutnya
+        </Button>
       </div>
     </Layout>
   );
