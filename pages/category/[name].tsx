@@ -18,6 +18,7 @@ import { useDebounce } from "use-debounce";
 export default function CategoriesPage({
   products,
   name,
+  sort,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const params = useParams();
   const [search, setSearch] = useState("");
@@ -31,7 +32,9 @@ export default function CategoriesPage({
     if (previousPageData && !previousPageData.data.length) return null;
 
     return {
-      url: `/products/category/${encodeURIComponent(name)}?page=${pageIndex + 1}`,
+      url: sort
+        ? `/products/category/${encodeURIComponent(name)}?page=${pageIndex + 1}&sort=${sort}`
+        : `/products/category/${encodeURIComponent(name)}?page=${pageIndex + 1}`,
       method: "GET",
     };
   };
@@ -110,9 +113,13 @@ export default function CategoriesPage({
   );
 }
 
-export const getServerSideProps = (async ({ params }) => {
+export const getServerSideProps = (async ({ params, query }) => {
+  const sort = query?.sort as string;
+
   const response: SuccessResponse<Product[]> = await fetcher({
-    url: `/products/category/${encodeURIComponent(params?.name as string)}?page=1`,
+    url: sort
+      ? `/products/category/${encodeURIComponent(params?.name as string)}?page=1&sort=${sort}`
+      : `/products/category/${encodeURIComponent(params?.name as string)}?page=1`,
     method: "GET",
   });
 
@@ -120,6 +127,7 @@ export const getServerSideProps = (async ({ params }) => {
     props: {
       products: response,
       name: params?.name as string,
+      sort: sort ? sort : "",
     },
   };
 }) satisfies GetServerSideProps<{
