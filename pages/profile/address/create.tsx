@@ -294,7 +294,7 @@ export default function CreateShippingAddress({
           />
         </div>
 
-        <div className="sticky bottom-0 left-0 z-50 bg-white py-4">
+        <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
           <Button
             color="primary"
             onClick={handleCreateAddress}
