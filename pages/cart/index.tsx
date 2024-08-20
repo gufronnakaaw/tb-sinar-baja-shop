@@ -1,11 +1,11 @@
 import CardCart from "@/components/card/CardCart";
 import EmptyCart from "@/components/EmptyCart";
+import HeaderTitle from "@/components/header/HeaderTitle";
 import Layout from "@/components/Layout";
 import { Cart } from "@/types/cart.type";
 import { SuccessResponse } from "@/types/global.type";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button } from "@nextui-org/react";
-import { CaretLeft } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as qs from "qs";
@@ -32,23 +32,13 @@ export default function CartPage({
 
   return (
     <Layout title="Keranjang Saya">
-      <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
-        <Button
-          isIconOnly
-          variant="light"
-          color="default"
-          size="sm"
-          onClick={() => router.back()}
-        >
-          <CaretLeft weight="bold" size={20} className="text-foreground" />
-        </Button>
+      <HeaderTitle
+        path="/products"
+        label="Keranjang Saya"
+        className="sticky left-0 top-0"
+      />
 
-        <h5 className="text-center font-semibold text-foreground">
-          Keranjang Saya
-        </h5>
-      </header>
-
-      <div className="h-full">
+      <div className="min-h-screen">
         {data?.data.length ? (
           <div className="grid gap-4 pb-8">
             {data.data.map((cart) => (
@@ -61,7 +51,7 @@ export default function CartPage({
       </div>
 
       {data?.data.length ? (
-        <div className="sticky bottom-0 left-0 z-50 h-24 w-full bg-white">
+        <div className="sticky bottom-0 left-0 z-50 w-full bg-white p-[8px_0_1.5rem_0]">
           <div className="mb-2 flex items-end justify-between">
             <h4 className="text-[12px] font-medium text-foreground-600">
               Total Pembayaran
