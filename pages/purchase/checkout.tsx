@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout";
-import HeaderTitle from "@/components/header/HeaderTitle";
 import { shopAddress } from "@/data/app.data";
 import { Address } from "@/types/address.type";
 import { Bank } from "@/types/bank.type";
@@ -12,7 +11,7 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { ArrowRight, MapTrifold, Truck } from "@phosphor-icons/react";
+import { ArrowRight, CaretLeft, MapTrifold, Truck } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -39,25 +38,40 @@ export default function CheckoutPage({
 
   function handleCheckout() {
     if (!disabled) {
+      const query = {
+        type: selectedDiv,
+        bank,
+        ...router.query,
+      };
+
+      if (address) {
+        Object.assign(query, { address });
+      }
+
       return router.push({
         pathname: "/purchase/preview",
-        query: {
-          type: selectedDiv,
-          bank,
-          address,
-          ...router.query,
-        },
+        query,
       });
     }
   }
 
   return (
     <Layout title="Checkout Page">
-      <HeaderTitle
-        path="/products"
-        label="Buat Pesanan"
-        className="sticky left-0 top-0"
-      />
+      <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
+          <Button
+            isIconOnly
+            variant="light"
+            color="default"
+            size="sm"
+            onClick={() => router.back()}
+          >
+            <CaretLeft weight="bold" size={20} className="text-foreground" />
+          </Button>
+
+          <h5 className="text-center font-semibold text-foreground">
+          Buat Pesanan
+          </h5>
+        </header>
 
       <div className="grid gap-8">
         <div className="grid gap-4">

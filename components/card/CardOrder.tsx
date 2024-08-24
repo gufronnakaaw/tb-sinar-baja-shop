@@ -1,15 +1,16 @@
+import { ProductOrder } from "@/types/preview.type";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Image } from "@nextui-org/react";
 import NextImage from "next/image";
 
-export default function CardOrder() {
+export default function CardOrder(item: ProductOrder) {
   return (
     <div className="grid grid-cols-[80px_1fr] items-center gap-4">
       <Image
         priority
         isBlurred
         as={NextImage}
-        src="/img/product-img-1.webp"
+        src={item.image[0].url}
         alt="image"
         width={500}
         height={500}
@@ -19,19 +20,19 @@ export default function CardOrder() {
       <div className="grid gap-2">
         <div>
           <h4 className="line-clamp-2 text-sm font-semibold text-foreground">
-            Besi Beton KS (Krakatau Steel) 12mm Polos TP280
+            {item.nama_produk_asli}
           </h4>
           <p className="text-[12px] font-medium text-foreground-600">
-            Besi Baja
+            {item.kategori}
           </p>
         </div>
 
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-semibold text-foreground">
-            2 x {formatRupiah(130000)}
+            {item.quantity} x {formatRupiah(item.harga)}
           </h4>
           <h4 className="text-sm font-semibold text-foreground">
-            {formatRupiah(260000)}
+            {formatRupiah(item.subtotal_produk)}
           </h4>
         </div>
       </div>

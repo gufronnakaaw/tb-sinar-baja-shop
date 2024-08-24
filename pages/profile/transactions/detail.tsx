@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout";
-import CardOrder from "@/components/card/CardOrder";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Chip } from "@nextui-org/react";
@@ -68,9 +67,9 @@ export default function TransactionDetail() {
             <h4 className="font-semibold text-foreground">Daftar Pesanan</h4>
 
             <div className="grid gap-4">
+              {/* <CardOrder />
               <CardOrder />
-              <CardOrder />
-              <CardOrder />
+              <CardOrder /> */}
             </div>
           </div>
 
