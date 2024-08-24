@@ -34,9 +34,9 @@ export default function PreviewPage({
         </h5>
       </header>
 
-      <div className="grid gap-16">
-        <div className="grid gap-6">
-          <div className="grid gap-[12px]">
+      <div className="mb-10 min-h-screen">
+        <div className="grid divide-y-2 divide-dashed divide-foreground-200">
+          <div className="grid gap-[12px] pb-4">
             <h3 className="text-sm font-semibold text-foreground">
               Informasi Pengiriman
             </h3>
@@ -80,9 +80,7 @@ export default function PreviewPage({
             </div>
           </div>
 
-          <div className="h-[1px] w-full border border-dashed border-foreground-200" />
-
-          <div className="grid gap-[12px]">
+          <div className="grid gap-[12px] py-4">
             <h3 className="text-sm font-semibold text-foreground">
               Metode Pembayaran{" "}
               <span className="text-[12px] font-medium text-foreground-600">
@@ -90,21 +88,17 @@ export default function PreviewPage({
               </span>
             </h3>
 
-            <div className="flex items-center justify-between gap-2">
-              <div>
-                <h6 className="text-[12px] font-medium text-foreground">
-                  {preview.bank.bank}
-                </h6>
-                <p className="mt-1 text-[12px] font-medium text-foreground-600">
-                  {preview.bank.no_rekening} a/n {preview.bank.atas_nama}
-                </p>
-              </div>
+            <div>
+              <h6 className="text-[12px] font-medium text-foreground">
+                {preview.bank.bank}
+              </h6>
+              <p className="mt-1 text-[12px] font-medium text-foreground-600">
+                {preview.bank.no_rekening} a/n {preview.bank.atas_nama}
+              </p>
             </div>
           </div>
 
-          <div className="h-[1px] w-full border border-dashed border-foreground-200" />
-
-          <div className="grid gap-[12px]">
+          <div className="grid gap-[12px] py-4">
             <h4 className="font-semibold text-foreground">Daftar Pesanan</h4>
 
             <div className="grid gap-4">
@@ -114,9 +108,7 @@ export default function PreviewPage({
             </div>
           </div>
 
-          <div className="h-[1px] w-full border border-dashed border-foreground-200" />
-
-          <div className="grid gap-1">
+          <div className="grid gap-1 pt-4">
             <div className="flex items-center justify-between gap-2">
               <h4 className="text-[12px] font-medium text-foreground-600">
                 Subtotal Produk
@@ -138,23 +130,25 @@ export default function PreviewPage({
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="grid gap-3 pb-4">
-          <div className="flex items-center justify-between gap-2">
-            <h4 className="font-semibold text-foreground">Total Pembayaran</h4>
-            <h4 className="font-semibold text-foreground">
-              {formatRupiah(preview.total)}
-            </h4>
-          </div>
-
-          <Button
-            color="primary"
-            onClick={() => router.push("/purchase/payment")}
-            className="w-full font-semibold"
-          >
-            Pesan ({preview.products.length} item)
-          </Button>
+      <div className="sticky bottom-0 left-0 z-50 w-full bg-white p-[8px_0_1.5rem_0]">
+        <div className="mb-2 flex items-end justify-between">
+          <h4 className="text-[12px] font-medium text-foreground-600">
+            Total Pembayaran
+          </h4>
+          <h4 className="font-semibold text-foreground">
+            {formatRupiah(preview.total)}
+          </h4>
         </div>
+
+        <Button
+          color="primary"
+          onClick={() => router.push("/purchase/payment")}
+          className="w-full font-semibold"
+        >
+          Pesan ({preview.products.length} item)
+        </Button>
       </div>
     </Layout>
   );
