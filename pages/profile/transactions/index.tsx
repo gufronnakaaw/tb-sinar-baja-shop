@@ -1,8 +1,15 @@
+import EmptyTransaction from "@/components/EmptyTransaction";
 import Layout from "@/components/Layout";
 import CardTransaction from "@/components/card/CardTransaction";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { SuccessResponse } from "@/types/global.type";
+import { Transaction } from "@/types/transaction.type";
+import { fetcher } from "@/utils/fetcher";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-export default function TransactionsPage() {
+export default function TransactionsPage({
+  transactions,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout title="Lihat Riwayat Transaksi Pembelian Baja Anda Dengan Mudah Dan Cepat.">
       <div className="grid gap-3">
@@ -12,36 +19,30 @@ export default function TransactionsPage() {
           className="sticky left-0 top-0"
         />
 
-        <CardTransaction
-          {...{
-            id_transaksi: "#150720241001",
-            total_item: 2,
-            total_transaksi: 100000,
-            tanggal_transaksi: "20 Juli 2024 09:13",
-            status: "Selesai",
-          }}
-        />
-
-        <CardTransaction
-          {...{
-            id_transaksi: "#090720242301",
-            total_item: 10,
-            total_transaksi: 3500000,
-            tanggal_transaksi: "20 Juli 2024 09:13",
-            status: "Selesai",
-          }}
-        />
-
-        <CardTransaction
-          {...{
-            id_transaksi: "#290720241201",
-            total_item: 20,
-            total_transaksi: 35000000,
-            tanggal_transaksi: "20 Juli 2024 09:13",
-            status: "Selesai",
-          }}
-        />
+        {transactions.length ? (
+          transactions.map((item) => {
+            return <CardTransaction key={item.transaksi_id} {...item} />;
+          })
+        ) : (
+          <EmptyTransaction />
+        )}
       </div>
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ req }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<Transaction[]> = await fetcher({
+    url: "/transactions",
+    method: "GET",
+    token,
+  });
+
+  return {
+    props: {
+      transactions: response.data,
+    },
+  };
+}) satisfies GetServerSideProps<{ transactions: Transaction[] }>;

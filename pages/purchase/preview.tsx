@@ -10,11 +10,40 @@ import { CaretLeft, MapPin, Truck } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import qs from "qs";
+import Toast from "react-hot-toast";
 
 export default function PreviewPage({
   preview,
+  token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+
+  async function handleCreateTransaction() {
+    try {
+      const response: SuccessResponse<{ transaksi_id: string }> = await fetcher(
+        {
+          url: "/transactions",
+          method: "POST",
+          token,
+          data: preview,
+        },
+      );
+
+      if (preview.type == "pickup") {
+        return router.push(
+          `/purchase/payment?id=${response.data.transaksi_id}`,
+        );
+      } else {
+        return router.push(
+          `/purchase/waiting?id=${response.data.transaksi_id}`,
+        );
+      }
+    } catch (error) {
+      console.log(error);
+
+      Toast.error("Terjadi kesalahan saat membuat transaksi");
+    }
+  }
 
   return (
     <Layout title="Preview Page">
@@ -144,7 +173,7 @@ export default function PreviewPage({
 
         <Button
           color="primary"
-          onClick={() => router.push("/purchase/payment")}
+          onClick={handleCreateTransaction}
           className="w-full font-semibold"
         >
           Pesan ({preview.products.length} item)
@@ -166,6 +195,7 @@ export const getServerSideProps = (async ({ query, req }) => {
   return {
     props: {
       preview: response.data,
+      token,
     },
   };
-}) satisfies GetServerSideProps<{ preview: Preview }>;
+}) satisfies GetServerSideProps<{ preview: Preview; token: string }>;

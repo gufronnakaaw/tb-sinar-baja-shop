@@ -86,7 +86,7 @@ export default function OrderPage() {
   return (
     <Layout title="Payment Page">
       <HeaderTitle
-        path="/"
+        path="/profile/transactions"
         label="Pembayaran"
         className="sticky left-0 top-0"
       />
