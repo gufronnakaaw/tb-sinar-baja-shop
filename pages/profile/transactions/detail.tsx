@@ -26,20 +26,20 @@ export default function TransactionDetails({
           className="sticky left-0 top-0"
         />
 
-        <div className="grid gap-6">
-          <div className="flex flex-col items-center justify-center gap-2">
-            <div className="rounded-full bg-foreground-100 p-6">
-              <Bag weight="bold" size={35} />
+        <div className="grid divide-y-1.5 divide-dashed divide-foreground-200">
+          <div className="flex flex-col items-center justify-center gap-2 pb-6">
+            <div className="rounded-full bg-foreground-100 p-4">
+              <Bag weight="bold" size={26} />
             </div>
 
             <div className="flex flex-col items-center gap-1 text-center">
-              <p className="text-lg font-semibold">
+              <p className="font-semibold text-foreground">
                 {transaction.nama_penerima}
               </p>
-              <p className="text-sm text-foreground-600">
+              <p className="text-[12px] text-foreground-600">
                 {transaction.no_telpon}
               </p>
-              <p className="text-sm text-foreground-600">
+              <p className="text-[12px] text-foreground-600">
                 {transaction.alamat_lengkap},{" "}
                 <span className="uppercase">
                   {transaction.kecamatan}, {transaction.kota},{" "}
@@ -49,41 +49,37 @@ export default function TransactionDetails({
             </div>
           </div>
 
-          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
-
           {transaction.type == "pickup" ? (
-            <>
-              <div className="grid gap-3">
-                <h4 className="font-semibold text-foreground">Alamat</h4>
+            <div className="grid gap-2 py-6">
+              <h4 className="text-sm font-semibold text-foreground">Alamat</h4>
 
-                <div className="border-l-4 border-primary py-2 pl-3">
-                  <h6 className="mb-1 text-[12px] font-semibold text-foreground">
-                    TB Sinar Baja
-                    <Chip
-                      color="primary"
-                      size="sm"
-                      classNames={{
-                        base: "px-[2px]",
-                        content: "font-medium text-[10px]",
-                      }}
-                      className="ml-2 inline-flex"
-                    >
-                      Ambil Sendiri
-                    </Chip>
-                  </h6>
-                  <p className="text-[12px] font-medium text-foreground-600">
-                    {shopAddress.address} - {shopAddress.phone}
-                  </p>
-                </div>
+              <div>
+                <h6 className="mb-1 text-[12px] font-semibold text-foreground">
+                  TB Sinar Baja
+                  <Chip
+                    color="primary"
+                    size="sm"
+                    classNames={{
+                      content: "font-medium text-[10px]",
+                    }}
+                    className="ml-2"
+                  >
+                    Ambil Sendiri
+                  </Chip>
+                </h6>
+                <p className="text-[12px] font-medium text-foreground-600">
+                  {shopAddress.address} - {shopAddress.phone}
+                </p>
               </div>
-              <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
-            </>
+            </div>
           ) : null}
 
-          <div className="grid gap-3">
-            <h4 className="font-semibold text-foreground">Daftar Pesanan</h4>
+          <div className="grid gap-2 py-6">
+            <h4 className="text-sm font-semibold text-foreground">
+              Daftar Pesanan
+            </h4>
 
-            <div className="grid gap-4">
+            <div className="grid gap-2">
               {transaction.products.map((product) => {
                 return (
                   <CardOrder
@@ -103,10 +99,10 @@ export default function TransactionDetails({
             </div>
           </div>
 
-          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
-
-          <div className="grid gap-3">
-            <h4 className="font-semibold text-foreground">Rincian Transaksi</h4>
+          <div className="grid gap-2 py-6">
+            <h4 className="text-sm font-semibold text-foreground">
+              Rincian Transaksi
+            </h4>
 
             <div className="grid grid-cols-2 items-center gap-2">
               <div className="grid gap-1 justify-self-start text-[12px] font-medium text-foreground-600">
@@ -122,9 +118,18 @@ export default function TransactionDetails({
               <div className="grid gap-1 justify-self-end text-[12px] font-medium text-foreground">
                 <p>{transaction.transaksi_id}</p>
                 <p className="capitalize">{transaction.payment.metode}</p>
-                <p className="font-semibold capitalize text-success">
+                <Chip
+                  variant="flat"
+                  color={
+                    transaction.status == "selesai" ? "success" : "default"
+                  }
+                  size="sm"
+                  classNames={{
+                    content: "text-[9px] capitalize font-medium",
+                  }}
+                >
                   {transaction.status}
-                </p>
+                </Chip>
                 <p>{formatTime(transaction.created_at)}</p>
                 <p>{formatDateWithoutTime(transaction.created_at)}</p>
                 <p>{formatRupiah(transaction.subtotal_produk)}</p>
@@ -133,14 +138,12 @@ export default function TransactionDetails({
             </div>
           </div>
 
-          <div className="h-[1.5px] w-full border-[1.5px] border-dashed border-foreground-200" />
-
-          <div className="mb-4 grid gap-2">
+          <div className="grid gap-2 pb-8 pt-6">
             <div className="flex items-end justify-between gap-2">
               <p className="text-[12px] font-medium text-foreground-600">
                 Total
               </p>
-              <h4 className="font-bold text-foreground">
+              <h4 className="text-sm font-bold text-foreground">
                 {formatRupiah(transaction.total)}
               </h4>
             </div>

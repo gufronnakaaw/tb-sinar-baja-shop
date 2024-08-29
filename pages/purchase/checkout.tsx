@@ -11,7 +11,12 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { ArrowRight, CaretLeft, MapTrifold, Truck } from "@phosphor-icons/react";
+import {
+  ArrowRight,
+  CaretLeft,
+  MapTrifold,
+  Truck,
+} from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -58,20 +63,20 @@ export default function CheckoutPage({
   return (
     <Layout title="Checkout Page">
       <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
-          <Button
-            isIconOnly
-            variant="light"
-            color="default"
-            size="sm"
-            onClick={() => router.back()}
-          >
-            <CaretLeft weight="bold" size={20} className="text-foreground" />
-          </Button>
+        <Button
+          isIconOnly
+          variant="light"
+          color="default"
+          size="sm"
+          onClick={() => router.back()}
+        >
+          <CaretLeft weight="bold" size={20} className="text-foreground" />
+        </Button>
 
-          <h5 className="text-center font-semibold text-foreground">
+        <h5 className="text-center font-semibold text-foreground">
           Buat Pesanan
-          </h5>
-        </header>
+        </h5>
+      </header>
 
       <div className="mb-16 min-h-screen">
         <div className="grid divide-y-1 divide-dashed divide-foreground-200">

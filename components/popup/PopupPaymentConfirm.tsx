@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -39,15 +40,35 @@ export default function PopupPaymentConfirm() {
               </ModalHeader>
 
               <ModalBody>
-                <div className="grid gap-1.5">
-                  <span className="inline-flex text-sm after:ml-[2px] after:text-danger after:content-['*']">
-                    Cari Berkas
-                  </span>
-                  <input
-                    type="file"
-                    accept=".xlsx,.xls,.jpg,.jpeg,.png,.svg,.pdf"
-                    className="rounded-xl bg-default-100 px-2 py-2 text-small text-foreground-500 file:mr-4 file:rounded-md file:border-0 file:bg-default-200 file:px-2 file:py-[2px] file:text-sm file:font-medium file:text-primary hover:file:bg-default-300"
+                <div className="grid gap-4">
+                  <Input
+                    isRequired
+                    variant="flat"
+                    color="default"
+                    label="Nama Pengirim"
+                    labelPlacement="outside"
+                    placeholder="Contoh: Jhon Doe"
                   />
+
+                  <Input
+                    isRequired
+                    variant="flat"
+                    color="default"
+                    label="Bank"
+                    labelPlacement="outside"
+                    placeholder="Contoh: Bank Satu Nusa"
+                  />
+
+                  <div className="grid gap-1.5">
+                    <span className="inline-flex text-sm after:ml-[2px] after:text-danger after:content-['*']">
+                      Cari Berkas
+                    </span>
+                    <input
+                      type="file"
+                      accept=".xlsx,.xls,.jpg,.jpeg,.png,.svg,.pdf"
+                      className="rounded-xl bg-default-100 px-2 py-2 text-small text-foreground-500 file:mr-4 file:rounded-md file:border-0 file:bg-default-200 file:px-2 file:py-[2px] file:text-sm file:font-medium file:text-primary hover:file:bg-default-300"
+                    />
+                  </div>
                 </div>
               </ModalBody>
 

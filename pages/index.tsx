@@ -18,12 +18,7 @@ export default function HomePage({
   const session = useSession();
 
   return (
-    <Layout
-      title="TB Sinar Baja : Temukan Berbagai Produk Baja Berkualitas Untuk Kebutuhan Proyek Anda Disini."
-      className="relative"
-    >
-      <Navbar />
-
+    <Layout title="TB Sinar Baja : Temukan Berbagai Produk Baja Berkualitas Untuk Kebutuhan Proyek Anda Disini.">
       <div className="grid gap-2">
         <div className="flex items-center justify-between gap-4 pb-4 pt-8">
           <h3 className="inline-flex gap-1 text-lg font-bold text-foreground">
@@ -76,16 +71,26 @@ export default function HomePage({
             : null}
         </div>
 
-        <div className="grid gap-2">
-          <h4 className="font-semibold text-foreground">Produk Terbaru</h4>
+        <div className="grid gap-8 pb-8">
+          <div className="grid gap-2">
+            <h4 className="font-semibold text-foreground">Produk Terbaru</h4>
 
-          <div className="grid grid-cols-2 items-start gap-4 overflow-scroll pb-32">
-            {products.map((product) => (
-              <CardProduct key={product.kode_item} product={product} />
-            ))}
+            <div className="grid grid-cols-2 items-start gap-4 overflow-scroll">
+              {products.map((product) => (
+                <CardProduct key={product.kode_item} product={product} />
+              ))}
+            </div>
           </div>
+
+          <p className="grid grid-cols-3 items-center text-center text-[10px] font-medium italic text-foreground-400">
+            <div className="h-[1px] w-full rounded-full bg-foreground-200" />
+            Kembali ke atas!
+            <div className="h-[1px] w-full rounded-full bg-foreground-200" />
+          </p>
         </div>
       </div>
+
+      <Navbar />
     </Layout>
   );
 }

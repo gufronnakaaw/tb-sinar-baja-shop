@@ -1,11 +1,11 @@
 import Layout from "@/components/Layout";
-import HeaderTitle from "@/components/header/HeaderTitle";
 import PopupPaymentConfirm from "@/components/popup/PopupPaymentConfirm";
 import { SuccessResponse } from "@/types/global.type";
 import { TransactionPaymentPage } from "@/types/transaction.type";
 import { fetcher } from "@/utils/fetcher";
 import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Snippet, Tab, Tabs } from "@nextui-org/react";
+import { CaretLeft } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
@@ -92,21 +92,31 @@ export default function OrderPage({
 
   return (
     <Layout title="Payment Page">
-      <HeaderTitle
-        path="/profile/transactions"
-        label="Pembayaran"
-        className="sticky left-0 top-0"
-      />
+      <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
+        <Button
+          isIconOnly
+          variant="light"
+          color="default"
+          size="sm"
+          onClick={() => router.back()}
+        >
+          <CaretLeft weight="bold" size={20} className="text-foreground" />
+        </Button>
 
-      <div className="grid gap-4">
-        <div className="grid gap-4">
+        <h5 className="text-center font-semibold text-foreground">
+          Pembayaran
+        </h5>
+      </header>
+
+      <div className="grid divide-y-1.5 divide-dashed divide-foreground-200">
+        <div className="grid gap-2 pb-6">
           <h3 className="text-sm font-semibold text-foreground">
-            Transfer ke Rekening
+            Metode Pembayaran
           </h3>
 
           <div className="grid gap-1">
             <p className="text-[12px] text-foreground-600">
-              {transaction.bank}
+              Bank Centrak Asia (BCA)
             </p>
 
             <div className="flex items-center justify-between gap-2">
@@ -121,7 +131,7 @@ export default function OrderPage({
               className="w-full"
               classNames={{
                 base: "text-foreground border-none p-0",
-                pre: "font-semibold text-foreground font-sans text-[16px]",
+                pre: "font-semibold text-foreground font-sans text-[14px]",
               }}
             >
               {transaction.no_rekening}
@@ -129,9 +139,7 @@ export default function OrderPage({
           </div>
         </div>
 
-        <div className="my-1 h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="grid gap-4">
+        <div className="grid gap-2 py-6">
           <h3 className="text-sm font-semibold text-foreground">
             Rincian Pembayaran
           </h3>
@@ -163,9 +171,7 @@ export default function OrderPage({
           </div>
         </div>
 
-        <div className="my-1 h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="grid gap-4">
+        <div className="grid gap-2 py-6">
           <h3 className="text-sm font-semibold text-foreground">
             Panduan Pembayaran
           </h3>
@@ -177,7 +183,7 @@ export default function OrderPage({
             color="primary"
             radius="full"
             classNames={{
-              base: "font-semibold",
+              base: "font-medium",
             }}
           >
             {(item) => (
@@ -202,10 +208,8 @@ export default function OrderPage({
           </Tabs>
         </div>
 
-        <div className="my-1 h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="mb-4 grid gap-2">
-          <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="grid gap-2 pb-8 pt-6">
+          <div className="flex items-center justify-between gap-2">
             <h4 className="text-[12px] font-medium text-foreground-600">
               Total
             </h4>
