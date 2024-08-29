@@ -73,8 +73,6 @@ export default function ProductsSearchPage({
 
   return (
     <Layout title="Jelajahi Pilihan Baja Berkualitas Tinggi Untuk Semua Kebutuhan Anda.">
-      <Navbar />
-
       <div className="grid gap-4" ref={containerParent}>
         <header className="sticky left-0 top-0 z-50 flex h-20 items-center gap-4 bg-white">
           <Input
@@ -106,7 +104,7 @@ export default function ProductsSearchPage({
             <FilterProduct />
           </div>
 
-          <div className="grid grid-cols-2 items-start gap-4 pb-32">
+          <div className="grid grid-cols-2 items-start gap-4 pb-8">
             {productsMap?.map((product) => (
               <CardProduct key={product.kode_item} product={product} />
             ))}
@@ -121,6 +119,8 @@ export default function ProductsSearchPage({
           </div>
         </div>
       </div>
+
+      <Navbar />
     </Layout>
   );
 }
