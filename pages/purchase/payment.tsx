@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
-import HeaderTitle from "@/components/header/HeaderTitle";
 import PopupPaymentConfirm from "@/components/popup/PopupPaymentConfirm";
 import { Button, Snippet, Tab, Tabs } from "@nextui-org/react";
+import { CaretLeft } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -85,11 +85,21 @@ export default function OrderPage() {
 
   return (
     <Layout title="Payment Page">
-      <HeaderTitle
-        path="/profile/transactions"
-        label="Pembayaran"
-        className="sticky left-0 top-0"
-      />
+      <header className="sticky left-0 top-0 z-50 grid h-20 grid-cols-[50px_1fr_50px] items-center bg-white">
+        <Button
+          isIconOnly
+          variant="light"
+          color="default"
+          size="sm"
+          onClick={() => router.back()}
+        >
+          <CaretLeft weight="bold" size={20} className="text-foreground" />
+        </Button>
+
+        <h5 className="text-center font-semibold text-foreground">
+          Pembayaran
+        </h5>
+      </header>
 
       <div className="grid gap-4">
         <div className="grid gap-4">

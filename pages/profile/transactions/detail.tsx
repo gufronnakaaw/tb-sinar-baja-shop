@@ -53,17 +53,16 @@ export default function TransactionDetails({
             <div className="grid gap-2 py-6">
               <h4 className="text-sm font-semibold text-foreground">Alamat</h4>
 
-              <div className="py-2">
+              <div>
                 <h6 className="mb-1 text-[12px] font-semibold text-foreground">
                   TB Sinar Baja
                   <Chip
                     color="primary"
                     size="sm"
                     classNames={{
-                      base: "px-[2px]",
                       content: "font-medium text-[10px]",
                     }}
-                    className="ml-2 inline-flex"
+                    className="ml-2"
                   >
                     Ambil Sendiri
                   </Chip>
