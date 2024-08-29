@@ -12,21 +12,31 @@ export default function TransactionsPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout title="Lihat Riwayat Transaksi Pembelian Baja Anda Dengan Mudah Dan Cepat.">
-      <div className="grid gap-3">
-        <HeaderTitle
-          path="/profile"
-          label="Riwayat Transaksi"
-          className="sticky left-0 top-0"
-        />
+      <HeaderTitle
+        path="/profile"
+        label="Riwayat Transaksi"
+        className="sticky left-0 top-0"
+      />
 
-        {transactions.length ? (
-          transactions.map((item) => {
-            return <CardTransaction key={item.transaksi_id} {...item} />;
-          })
-        ) : (
+      {transactions.length ? (
+        <div className="grid gap-8 pb-8">
+          <div className="grid gap-3">
+            {transactions.map((item) => {
+              return <CardTransaction key={item.transaksi_id} {...item} />;
+            })}
+          </div>
+
+          <p className="grid grid-cols-3 items-center text-center text-[10px] font-medium italic text-foreground-400">
+            <div className="h-[1px] w-full rounded-full bg-foreground-200" />
+            Kembali ke atas!
+            <div className="h-[1px] w-full rounded-full bg-foreground-200" />
+          </p>
+        </div>
+      ) : (
+        <div className="flex justify-center pt-10">
           <EmptyTransaction />
-        )}
-      </div>
+        </div>
+      )}
     </Layout>
   );
 }
