@@ -175,7 +175,7 @@ export default function OrderPage() {
             color="primary"
             radius="full"
             classNames={{
-              base: "font-semibold",
+              base: "font-medium",
             }}
           >
             {(item) => (
