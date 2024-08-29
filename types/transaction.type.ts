@@ -45,3 +45,21 @@ export type TransactionProduct = {
   quantity: number;
   subtotal_produk: number;
 };
+
+export type TransactionWaiting = {
+  transaksi_id: string;
+  replied: boolean;
+  total: number;
+  subtotal_produk: number;
+  subtotal_ongkir: number;
+  status: string;
+};
+
+export type TransactionPaymentPage = {
+  bank: string;
+  no_rekening: boolean;
+  atas_nama: boolean;
+  total: number;
+  subtotal_produk: number;
+  subtotal_ongkir: number;
+};

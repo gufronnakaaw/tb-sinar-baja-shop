@@ -1,11 +1,18 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import PopupPaymentConfirm from "@/components/popup/PopupPaymentConfirm";
+import { SuccessResponse } from "@/types/global.type";
+import { TransactionPaymentPage } from "@/types/transaction.type";
+import { fetcher } from "@/utils/fetcher";
+import { formatRupiah } from "@/utils/formatRupiah";
 import { Button, Snippet, Tab, Tabs } from "@nextui-org/react";
-import Image from "next/image";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
-export default function OrderPage() {
+export default function OrderPage({
+  transaction,
+  transaksi_id,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
 
   const tabs = [
@@ -99,20 +106,13 @@ export default function OrderPage() {
 
           <div className="grid gap-1">
             <p className="text-[12px] text-foreground-600">
-              Bank Centrak Asia (BCA)
+              {transaction.bank}
             </p>
 
             <div className="flex items-center justify-between gap-2">
               <h6 className="text-sm font-semibold text-foreground">
-                a/n TB Sinar Baja Kediri
+                a/n {transaction.atas_nama}
               </h6>
-              <Image
-                priority
-                src="/img/bank-bca-logo.svg"
-                alt="bank logo"
-                width={48}
-                height={15}
-              />
             </div>
 
             <Snippet
@@ -124,7 +124,7 @@ export default function OrderPage() {
                 pre: "font-semibold text-foreground font-sans text-[16px]",
               }}
             >
-              0192847621
+              {transaction.no_rekening}
             </Snippet>
           </div>
         </div>
@@ -139,19 +139,19 @@ export default function OrderPage() {
           <div className="grid gap-1">
             <div className="flex items-center justify-between gap-2">
               <h4 className="text-[12px] font-medium text-foreground-600">
-                Total Harga (3 item)
+                Subtotal Produk
               </h4>
               <h4 className="text-[12px] font-semibold text-foreground">
-                Rp 780.000
+                {formatRupiah(transaction.subtotal_produk)}
               </h4>
             </div>
 
             <div className="flex items-center justify-between gap-2">
               <h4 className="text-[12px] font-medium text-foreground-600">
-                Biaya Pengiriman
+                Subtotal Ongkir
               </h4>
               <h4 className="text-[12px] font-semibold text-foreground">
-                Rp 50.000
+                {formatRupiah(transaction.subtotal_ongkir)}
               </h4>
             </div>
 
@@ -207,16 +207,22 @@ export default function OrderPage() {
         <div className="mb-4 grid gap-2">
           <div className="mb-2 flex items-center justify-between gap-2">
             <h4 className="text-[12px] font-medium text-foreground-600">
-              Total Pembayaran
+              Total
             </h4>
-            <h4 className="font-semibold text-foreground">Rp 830.000</h4>
+            <h4 className="font-semibold text-foreground">
+              {formatRupiah(transaction.total)}
+            </h4>
           </div>
 
           <Button
             variant="solid"
             color="primary"
             className="w-full font-semibold"
-            onClick={() => router.push("/profile/transactions/detail")}
+            onClick={() =>
+              router.push(
+                `/profile/transactions/detail/${encodeURIComponent(transaksi_id)}`,
+              )
+            }
           >
             Detail Pesanan Saya
           </Button>
@@ -227,3 +233,25 @@ export default function OrderPage() {
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ req, query }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<TransactionPaymentPage> = await fetcher({
+    url: `/payment?id=${encodeURIComponent(query?.id as string)}`,
+    method: "GET",
+    token,
+  });
+
+  return {
+    props: {
+      transaction: response.data,
+      token,
+      transaksi_id: query?.id ? (query?.id as string) : "",
+    },
+  };
+}) satisfies GetServerSideProps<{
+  transaction: TransactionPaymentPage;
+  token: string;
+  transaksi_id: string;
+}>;

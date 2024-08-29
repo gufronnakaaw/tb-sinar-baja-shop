@@ -15,6 +15,7 @@ import Toast from "react-hot-toast";
 export default function PreviewPage({
   preview,
   token,
+  carts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
 
@@ -25,17 +26,20 @@ export default function PreviewPage({
           url: "/transactions",
           method: "POST",
           token,
-          data: preview,
+          data: {
+            ...preview,
+            carts: Array.isArray(carts) ? [...carts] : [carts],
+          },
         },
       );
 
       if (preview.type == "pickup") {
         return router.push(
-          `/purchase/payment?id=${response.data.transaksi_id}`,
+          `/purchase/payment?id=${encodeURIComponent(response.data.transaksi_id)}`,
         );
       } else {
         return router.push(
-          `/purchase/waiting?id=${response.data.transaksi_id}`,
+          `/purchase/waiting?id=${encodeURIComponent(response.data.transaksi_id)}`,
         );
       }
     } catch (error) {
@@ -196,6 +200,11 @@ export const getServerSideProps = (async ({ query, req }) => {
     props: {
       preview: response.data,
       token,
+      carts: query?.carts ? query.carts : "",
     },
   };
-}) satisfies GetServerSideProps<{ preview: Preview; token: string }>;
+}) satisfies GetServerSideProps<{
+  preview: Preview;
+  token: string;
+  carts: string | string[];
+}>;

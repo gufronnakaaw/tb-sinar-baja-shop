@@ -148,7 +148,11 @@ export default function TransactionDetails({
             <Button
               variant="bordered"
               color="primary"
-              onClick={() => router.push("/purchase/payment?id=17630837")}
+              onClick={() =>
+                router.push(
+                  `/purchase/payment?id=${encodeURIComponent(transaction.transaksi_id)}`,
+                )
+              }
               className="w-full font-semibold"
             >
               Pembayaran
@@ -169,9 +173,23 @@ export const getServerSideProps = (async ({ req, query }) => {
     token,
   });
 
+  if (
+    ["Menunggu balasan", "Menunggu konfirmasi anda"].includes(
+      response.data.status,
+    )
+  ) {
+    return {
+      redirect: {
+        destination: `/purchase/waiting?id=${encodeURIComponent(response.data.transaksi_id)}`,
+      },
+    };
+  }
+
   return {
     props: {
       transaction: response.data,
     },
   };
-}) satisfies GetServerSideProps<{ transaction: TransactionDetail }>;
+}) satisfies GetServerSideProps<{
+  transaction: TransactionDetail;
+}>;

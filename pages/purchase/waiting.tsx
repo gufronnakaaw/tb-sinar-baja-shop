@@ -1,17 +1,59 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { SuccessResponse } from "@/types/global.type";
+import { TransactionWaiting } from "@/types/transaction.type";
+import { fetcher } from "@/utils/fetcher";
+import { formatRupiah } from "@/utils/formatRupiah";
 import { Button } from "@nextui-org/react";
-import { ArrowRight } from "@phosphor-icons/react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Toast from "react-hot-toast";
 
-export default function WaitingPage() {
+export default function WaitingPage({
+  transaction,
+  token,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+
+  if (
+    !["Menunggu balasan", "Menunggu konfirmasi anda"].includes(
+      transaction.status,
+    )
+  ) {
+    return router.push(
+      `/purchase/payment?id=${encodeURIComponent(transaction.transaksi_id)}`,
+    );
+  }
+
+  async function handleConfirm() {
+    try {
+      await fetcher({
+        url: "/transactions/draft",
+        method: "PATCH",
+        token,
+        data: {
+          transaksi_id: transaction.transaksi_id,
+          total: transaction.total + transaction.subtotal_ongkir,
+        },
+      });
+
+      router.push(
+        `/purchase/payment?id=${encodeURIComponent(transaction.transaksi_id)}`,
+      );
+    } catch (error) {
+      console.log(error);
+
+      Toast.error("Terjadi kesalahan saat update transaksi");
+    }
+  }
+
+  async function handleCancel() {}
 
   return (
     <Layout title="Waiting Page">
       <HeaderTitle
-        path="/purchase/checkout?id=17630837"
+        path="/profile/transactions"
         label="Menunggu Konfirmasi"
         className="sticky left-0 top-0"
       />
@@ -39,20 +81,72 @@ export default function WaitingPage() {
           </div>
 
           <div className="flex items-center justify-between gap-2">
-            <h5 className="font-semibold text-foreground">Total Belanja</h5>
-            <h5 className="font-semibold text-foreground">Rp780.000</h5>
+            <h5 className="text-sm font-semibold text-foreground">
+              Subtotal Produk
+            </h5>
+            <h5 className="text-sm font-semibold text-foreground">
+              {formatRupiah(transaction.subtotal_produk)}
+            </h5>
+          </div>
+
+          <div className="flex items-center justify-between gap-2">
+            <h5 className="text-sm font-semibold text-foreground">
+              Subtotal Ongkir
+            </h5>
+            <h5 className="text-sm font-semibold text-foreground">
+              {formatRupiah(transaction.subtotal_ongkir)}
+            </h5>
+          </div>
+
+          <div className="flex items-center justify-between gap-2">
+            <h5 className="text-sm font-semibold text-foreground">Total</h5>
+            <h5 className="text-sm font-semibold text-foreground">
+              {formatRupiah(transaction.total + transaction.subtotal_ongkir)}
+            </h5>
           </div>
         </div>
 
-        <Button
-          color="primary"
-          endContent={<ArrowRight weight="bold" size={16} />}
-          onClick={() => router.push("/products")}
-          className="mb-4 w-full font-semibold"
-        >
-          Lanjut Belanja
-        </Button>
+        <div>
+          <Button
+            color="primary"
+            onClick={handleConfirm}
+            className="mb-4 w-full font-semibold"
+            isDisabled={!transaction.replied}
+          >
+            Lanjut Pembayaran
+          </Button>
+
+          <Button
+            color="primary"
+            variant="bordered"
+            onClick={handleCancel}
+            className="mb-4 w-full font-semibold"
+            isDisabled={!transaction.replied}
+          >
+            Batalkan
+          </Button>
+        </div>
       </div>
     </Layout>
   );
 }
+
+export const getServerSideProps = (async ({ req, query }) => {
+  const token = req.headers["access_token"] as string;
+
+  const response: SuccessResponse<TransactionWaiting> = await fetcher({
+    url: `/waiting?id=${encodeURIComponent(query?.id as string)}`,
+    method: "GET",
+    token,
+  });
+
+  return {
+    props: {
+      transaction: response.data,
+      token,
+    },
+  };
+}) satisfies GetServerSideProps<{
+  transaction: TransactionWaiting;
+  token: string;
+}>;
