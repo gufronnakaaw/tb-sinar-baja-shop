@@ -2,7 +2,6 @@ import Layout from "@/components/Layout";
 import PopupPaymentConfirm from "@/components/popup/PopupPaymentConfirm";
 import { Button, Snippet, Tab, Tabs } from "@nextui-org/react";
 import { CaretLeft } from "@phosphor-icons/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function OrderPage() {
@@ -101,28 +100,21 @@ export default function OrderPage() {
         </h5>
       </header>
 
-      <div className="grid gap-4">
-        <div className="grid gap-4">
+      <div className="grid divide-y-1.5 divide-dashed divide-foreground-200">
+        <div className="grid gap-2 pb-6">
           <h3 className="text-sm font-semibold text-foreground">
-            Transfer ke Rekening
+            Metode Pembayaran
           </h3>
 
-          <div className="grid gap-1">
-            <p className="text-[12px] text-foreground-600">
-              Bank Centrak Asia (BCA)
-            </p>
-
+          <div className="grid gap-[2px] rounded-xl border border-foreground-200 p-4">
             <div className="flex items-center justify-between gap-2">
               <h6 className="text-sm font-semibold text-foreground">
-                a/n TB Sinar Baja Kediri
+                BCA - a/n TB. Sinar Baja
               </h6>
-              <Image
-                priority
-                src="/img/bank-bca-logo.svg"
-                alt="bank logo"
-                width={48}
-                height={15}
-              />
+
+              <p className="text-[12px] font-medium text-primary">
+                Transfer Bank
+              </p>
             </div>
 
             <Snippet
@@ -131,7 +123,7 @@ export default function OrderPage() {
               className="w-full"
               classNames={{
                 base: "text-foreground border-none p-0",
-                pre: "font-semibold text-foreground font-sans text-[16px]",
+                pre: "font-semibold text-foreground font-sans text-[14px]",
               }}
             >
               0192847621
@@ -139,9 +131,7 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className="my-1 h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="grid gap-4">
+        <div className="grid gap-2 py-6">
           <h3 className="text-sm font-semibold text-foreground">
             Rincian Pembayaran
           </h3>
@@ -173,9 +163,7 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className="my-1 h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="grid gap-4">
+        <div className="grid gap-2 py-6">
           <h3 className="text-sm font-semibold text-foreground">
             Panduan Pembayaran
           </h3>
@@ -212,10 +200,8 @@ export default function OrderPage() {
           </Tabs>
         </div>
 
-        <div className="my-1 h-[1px] w-full border border-dashed border-foreground-200" />
-
-        <div className="mb-4 grid gap-2">
-          <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="grid gap-2 pb-8 pt-6">
+          <div className="flex items-center justify-between gap-2">
             <h4 className="text-[12px] font-medium text-foreground-600">
               Total Pembayaran
             </h4>
