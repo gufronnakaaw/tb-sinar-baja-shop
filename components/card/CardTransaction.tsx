@@ -52,7 +52,7 @@ export default function CardTransaction({
       <div className="grid grid-cols-[40px_1fr] items-center gap-2 pt-4">
         <Image
           priority
-          src="/img/package.jpg"
+          src="/img/package.png"
           alt="package img"
           width={200}
           height={200}
