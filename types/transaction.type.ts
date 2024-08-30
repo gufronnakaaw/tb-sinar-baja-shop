@@ -44,6 +44,7 @@ export type TransactionProduct = {
   kategori: string;
   quantity: number;
   subtotal_produk: number;
+  image: { url: string }[];
 };
 
 export type TransactionWaiting = {

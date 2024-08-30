@@ -26,11 +26,12 @@ export default function TransactionsPage({
             })}
           </div>
 
-          <p className="grid grid-cols-3 items-center text-center text-[10px] font-medium italic text-foreground-400">
-            <div className="h-[1px] w-full rounded-full bg-foreground-200" />
-            Kembali ke atas!
-            <div className="h-[1px] w-full rounded-full bg-foreground-200" />
-          </p>
+          {/* <p className="grid grid-cols-3 items-center text-center text-[10px] font-medium italic text-foreground-400">
+            <div className="h-[1px] w-full rounded-full bg-foreground-200">
+              Kembali ke atas!
+            </div>
+            <div className="h-[1px] w-full rounded-full bg-foreground-200"></div>
+          </p> */}
         </div>
       ) : (
         <div className="flex justify-center pt-10">

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 export default function OrderPage({
   transaction,
   transaksi_id,
+  token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
 
@@ -98,7 +99,11 @@ export default function OrderPage({
           variant="light"
           color="default"
           size="sm"
-          onClick={() => router.back()}
+          onClick={() =>
+            router.push(
+              `/profile/transactions/detail?id=${encodeURIComponent(transaksi_id)}`,
+            )
+          }
         >
           <CaretLeft weight="bold" size={20} className="text-foreground" />
         </Button>
@@ -216,20 +221,7 @@ export default function OrderPage({
             </h4>
           </div>
 
-          <Button
-            variant="solid"
-            color="primary"
-            className="w-full font-semibold"
-            onClick={() =>
-              router.push(
-                `/profile/transactions/detail?id=${encodeURIComponent(transaksi_id)}`,
-              )
-            }
-          >
-            Detail Pesanan Saya
-          </Button>
-
-          <PopupPaymentConfirm />
+          <PopupPaymentConfirm token={token} transaksi_id={transaksi_id} />
         </div>
       </div>
     </Layout>

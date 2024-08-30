@@ -39,13 +39,15 @@ export default function TransactionDetails({
               <p className="text-[12px] text-foreground-600">
                 {transaction.no_telpon}
               </p>
-              <p className="text-[12px] text-foreground-600">
-                {transaction.alamat_lengkap},{" "}
-                <span className="uppercase">
-                  {transaction.kecamatan}, {transaction.kota},{" "}
-                  {transaction.provinsi}, {transaction.kode_pos}
-                </span>
-              </p>
+              {transaction.type == "delivery" ? (
+                <p className="text-[12px] text-foreground-600">
+                  {transaction.alamat_lengkap},{" "}
+                  <span className="uppercase">
+                    {transaction.kecamatan}, {transaction.kota},{" "}
+                    {transaction.provinsi}, {transaction.kode_pos}
+                  </span>
+                </p>
+              ) : null}
             </div>
           </div>
 
@@ -84,7 +86,7 @@ export default function TransactionDetails({
                 return (
                   <CardOrder
                     {...{
-                      image: [{ url: "" }],
+                      image: product.image,
                       harga: product.harga,
                       kategori: product.kategori,
                       kode_item: product.kode_item,
