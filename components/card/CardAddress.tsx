@@ -1,5 +1,5 @@
 import { Button, Chip } from "@nextui-org/react";
-import { PencilSimple, Trash } from "@phosphor-icons/react";
+import { HouseLine, PencilSimple, Trash } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
 
 import { Address } from "@/types/address.type";
@@ -33,32 +33,41 @@ export default function CardAddress({ address, mutate, token }: AddressProps) {
   }
 
   return (
-    <div className="grid gap-4 rounded-xl border border-foreground-200 p-4">
-      <div className="flex items-center justify-between gap-2">
-        <Chip
-          variant="flat"
-          color="primary"
-          size="sm"
-          classNames={{
-            content: "font-semibold capitalize",
-          }}
-        >
-          Alamat {address.label}
-        </Chip>
-      </div>
+    <div className="grid divide-y divide-foreground-200 rounded-xl border border-foreground-200 p-4">
+      <div className="grid gap-2 pb-4">
+        <div className="flex items-center justify-between gap-2">
+          <div className="inline-flex items-center gap-3">
+            <HouseLine weight="duotone" size={26} className="text-primary" />
 
-      <div className="grid gap-1">
-        <h4 className="font-semibold text-foreground">
-          {address.nama_penerima}
-        </h4>
-        <p className="font-medium text-foreground">{address.no_telpon}</p>
-        <p className="mt-1 text-sm font-medium leading-[180%] text-foreground-600">
+            <div>
+              <h4 className="text-sm font-semibold text-foreground">
+                {address.nama_penerima}
+              </h4>
+              <p className="text-[12px] font-medium text-foreground">
+                {address.no_telpon}
+              </p>
+            </div>
+          </div>
+
+          <Chip
+            variant="flat"
+            color="primary"
+            size="sm"
+            classNames={{
+              content: "font-semibold capitalize text-[10px]",
+            }}
+          >
+            Alamat {address.label}
+          </Chip>
+        </div>
+
+        <p className="text-[12px] font-medium leading-[180%] text-foreground-600">
           {address.alamat_lengkap} | {address.kecamatan} | {address.kota} |{" "}
           {address.provinsi} | {address.kode_pos}
         </p>
       </div>
 
-      <div className="flex items-center gap-1 border-t border-foreground-200 pt-4">
+      <div className="flex items-center gap-1 pt-4">
         <Button
           variant="light"
           color="primary"

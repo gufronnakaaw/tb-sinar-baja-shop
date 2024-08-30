@@ -26,7 +26,7 @@ export default function TransactionDetails({
           className="sticky left-0 top-0"
         />
 
-        <div className="grid divide-y-1.5 divide-dashed divide-foreground-200">
+        <div className="grid divide-y-2 divide-dashed divide-foreground-200">
           <div className="flex flex-col items-center justify-center gap-2 pb-6">
             <div className="rounded-full bg-foreground-100 p-4">
               <Bag weight="bold" size={26} />

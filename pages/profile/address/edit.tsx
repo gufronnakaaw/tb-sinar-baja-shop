@@ -1,10 +1,9 @@
-import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
-
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { SuccessResponse } from "@/types/global.type";
 import { Regional } from "@/types/regional.type";
 import { fetcher } from "@/utils/fetcher";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { Key, useEffect, useState } from "react";
@@ -95,7 +94,9 @@ export default function EditShippingAddress({
         />
 
         <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Informasi Penerima</h4>
+          <h4 className="text-sm font-semibold text-foreground">
+            Informasi Penerima
+          </h4>
 
           <Input
             isRequired
@@ -104,6 +105,9 @@ export default function EditShippingAddress({
             label="Nama Penerima"
             labelPlacement="outside"
             placeholder="Masukan nama penerima"
+            classNames={{
+              label: "text-[12px]",
+            }}
           />
 
           <Input
@@ -114,11 +118,16 @@ export default function EditShippingAddress({
             label="No. Telpon Penerima"
             labelPlacement="outside"
             placeholder="Cth. 082233445566"
+            classNames={{
+              label: "text-[12px]",
+            }}
           />
         </div>
 
         <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Detail Alamat</h4>
+          <h4 className="text-sm font-semibold text-foreground">
+            Detail Alamat
+          </h4>
 
           <Select
             isRequired
@@ -128,6 +137,9 @@ export default function EditShippingAddress({
             labelPlacement="outside"
             onChange={(e) => setProvinceCode(e.target.value)}
             placeholder="Cth. DKI Jakarta"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             {provinces.map((province) => (
               <SelectItem key={province.code} value={province.name}>
@@ -144,6 +156,9 @@ export default function EditShippingAddress({
             labelPlacement="outside"
             onChange={(e) => setRegencyCode(e.target.value)}
             placeholder="Cth. Jakarta Selatan"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             {regencies.map((regency) => (
               <SelectItem key={regency.code} value={regency.name}>
@@ -160,6 +175,9 @@ export default function EditShippingAddress({
             labelPlacement="outside"
             onChange={(e) => setDistrictCode(e.target.value)}
             placeholder="Cth. Setiabudi"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             {districts.map((district) => (
               <SelectItem key={district.code} value={district.name}>
@@ -176,6 +194,9 @@ export default function EditShippingAddress({
             label="Alamat Lengkap"
             labelPlacement="outside"
             placeholder="Masukan nama jalan, no. rumah, dan lain sebagainya"
+            classNames={{
+              label: "text-[12px]",
+            }}
           />
 
           <Select
@@ -185,6 +206,9 @@ export default function EditShippingAddress({
             label="Label Alamat"
             labelPlacement="outside"
             placeholder="Cth. Rumah"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             <SelectItem key="rumah" value="rumah">
               Rumah
@@ -200,20 +224,14 @@ export default function EditShippingAddress({
             color="default"
             label="Kode Pos"
             labelPlacement="outside"
-            placeholder="Cth. 16512"
-          />
-
-          {/* <Checkbox
-            color="primary"
+            placeholder="Cth. 19191"
             classNames={{
-              label: "text-sm text-foreground",
+              label: "text-[12px]",
             }}
-          >
-            Jadikan Alamat Utama
-          </Checkbox> */}
+          />
         </div>
 
-        <div className="sticky bottom-0 left-0 z-50 bg-white py-4">
+        <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
           <Button
             color="primary"
             onClick={() => {

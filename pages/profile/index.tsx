@@ -1,20 +1,19 @@
-import { Button } from "@nextui-org/react";
+import Layout from "@/components/Layout";
+import Navbar from "@/components/Navbar";
+import { SuccessResponse } from "@/types/global.type";
+import { Profile } from "@/types/profile.type";
+import { fetcher } from "@/utils/fetcher";
+import { Button, Chip } from "@nextui-org/react";
 import {
   MapTrifold,
   Receipt,
   SignOut,
   UserCircle,
 } from "@phosphor-icons/react";
-import Image from "next/image";
-import Link from "next/link";
-
-import Layout from "@/components/Layout";
-import Navbar from "@/components/Navbar";
-import { SuccessResponse } from "@/types/global.type";
-import { Profile } from "@/types/profile.type";
-import { fetcher } from "@/utils/fetcher";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function ProfilePage({
   profile,
@@ -33,7 +32,9 @@ export default function ProfilePage({
             />
 
             <div>
-              <h6 className="font-semibold text-foreground">{profile.nama}</h6>
+              <h6 className="text-sm font-semibold text-foreground">
+                {profile.nama}
+              </h6>
               <p className="text-[12px] font-medium text-foreground-600">
                 {profile.email}
               </p>
@@ -45,7 +46,7 @@ export default function ProfilePage({
 
             <Link
               href="/profile/transactions"
-              className="group flex items-center gap-4"
+              className="group grid grid-cols-[24px_1fr] items-center gap-4"
             >
               <Receipt
                 weight="duotone"
@@ -63,11 +64,16 @@ export default function ProfilePage({
                   </p>
                 </div>
 
-                <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-danger">
-                  <p className="text-sm text-white">
-                    {profile.total_transaction}
-                  </p>
-                </div>
+                <Chip
+                  size="sm"
+                  variant="solid"
+                  color="danger"
+                  classNames={{
+                    content: "font-medium",
+                  }}
+                >
+                  {profile.total_transaction}
+                </Chip>
               </div>
             </Link>
           </div>
@@ -75,10 +81,10 @@ export default function ProfilePage({
           <div className="grid gap-2">
             <h4 className="text-sm font-semibold text-foreground">Akun</h4>
 
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               <Link
                 href="/profile/detail"
-                className="group flex items-center gap-4"
+                className="group grid grid-cols-[24px_1fr] items-center gap-4"
               >
                 <UserCircle
                   weight="duotone"
@@ -96,29 +102,9 @@ export default function ProfilePage({
                 </div>
               </Link>
 
-              {/* <Link
-                href="/profile/security"
-                className="group flex items-center gap-4"
-              >
-                <Key
-                  weight="duotone"
-                  size={24}
-                  className="text-foreground-600 group-hover:text-primary"
-                />
-
-                <div>
-                  <h6 className="text-sm font-semibold text-foreground group-hover:text-primary">
-                    Ubah Kata Sandi
-                  </h6>
-                  <p className="text-[12px] font-medium text-foreground-600 group-hover:text-foreground-400">
-                    Atur ulang kata sandi
-                  </p>
-                </div>
-              </Link> */}
-
               <Link
                 href="/profile/address"
-                className="group flex items-center gap-4"
+                className="group grid grid-cols-[24px_1fr] items-center gap-4"
               >
                 <MapTrifold
                   weight="duotone"

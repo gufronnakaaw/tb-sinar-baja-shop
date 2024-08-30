@@ -1,10 +1,9 @@
-import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
-
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
 import { SuccessResponse } from "@/types/global.type";
 import { Regional } from "@/types/regional.type";
 import { fetcher } from "@/utils/fetcher";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { WarningCircle } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
@@ -150,7 +149,9 @@ export default function CreateShippingAddress({
         )}
 
         <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Informasi Penerima</h4>
+          <h4 className="text-sm font-semibold text-foreground">
+            Informasi Penerima
+          </h4>
 
           <Input
             isRequired
@@ -165,6 +166,9 @@ export default function CreateShippingAddress({
                 ...input,
                 [e.target.name]: e.target.value,
               });
+            }}
+            classNames={{
+              label: "text-[12px]",
             }}
           />
 
@@ -183,11 +187,16 @@ export default function CreateShippingAddress({
                 [e.target.name]: e.target.value,
               });
             }}
+            classNames={{
+              label: "text-[12px]",
+            }}
           />
         </div>
 
         <div className="grid gap-4">
-          <h4 className="font-semibold text-foreground">Detail Alamat</h4>
+          <h4 className="text-sm font-semibold text-foreground">
+            Detail Alamat
+          </h4>
 
           <Select
             isRequired
@@ -197,6 +206,9 @@ export default function CreateShippingAddress({
             labelPlacement="outside"
             onChange={(e) => setProvinceCode(e.target.value)}
             placeholder="Cth. DKI Jakarta"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             {provinces.map((province) => (
               <SelectItem key={province.code} value={province.name}>
@@ -213,6 +225,9 @@ export default function CreateShippingAddress({
             labelPlacement="outside"
             onChange={(e) => setRegencyCode(e.target.value)}
             placeholder="Cth. Jakarta Selatan"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             {regencies.map((regency) => (
               <SelectItem key={regency.code} value={regency.name}>
@@ -229,6 +244,9 @@ export default function CreateShippingAddress({
             labelPlacement="outside"
             onChange={(e) => setDistrictCode(e.target.value)}
             placeholder="Cth. Setiabudi"
+            classNames={{
+              label: "text-[12px]",
+            }}
           >
             {districts.map((district) => (
               <SelectItem key={district.code} value={district.name}>
@@ -252,6 +270,9 @@ export default function CreateShippingAddress({
                 [e.target.name]: e.target.value,
               });
             }}
+            classNames={{
+              label: "text-[12px]",
+            }}
           />
 
           <Select
@@ -266,6 +287,9 @@ export default function CreateShippingAddress({
                 ...input,
                 label: e.target.value,
               });
+            }}
+            classNames={{
+              label: "text-[12px]",
             }}
           >
             <SelectItem key="rumah" value="rumah">
@@ -283,13 +307,16 @@ export default function CreateShippingAddress({
             color="default"
             label="Kode Pos"
             labelPlacement="outside"
-            placeholder="Cth. 16512"
+            placeholder="Cth. 19191"
             name="kode_pos"
             onChange={(e) => {
               setInput({
                 ...input,
                 [e.target.name]: e.target.value,
               });
+            }}
+            classNames={{
+              label: "text-[12px]",
             }}
           />
         </div>

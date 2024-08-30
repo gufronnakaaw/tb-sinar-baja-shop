@@ -18,7 +18,9 @@ export default function EditUserProfilePage({
 
         <div className="grid gap-8">
           <div className="grid gap-4">
-            <h4 className="font-semibold text-foreground">Biodata Diri</h4>
+            <h4 className="text-sm font-semibold text-foreground">
+              Biodata Diri
+            </h4>
 
             <Input
               value={profile.nama}
@@ -28,6 +30,9 @@ export default function EditUserProfilePage({
               label="Nama Lengkap"
               labelPlacement="outside"
               placeholder="Cth. Johnson Doe"
+              classNames={{
+                label: "text-[12px]",
+              }}
             />
 
             <Input
@@ -36,21 +41,38 @@ export default function EditUserProfilePage({
               label="Tanggal Lahir"
               labelPlacement="outside"
               placeholder="Cth. 12 Januari 1999"
+              classNames={{
+                label: "text-[12px]",
+              }}
             />
 
             <RadioGroup
               label="Jenis Kelamin"
               classNames={{
-                label: "text-sm text-foreground",
+                label: "text-[12px] text-foreground",
               }}
             >
-              <Radio value="P">Pria</Radio>
-              <Radio value="W">Wanita</Radio>
+              <Radio
+                value="P"
+                classNames={{
+                  label: "text-[14px]",
+                }}
+              >
+                Pria
+              </Radio>
+              <Radio
+                value="W"
+                classNames={{
+                  label: "text-[14px]",
+                }}
+              >
+                Wanita
+              </Radio>
             </RadioGroup>
           </div>
 
           <div className="grid gap-4">
-            <h4 className="font-semibold text-foreground">Kontak</h4>
+            <h4 className="text-sm font-semibold text-foreground">Kontak</h4>
 
             <Input
               value={profile.email}
@@ -61,6 +83,9 @@ export default function EditUserProfilePage({
               label="Email"
               labelPlacement="outside"
               placeholder="eg, maman.kusniadi@mail.com"
+              classNames={{
+                label: "text-[12px]",
+              }}
             />
 
             <Input
@@ -71,6 +96,9 @@ export default function EditUserProfilePage({
               label="Nomor HP"
               labelPlacement="outside"
               placeholder="eg, 08XXXXXXXXXX"
+              classNames={{
+                label: "text-[12px]",
+              }}
             />
           </div>
 

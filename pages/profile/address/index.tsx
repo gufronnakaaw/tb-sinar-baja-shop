@@ -31,37 +31,41 @@ export default function ShippingAddressPage({
 
   return (
     <Layout title="Alamat Pengiriman" className="relative">
-      <HeaderTitle path="/profile" label="Alamat Pengiriman" />
+      <HeaderTitle
+        path="/profile"
+        label="Alamat Pengiriman"
+        className="sticky left-0 top-0"
+      />
 
-      <div className="mb-16 min-h-screen">
-        <div className="grid gap-4 overflow-scroll">
-          {!data?.data.length ? (
-            <div className="mt-12 grid place-items-center gap-4">
-              <Image
-                priority
-                src="/img/map.svg"
-                alt="map img"
-                width={200}
-                height={200}
-              />
+      {!data?.data.length ? (
+        <div className="mt-12 grid min-h-screen place-items-center gap-4">
+          <Image
+            priority
+            src="/img/map.svg"
+            alt="map img"
+            width={200}
+            height={200}
+          />
 
-              <div className="text-center">
-                <h4 className="mb-1 text-[18px] font-semibold text-foreground">
-                  Belum Ada Alamat Pengiriman
-                </h4>
-                <p className="mx-auto max-w-[350px] text-sm font-medium leading-[180%] text-foreground-600">
-                  Tambahkan alamat pengiriman untuk memudahkan Anda dalam
-                  menghitung estimasi biaya pengiriman
-                </p>
-              </div>
-            </div>
-          ) : null}
-
-          {data?.data.map((address, index) => (
-            <CardAddress key={index} {...{ address, mutate, token }} />
-          ))}
+          <div className="text-center">
+            <h4 className="mb-1 text-[18px] font-semibold text-foreground">
+              Belum Ada Alamat Pengiriman
+            </h4>
+            <p className="mx-auto max-w-[350px] text-sm font-medium leading-[180%] text-foreground-600">
+              Tambahkan alamat pengiriman untuk memudahkan Anda dalam menghitung
+              estimasi biaya pengiriman
+            </p>
+          </div>
         </div>
-      </div>
+      ) : null}
+
+      {data?.data.map((address, index) => (
+        <div className="min-h-screen">
+          <div className="grid gap-4 overflow-scroll">
+            <CardAddress key={index} {...{ address, mutate, token }} />
+          </div>
+        </div>
+      ))}
 
       <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
         <Button
