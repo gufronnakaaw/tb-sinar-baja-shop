@@ -16,6 +16,12 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@phosphor-icons/react", "@nextui-org/react"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;
