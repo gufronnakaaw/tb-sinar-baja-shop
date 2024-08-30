@@ -104,18 +104,20 @@ export default function ProductsSearchPage({
             <FilterProduct />
           </div>
 
-          <div className="grid grid-cols-2 items-start gap-4 pb-8">
-            {productsMap?.map((product) => (
-              <CardProduct key={product.kode_item} product={product} />
-            ))}
+          <div className="min-h-screen">
+            <div className="grid grid-cols-2 items-start gap-4 pb-8">
+              {productsMap?.map((product) => (
+                <CardProduct key={product.kode_item} product={product} />
+              ))}
 
-            <div ref={ref}></div>
+              <div ref={ref}></div>
 
-            {isValidating ? (
-              <div className="col-span-2 mt-4 justify-self-center px-8 font-semibold">
-                <Spinner color="default" />
-              </div>
-            ) : null}
+              {isValidating ? (
+                <div className="col-span-2 mt-4 justify-self-center px-8 font-semibold">
+                  <Spinner color="default" />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
