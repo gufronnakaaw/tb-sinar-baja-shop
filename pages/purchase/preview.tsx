@@ -69,7 +69,7 @@ export default function PreviewPage({
 
       <div className="mb-10 min-h-screen">
         <div className="grid divide-y-2 divide-dashed divide-foreground-200">
-          <div className="grid gap-[12px] pb-4">
+          <div className="grid gap-2 pb-6">
             <h3 className="text-sm font-semibold text-foreground">
               Informasi Pengiriman
             </h3>
@@ -81,42 +81,40 @@ export default function PreviewPage({
                 <Truck weight="duotone" size={48} className="text-primary" />
               )}
 
-              <div>
-                {preview.type == "pickup" ? (
-                  <>
-                    <h5 className="mb-1 text-[12px] font-semibold text-foreground">
-                      Pesanan Diambil Sendiri
-                    </h5>
-                    <p className="text-[12px] font-medium text-foreground-600">
-                      {shopAddress.address} - {shopAddress.phone}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h5 className="mb-1 text-[12px] font-semibold text-foreground">
-                      Pesanan Diantar
-                    </h5>
-                    <p className="text-[12px] font-medium text-foreground-600">
-                      {preview.address.nama_penerima} -{" "}
-                      {preview.address.no_telpon}
-                    </p>
-                    <p className="text-[12px] font-medium text-foreground-600">
-                      {preview.address.alamat_lengkap},{" "}
-                      <span className="uppercase">
-                        {preview.address.kecamatan}, {preview.address.kota},{" "}
-                        {preview.address.provinsi}, {preview.address.kode_pos}
-                      </span>
-                    </p>
-                  </>
-                )}
-              </div>
+              {preview.type == "pickup" ? (
+                <div>
+                  <h5 className="mb-1 text-[12px] font-semibold text-foreground">
+                    Pesanan Diambil Sendiri
+                  </h5>
+                  <p className="text-[12px] font-medium text-foreground-600">
+                    {shopAddress.address} - {shopAddress.phone}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <h5 className="mb-1 text-[12px] font-semibold text-foreground">
+                    Pesanan Diantar
+                  </h5>
+                  <p className="text-[12px] font-medium text-foreground-600">
+                    {preview.address.nama_penerima} -{" "}
+                    {preview.address.no_telpon}
+                  </p>
+                  <p className="text-[12px] font-medium text-foreground-600">
+                    {preview.address.alamat_lengkap},{" "}
+                    <span className="uppercase">
+                      {preview.address.kecamatan}, {preview.address.kota},{" "}
+                      {preview.address.provinsi}, {preview.address.kode_pos}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="grid gap-[12px] py-4">
+          <div className="grid gap-2 py-6">
             <h3 className="text-sm font-semibold text-foreground">
               Metode Pembayaran{" "}
-              <span className="text-[12px] font-medium text-foreground-600">
+              <span className="text-[10px] font-medium text-foreground-600">
                 (Transfer)
               </span>
             </h3>
@@ -131,17 +129,19 @@ export default function PreviewPage({
             </div>
           </div>
 
-          <div className="grid gap-[12px] py-4">
-            <h4 className="font-semibold text-foreground">Daftar Pesanan</h4>
+          <div className="grid gap-2 py-6">
+            <h4 className="text-sm font-semibold text-foreground">
+              Daftar Pesanan
+            </h4>
 
-            <div className="grid gap-4">
+            <div className="grid gap-2">
               {preview.products.map((product) => {
                 return <CardOrder {...product} key={product.kode_item} />;
               })}
             </div>
           </div>
 
-          <div className="grid gap-1 pt-4">
+          <div className="grid gap-1 pt-6">
             <div className="flex items-center justify-between gap-2">
               <h4 className="text-[12px] font-medium text-foreground-600">
                 Subtotal Produk

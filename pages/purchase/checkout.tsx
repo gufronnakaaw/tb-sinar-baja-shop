@@ -79,8 +79,8 @@ export default function CheckoutPage({
       </header>
 
       <div className="mb-16 min-h-screen">
-        <div className="grid divide-y-1 divide-dashed divide-foreground-200">
-          <div className="grid gap-4 pb-6">
+        <div className="grid divide-y-2 divide-dashed divide-foreground-200">
+          <div className="grid gap-2 pb-6">
             <h3 className="text-sm font-semibold text-foreground">
               Informasi Pengiriman
             </h3>
@@ -128,8 +128,8 @@ export default function CheckoutPage({
 
             {/* selected delivery */}
             {selectedDiv == "pickup" ? (
-              <div className="grid border-l-[4px] border-primary pl-4">
-                <h5 className="mb-1 text-sm font-semibold text-foreground">
+              <div className="mt-2 grid gap-2 border-l-[4px] border-primary pl-4">
+                <h5 className="text-sm font-semibold text-foreground">
                   Alamat Toko
                 </h5>
                 <p className="text-[12px] font-medium text-foreground-600">
@@ -139,8 +139,8 @@ export default function CheckoutPage({
             ) : null}
 
             {selectedDiv == "delivery" ? (
-              <div className="grid border-l-[4px] border-primary pl-4">
-                <h5 className="mb-1 text-sm font-semibold text-foreground">
+              <div className="mt-2 grid gap-2 border-l-[4px] border-primary pl-4">
+                <h5 className="text-sm font-semibold text-foreground">
                   Alamat Saya
                 </h5>
 
@@ -155,13 +155,11 @@ export default function CheckoutPage({
                       key={address.address_id}
                       textValue={address.nama_penerima}
                     >
-                      <div className="flex items-center gap-2">
-                        <div className="flex flex-col">
-                          <span className="text-small capitalize">{`Alamat ${address.label} - ${address.nama_penerima} - ${address.no_telpon}`}</span>
-                          <span className="text-tiny text-default-400">
-                            {address.alamat_lengkap}
-                          </span>
-                        </div>
+                      <div className="grid">
+                        <h6 className="text-[14px] font-medium capitalize text-foreground">{`Alamat ${address.label} - ${address.nama_penerima} - ${address.no_telpon}`}</h6>
+                        <p className="text-[12px] text-default-600">
+                          {address.alamat_lengkap}
+                        </p>
                       </div>
                     </SelectItem>
                   )}
@@ -170,7 +168,7 @@ export default function CheckoutPage({
             ) : null}
           </div>
 
-          <div className="grid gap-4 pt-6">
+          <div className="grid gap-2 pt-6">
             <h3 className="text-sm font-semibold text-foreground">
               Metode Pembayaran{" "}
               <span className="text-[12px] font-medium text-foreground-600">

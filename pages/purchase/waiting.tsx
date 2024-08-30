@@ -64,53 +64,51 @@ export default function WaitingPage({
             priority
             src="/img/waiting-img.svg"
             alt="waiting img"
-            width={250}
-            height={250}
+            width={200}
+            height={200}
             className="justify-self-center"
           />
 
           <div className="text-center">
-            <h5 className="mb-1 font-semibold text-foreground">
+            <h5 className="mb-1 text-sm font-semibold text-foreground">
               Menunggu Konfirmasi Admin
             </h5>
-            <p className="text-[12px] leading-[180%] text-foreground-600">
+            <p className="max-w-[] text-[12px] leading-[180%] text-foreground-600">
               Mohon untuk menunggu konfirmasi dari admin mengenai biaya
               pengiriman. Proses ini akan memakan waktu paling lambat{" "}
               <span className="font-bold text-primary">1x24 jam</span>.
             </p>
           </div>
+        </div>
 
+        <div className="grid gap-1">
           <div className="flex items-center justify-between gap-2">
-            <h5 className="text-sm font-semibold text-foreground">
-              Subtotal Produk
-            </h5>
-            <h5 className="text-sm font-semibold text-foreground">
+            <p className="text-[12px] text-foreground-600">Subtotal Produk</p>
+            <h5 className="text-[12px] font-semibold text-foreground">
               {formatRupiah(transaction.subtotal_produk)}
             </h5>
           </div>
 
           <div className="flex items-center justify-between gap-2">
-            <h5 className="text-sm font-semibold text-foreground">
-              Subtotal Ongkir
-            </h5>
-            <h5 className="text-sm font-semibold text-foreground">
+            <p className="text-[12px] text-foreground-600">Subtotal Ongkir</p>
+            <h5 className="text-[12px] font-semibold text-foreground">
               {formatRupiah(transaction.subtotal_ongkir)}
             </h5>
           </div>
 
           <div className="flex items-center justify-between gap-2">
-            <h5 className="text-sm font-semibold text-foreground">Total</h5>
-            <h5 className="text-sm font-semibold text-foreground">
+            <p className="text-[12px] text-foreground-600">Total</p>
+            <h5 className="text-[12px] font-semibold text-foreground">
               {formatRupiah(transaction.total + transaction.subtotal_ongkir)}
             </h5>
           </div>
         </div>
 
-        <div>
+        <div className="grid gap-2">
           <Button
             color="primary"
             onClick={handleConfirm}
-            className="mb-4 w-full font-semibold"
+            className="font-semibold"
             isDisabled={!transaction.replied}
           >
             Lanjut Pembayaran
@@ -120,7 +118,7 @@ export default function WaitingPage({
             color="primary"
             variant="bordered"
             onClick={handleCancel}
-            className="mb-4 w-full font-semibold"
+            className="font-semibold"
             isDisabled={!transaction.replied}
           >
             Batalkan

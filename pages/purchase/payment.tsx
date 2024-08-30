@@ -108,7 +108,7 @@ export default function OrderPage({
         </h5>
       </header>
 
-      <div className="grid divide-y-1.5 divide-dashed divide-foreground-200">
+      <div className="grid divide-y-2 divide-dashed divide-foreground-200">
         <div className="grid gap-2 pb-6">
           <h3 className="text-sm font-semibold text-foreground">
             Metode Pembayaran

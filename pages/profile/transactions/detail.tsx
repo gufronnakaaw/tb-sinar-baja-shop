@@ -33,7 +33,7 @@ export default function TransactionDetails({
             </div>
 
             <div className="flex flex-col items-center gap-1 text-center">
-              <p className="font-semibold text-foreground">
+              <p className="text-sm font-semibold text-foreground">
                 {transaction.nama_penerima}
               </p>
               <p className="text-[12px] text-foreground-600">
@@ -141,9 +141,9 @@ export default function TransactionDetails({
           <div className="grid gap-2 pb-8 pt-6">
             <div className="flex items-end justify-between gap-2">
               <p className="text-[12px] font-medium text-foreground-600">
-                Total
+                Total Pembayaran
               </p>
-              <h4 className="text-sm font-bold text-foreground">
+              <h4 className="font-bold text-foreground">
                 {formatRupiah(transaction.total)}
               </h4>
             </div>
