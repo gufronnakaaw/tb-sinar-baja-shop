@@ -52,7 +52,7 @@ export default function ButtonNavbar({
           }}
         >
           <>{icon}</>
-          <span className="text-[12px] font-semibold">{label}</span>
+          <span className="text-[10px] font-medium">{label}</span>
         </Link>
       );
     }
@@ -64,7 +64,7 @@ export default function ButtonNavbar({
           className={`grid place-items-center ${router.pathname == path ? "text-primary" : "text-foreground-600"}`}
         >
           <>{icon}</>
-          <span className="text-[12px] font-semibold">{label}</span>
+          <span className="text-[10px] font-medium">{label}</span>
         </Link>
       </Badge>
     );
@@ -83,7 +83,7 @@ export default function ButtonNavbar({
         }}
       >
         <>{icon}</>
-        <span className="text-[12px] font-semibold">{label}</span>
+        <span className="text-[10px] font-medium">{label}</span>
       </Link>
     );
   }
@@ -91,7 +91,7 @@ export default function ButtonNavbar({
   return (
     <Link href={path} className={`grid place-items-center ${checkPath(path)}`}>
       <>{icon}</>
-      <span className="text-[12px] font-semibold">{label}</span>
+      <span className="text-[10px] font-medium">{label}</span>
     </Link>
   );
 }

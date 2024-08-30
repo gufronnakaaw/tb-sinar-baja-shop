@@ -19,25 +19,25 @@ export default function Navbar() {
 
   return (
     <nav className="sticky bottom-0 left-0 z-50 h-24 w-full bg-white">
-      <div className="container flex h-full items-center justify-between px-8">
+      <div className="container flex h-full items-center justify-between">
         <ButtonNavbar
           path="/"
           label="Utama"
-          icon={<House weight="duotone" size={24} />}
+          icon={<House weight="duotone" size={22} />}
           router={router}
         />
 
         <ButtonNavbar
           path="/products"
           label="Produk"
-          icon={<SquaresFour weight="duotone" size={24} />}
+          icon={<SquaresFour weight="duotone" size={22} />}
           router={router}
         />
 
         <ButtonNavbar
           path="/cart"
           label="Keranjang"
-          icon={<ShoppingCart weight="duotone" size={24} />}
+          icon={<ShoppingCart weight="duotone" size={22} />}
           router={router}
           status={status}
         />
@@ -45,7 +45,7 @@ export default function Navbar() {
         <ButtonNavbar
           path="/profile"
           label="Profil"
-          icon={<UserCircle weight="duotone" size={24} />}
+          icon={<UserCircle weight="duotone" size={22} />}
           router={router}
           status={status}
         />
