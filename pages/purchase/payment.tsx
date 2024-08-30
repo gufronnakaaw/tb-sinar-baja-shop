@@ -114,24 +114,22 @@ export default function OrderPage({
             Metode Pembayaran
           </h3>
 
-          <div className="grid gap-1">
-            <p className="text-[12px] text-foreground-600">
-              Bank Centrak Asia (BCA)
-            </p>
-
+          <div className="grid rounded-xl border border-foreground-200 p-4">
             <div className="flex items-center justify-between gap-2">
-              <h6 className="text-sm font-semibold text-foreground">
+              <h6 className="text-[12px] font-medium text-foreground">
                 a/n {transaction.atas_nama}
               </h6>
+              <p className="text-[12px] font-medium text-primary">
+                {transaction.bank}
+              </p>
             </div>
 
             <Snippet
               symbol=""
-              variant="bordered"
               className="w-full"
               classNames={{
-                base: "text-foreground border-none p-0",
-                pre: "font-semibold text-foreground font-sans text-[14px]",
+                base: "text-foreground bg-transparent border-none p-0",
+                pre: "font-semibold text-foreground font-sans text-[12px]",
               }}
             >
               {transaction.no_rekening}
@@ -211,7 +209,7 @@ export default function OrderPage({
         <div className="grid gap-2 pb-8 pt-6">
           <div className="flex items-center justify-between gap-2">
             <h4 className="text-[12px] font-medium text-foreground-600">
-              Total
+              Total Pembayaran
             </h4>
             <h4 className="font-semibold text-foreground">
               {formatRupiah(transaction.total)}
@@ -224,7 +222,7 @@ export default function OrderPage({
             className="w-full font-semibold"
             onClick={() =>
               router.push(
-                `/profile/transactions/detail/${encodeURIComponent(transaksi_id)}`,
+                `/profile/transactions/detail?id=${encodeURIComponent(transaksi_id)}`,
               )
             }
           >
