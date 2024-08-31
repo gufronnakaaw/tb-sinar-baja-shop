@@ -150,7 +150,8 @@ export default function TransactionDetails({
               </h4>
             </div>
 
-            {transaction.status == "Diproses" ? null : (
+            {transaction.status == "Menunggu pembayaran" ||
+            transaction.status == "Menunggu verifikasi" ? (
               <Button
                 variant="bordered"
                 color="primary"
@@ -166,7 +167,7 @@ export default function TransactionDetails({
                   ? "Sedang diverifikasi"
                   : "Pembayaran"}
               </Button>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
