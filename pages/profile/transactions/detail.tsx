@@ -150,18 +150,23 @@ export default function TransactionDetails({
               </h4>
             </div>
 
-            <Button
-              variant="bordered"
-              color="primary"
-              onClick={() =>
-                router.push(
-                  `/purchase/payment?id=${encodeURIComponent(transaction.transaksi_id)}`,
-                )
-              }
-              className="w-full font-semibold"
-            >
-              Pembayaran
-            </Button>
+            {transaction.status == "Diproses" ? null : (
+              <Button
+                variant="bordered"
+                color="primary"
+                onClick={() =>
+                  router.push(
+                    `/purchase/payment?id=${encodeURIComponent(transaction.transaksi_id)}`,
+                  )
+                }
+                className="w-full font-semibold"
+                isDisabled={transaction.status == "Menunggu verifikasi"}
+              >
+                {transaction.status == "Menunggu verifikasi"
+                  ? "Sedang diverifikasi"
+                  : "Pembayaran"}
+              </Button>
+            )}
           </div>
         </div>
       </div>
