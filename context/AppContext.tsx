@@ -5,6 +5,7 @@ type AppContextType = {
   onCloseUnauthenticated: () => void;
   onOpenUnauthenticated: () => void;
   totalCarts: number;
+  isOpen: boolean;
 };
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);

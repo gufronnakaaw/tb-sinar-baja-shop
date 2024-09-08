@@ -13,7 +13,15 @@ const months = [
   "Desember",
 ];
 
-const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+export const days = [
+  "Minggu",
+  "Senin",
+  "Selasa",
+  "Rabu",
+  "Kamis",
+  "Jumat",
+  "Sabtu",
+];
 
 export function formatDate(dateProp: string) {
   const date = new Date(dateProp);

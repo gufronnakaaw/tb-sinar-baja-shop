@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import CardProduct from "@/components/card/CardProduct";
+import { AppContext } from "@/context/AppContext";
 import { Banner } from "@/types/banner.type";
 import { SuccessResponse } from "@/types/global.type";
 import { Product } from "@/types/product.type";
@@ -10,12 +11,14 @@ import { Circle } from "@phosphor-icons/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import NextImage from "next/image";
+import { useContext } from "react";
 
 export default function HomePage({
   banners,
   products,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const session = useSession();
+  const ctx = useContext(AppContext);
 
   return (
     <Layout title="TB Sinar Baja : Temukan Berbagai Produk Baja Berkualitas Untuk Kebutuhan Proyek Anda Disini.">
@@ -34,21 +37,39 @@ export default function HomePage({
             )}
           </h3>
 
-          <Chip
-            variant="flat"
-            color="success"
-            size="sm"
-            startContent={
-              <Circle weight="fill" size={7} className="animate-ping" />
-            }
-            className="gap-1"
-            classNames={{
-              base: "px-2",
-              content: "font-semibold",
-            }}
-          >
-            Toko Aktif
-          </Chip>
+          {ctx?.isOpen ? (
+            <Chip
+              variant="flat"
+              color="success"
+              size="sm"
+              startContent={
+                <Circle weight="fill" size={7} className="animate-ping" />
+              }
+              className="gap-1"
+              classNames={{
+                base: "px-2",
+                content: "font-semibold",
+              }}
+            >
+              Toko Aktif
+            </Chip>
+          ) : (
+            <Chip
+              variant="flat"
+              color="danger"
+              size="sm"
+              startContent={
+                <Circle weight="fill" size={7} className="animate-ping" />
+              }
+              className="gap-1"
+              classNames={{
+                base: "px-2",
+                content: "font-semibold",
+              }}
+            >
+              Toko Tidak Aktif
+            </Chip>
+          )}
         </div>
 
         <div className="mb-2 aspect-video overflow-hidden rounded-xl">

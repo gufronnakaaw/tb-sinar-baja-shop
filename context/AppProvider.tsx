@@ -1,5 +1,7 @@
 import { SuccessResponse } from "@/types/global.type";
+import { OperationalType } from "@/types/operational.type";
 import { fetcher } from "@/utils/fetcher";
+import { days } from "@/utils/formatDate";
 import { useDisclosure } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -20,6 +22,26 @@ export default function AppProvider({
   const router = useRouter();
   const session = useSession();
   const [totalCarts, setTotalCarts] = useState(0);
+  const [operational, setOperational] = useState<OperationalType[]>([]);
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    getOperational();
+
+    async function getOperational() {
+      try {
+        const result: SuccessResponse<OperationalType[]> = await fetcher({
+          url: "/operational",
+          method: "GET",
+        });
+
+        setOperational(result.data);
+      } catch (error) {
+        Toast.error("Terjadi kesalahan saat mendapatkan jam operasional");
+        console.log(error);
+      }
+    }
+  }, [router]);
 
   useEffect(() => {
     onCloseUnauthenticated();
@@ -46,6 +68,38 @@ export default function AppProvider({
     }
   }, [router, session]);
 
+  useEffect(() => {
+    if (router.pathname.startsWith("/purchase") || router.pathname == "/") {
+      const now = new Date();
+      const hour = now.getHours();
+      const day = days[now.getDay()];
+
+      const find = operational.find((el) => el.hari == day);
+
+      const open = find?.open.split(":")[0];
+      const close = find?.close.split(":")[0];
+
+      if (open == "-" && close == "-") {
+        setIsOpen(false);
+      } else if (
+        hour >= parseInt(open as string) &&
+        hour <= parseInt(close as string)
+      ) {
+        setIsOpen(true);
+      } else {
+        setIsOpen(false);
+      }
+    }
+  }, [router, operational]);
+
+  useEffect(() => {
+    if (router.pathname.startsWith("/purchase")) {
+      if (!isOpen) {
+        router.push("/offline");
+      }
+    }
+  }, [router, isOpen]);
+
   return (
     <AppContext.Provider
       value={{
@@ -53,6 +107,7 @@ export default function AppProvider({
         onCloseUnauthenticated,
         onOpenUnauthenticated,
         totalCarts,
+        isOpen,
       }}
     >
       {children}

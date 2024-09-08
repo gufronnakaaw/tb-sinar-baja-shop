@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 
 export default function OfflinePage() {
@@ -23,13 +24,20 @@ export default function OfflinePage() {
 
           <div className="text-center">
             <h5 className="mb-2 text-lg font-semibold text-foreground">
-              Toko Sudah Tutup!
+              Toko Sedang Tutup!
             </h5>
             <p className="text-[12px] leading-[180%] text-foreground-600">
-              Proses pembelian dan transaksi akan otomatis dibatalkan untuk
-              kenyamanan dan keamanan pelanggan. Atas kerjasamanya kami ucapkan
-              terima kasih.
+              Segala proses transaksi untuk sementara diberhentikan. Atas
+              perhatiannya kami ucapkan terima kasih.
             </p>
+
+            <Button
+              color="primary"
+              onClick={() => (window.location.href = "/")}
+              className="mt-4 w-full font-semibold"
+            >
+              Kembali ke halaman utama
+            </Button>
           </div>
         </div>
       </div>
