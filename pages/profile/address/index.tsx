@@ -59,13 +59,15 @@ export default function ShippingAddressPage({
         </div>
       ) : null}
 
-      {data?.data.map((address, index) => (
-        <div className="min-h-screen">
-          <div className="grid gap-4 overflow-scroll">
-            <CardAddress key={index} {...{ address, mutate, token }} />
+      {data?.data.map((address, index) => {
+        return (
+          <div className="min-h-screen" key={address.address_id}>
+            <div className="grid gap-4 overflow-scroll">
+              <CardAddress {...{ address, mutate, token }} />
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
 
       <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
         <Button

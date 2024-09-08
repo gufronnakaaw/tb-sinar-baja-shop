@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import HeaderTitle from "@/components/header/HeaderTitle";
+import { Address } from "@/types/address.type";
 import { SuccessResponse } from "@/types/global.type";
 import { Regional } from "@/types/regional.type";
 import { fetcher } from "@/utils/fetcher";
@@ -11,8 +12,11 @@ import Toast from "react-hot-toast";
 
 export default function EditShippingAddress({
   provinces,
+  address,
+  token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const [input, setInput] = useState(address);
 
   const [provinceCode, setProvinceCode] = useState<Key>("");
   const [regencies, setRegencies] = useState<Regional[]>([]);
@@ -84,6 +88,27 @@ export default function EditShippingAddress({
     }
   }, [regencyCode]);
 
+  async function handleUpdateAddress() {
+    const provinsi = provinces.find((item) => item.code == provinceCode)?.name;
+    const kota = regencies.find((item) => item.code == regencyCode)?.name;
+    const kecamatan = districts.find((item) => item.code == districtCode)?.name;
+
+    try {
+      await fetcher({
+        url: "/profile/address",
+        method: "PATCH",
+        data: { ...input, provinsi, kota, kecamatan },
+        token,
+      });
+
+      Toast.success("Update alamat berhasil");
+      return router.push("/profile/address");
+    } catch (error) {
+      Toast.error("Terjadi kesalahan saat update alamat");
+      console.log(error);
+    }
+  }
+
   return (
     <Layout title="Edit Alamat">
       <div className="grid gap-8">
@@ -108,6 +133,13 @@ export default function EditShippingAddress({
             classNames={{
               label: "text-[12px]",
             }}
+            defaultValue={input.nama_penerima}
+            onChange={(e) => {
+              setInput({
+                ...input,
+                nama_penerima: e.target.value,
+              });
+            }}
           />
 
           <Input
@@ -120,6 +152,13 @@ export default function EditShippingAddress({
             placeholder="Cth. 082233445566"
             classNames={{
               label: "text-[12px]",
+            }}
+            defaultValue={input.no_telpon}
+            onChange={(e) => {
+              setInput({
+                ...input,
+                no_telpon: e.target.value,
+              });
             }}
           />
         </div>
@@ -136,7 +175,7 @@ export default function EditShippingAddress({
             label="Provinsi"
             labelPlacement="outside"
             onChange={(e) => setProvinceCode(e.target.value)}
-            placeholder="Cth. DKI Jakarta"
+            placeholder={address.provinsi}
             classNames={{
               label: "text-[12px]",
             }}
@@ -155,7 +194,7 @@ export default function EditShippingAddress({
             label="Kabupaten/Kota"
             labelPlacement="outside"
             onChange={(e) => setRegencyCode(e.target.value)}
-            placeholder="Cth. Jakarta Selatan"
+            placeholder={address.kota}
             classNames={{
               label: "text-[12px]",
             }}
@@ -174,7 +213,7 @@ export default function EditShippingAddress({
             label="Kecamatan"
             labelPlacement="outside"
             onChange={(e) => setDistrictCode(e.target.value)}
-            placeholder="Cth. Setiabudi"
+            placeholder={address.kecamatan}
             classNames={{
               label: "text-[12px]",
             }}
@@ -197,6 +236,13 @@ export default function EditShippingAddress({
             classNames={{
               label: "text-[12px]",
             }}
+            defaultValue={address.alamat_lengkap}
+            onChange={(e) => {
+              setInput({
+                ...input,
+                alamat_lengkap: e.target.value,
+              });
+            }}
           />
 
           <Select
@@ -209,6 +255,13 @@ export default function EditShippingAddress({
             classNames={{
               label: "text-[12px]",
             }}
+            onChange={(e) => {
+              setInput({
+                ...input,
+                label: e.target.value,
+              });
+            }}
+            defaultSelectedKeys={[address.label]}
           >
             <SelectItem key="rumah" value="rumah">
               Rumah
@@ -228,17 +281,20 @@ export default function EditShippingAddress({
             classNames={{
               label: "text-[12px]",
             }}
+            onChange={(e) => {
+              setInput({
+                ...input,
+                kode_pos: e.target.value,
+              });
+            }}
+            defaultValue={address.kode_pos}
           />
         </div>
 
         <div className="sticky bottom-0 left-0 z-50 h-20 w-full bg-white pt-2">
           <Button
             color="primary"
-            onClick={() => {
-              if (confirm("Apakah kamu yakin?")) {
-                window.location.href = "/profile/address";
-              }
-            }}
+            onClick={handleUpdateAddress}
             className="w-full font-semibold"
           >
             Simpan Alamat
@@ -249,15 +305,30 @@ export default function EditShippingAddress({
   );
 }
 
-export const getServerSideProps = (async ({ query }) => {
-  const response: SuccessResponse<Regional[]> = await fetcher({
-    url: "/provinces",
-    method: "GET",
-  });
+export const getServerSideProps = (async ({ req, query }) => {
+  const token = req.headers["access_token"] as string;
+
+  const [provinces, address] = await Promise.all([
+    fetcher({
+      url: "/provinces",
+      method: "GET",
+    }),
+    fetcher({
+      url: `/profile/address?address_id=${query.address_id as string}`,
+      method: "GET",
+      token,
+    }),
+  ]);
 
   return {
     props: {
-      provinces: response.data,
+      provinces: provinces.data as Regional[],
+      address: address.data as Address,
+      token,
     },
   };
-}) satisfies GetServerSideProps<{ provinces: Regional[] }>;
+}) satisfies GetServerSideProps<{
+  provinces: Regional[];
+  address: Address;
+  token: string;
+}>;
