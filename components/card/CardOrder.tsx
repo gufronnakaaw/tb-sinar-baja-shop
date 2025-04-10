@@ -11,7 +11,7 @@ export default function CardOrder(item: ProductOrder) {
           priority
           isBlurred
           as={NextImage}
-          src={item.image[0].url}
+          src={`${!item.image.length ? "/img/product-image-test.jpg" : item.image[0].url}`}
           alt="image"
           width={500}
           height={500}

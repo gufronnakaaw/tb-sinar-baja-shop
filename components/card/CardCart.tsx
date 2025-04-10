@@ -151,7 +151,7 @@ export default function CardCart({ cart, mutate, token }: CardCartProps) {
         <Image
           priority
           as={NextImage}
-          src={cart.image[0].url}
+          src={`${!cart.image.length ? "/img/product-image-test.jpg" : cart.image[0].url}`}
           alt="image"
           width={1000}
           height={1000}
